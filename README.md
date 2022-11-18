@@ -1,8 +1,8 @@
 # siged
 
 SIGED
-Uso do Docker compose
-No windows Instalar:
+Uso do Docker compose<br>
+Instalar no windows :
 
 * Docker: https://www.docker.com/
 
@@ -27,8 +27,15 @@ $ cd siged
 $ docker-compose -f .\docker-compose_dev.yml up -d --no-deps --build
 ```
 
+> - adminer: http://localhost:38080/
+>      - System: PostgreSQL
+>      - Server: db
+>      - Username: siged
+>      - Password: siged
+>      - database: siged
+
 ```
-# Criação do usuário do sistema
+#Criação do usuário do sistema
 
 INSERT INTO public.usuario(id, ativo, cpf, dataalteracao, datainclusao, email, forcaratualizacaoemail, nome, observacao,
                            senha, senhaexpirada, tipo, login)
@@ -37,16 +44,9 @@ VALUES (1, true, 99999999999, NOW(), NOW(), 'postgre@postgre.local', false, 'ipc
 
 ```
         
-
+#SIGED
 > - Web: http://localhost:18080/ 
 >      - Login: ipcconsulta
 >      - Senha: senha
 
-> - adminer: http://localhost:38080/
->      - System: PostgreSQL
->      - Server: db
->      - Username: siged
->      - Password: siged
->      - database: siged
 
-> Banco usuário e senha: siged
