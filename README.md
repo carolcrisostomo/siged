@@ -27,10 +27,26 @@ $ cd siged
 $ docker-compose -f .\docker-compose_dev.yml up -d --no-deps --build
 ```
 
+```
+# Criação do usuário do sistema
+
+INSERT INTO public.usuario(id, ativo, cpf, dataalteracao, datainclusao, email, forcaratualizacaoemail, nome, observacao,
+                           senha, senhaexpirada, tipo, login)
+VALUES (1, true, 99999999999, NOW(), NOW(), 'postgre@postgre.local', false, 'ipcconsulta', '',
+        'e8d95a51f3af4a3b134bf6bb680a213a', false, 1, 'ipcconsulta');
+
+```
+        
 
 > - Web: http://localhost:18080/ 
-> - pgadmin: http://localhost:28080/ 
-> - adminer: http://localhost:38080/
+>      - Login: ipcconsulta
+>      - Senha: senha
 
+> - adminer: http://localhost:38080/
+>      - System: PostgreSQL
+>      - Server: db
+>      - Username: siged
+>      - Password: siged
+>      - database: siged
 
 > Banco usuário e senha: siged
