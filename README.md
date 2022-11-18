@@ -22,7 +22,7 @@ Execute no terminal na pasta do projeto
 No windows coloque as a variavel de ambiente no arquivo .env_dev
 
 ```
-$ git clone [https://github.com/carolcrisostomo/siged.git](https://github.com/carolcrisostomo/siged.git)
+$ git clone https://github.com/carolcrisostomo/siged.git
 $ cd siged
 $ docker-compose -f .\docker-compose_dev.yml up -d --no-deps --build
 ```
