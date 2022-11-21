@@ -1,0 +1,835 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
+<!-- 2019-01-14T14:52:47 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="eventos" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b27e2e19-ffbb-4b48-9638-82c51e79e73b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="tipoEvento" class="java.lang.String"/>
+	<parameter name="publicoAlvo" class="java.lang.String"/>
+	<parameter name="periodoPrevisto1" class="java.lang.String"/>
+	<parameter name="periodoRealizacao1" class="java.lang.String"/>
+	<parameter name="localizacao" class="java.lang.String"/>
+	<parameter name="provedor" class="java.lang.String"/>
+	<parameter name="cidade" class="java.lang.String"/>
+	<parameter name="uf" class="java.lang.String"/>
+	<parameter name="pais" class="java.lang.String"/>
+	<parameter name="situacao" class="java.lang.String"/>
+	<parameter name="paramWhere" class="java.lang.String"/>
+	<parameter name="periodoPrevisto2" class="java.lang.String"/>
+	<parameter name="periodoRealizacao2" class="java.lang.String"/>
+	<parameter name="modalidade" class="java.lang.String"/>
+	<parameter name="tipoParticipanteWhere" class="java.lang.String"/>
+	<parameter name="tipoParticipante" class="java.lang.String"/>
+	<parameter name="eixoTematico" class="java.lang.String"/>
+	<parameter name="tituloEvento" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="esfera" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="programa" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT DISTINCT
+    (
+        SELECT
+            COUNT(DISTINCT p.id)
+        FROM
+            inscricao i
+            INNER JOIN participante p ON p.id = i.participante_id
+            LEFT JOIN sapjava_entidade o ON p.orgao_id = o.identidade
+        WHERE
+            i.evento_id = e.id
+            AND i.confirmada = 'S'
+            $P!{tipoParticipanteWhere}
+    ) AS total_inscricoes,
+    e.id AS evento,
+    te.descricao AS tipo_evento,
+    e.titulo AS titulo_evento,
+    DECODE(e.data_inicio_realizacao,NULL,e.data_inicio_previsto,e.data_inicio_realizacao) AS data_inicio_realizacao,
+    DECODE(e.data_fim_realizacao,NULL,e.data_fim_previsto,e.data_fim_realizacao) AS data_fim_realizacao,
+    e.carga_horaria AS carga_horaria,
+    (
+        SELECT
+            LISTAGG(tle2_descricao,', ') WITHIN GROUP(ORDER BY tle2_id)
+        FROM
+            (
+                SELECT DISTINCT
+                    tle2.id AS tle2_id,
+                    tle2.descricao AS tle2_descricao,
+                    mod2.evento_id AS mod2_evento_id
+                FROM
+                    tipo_localizacao_evento tle2
+                    INNER JOIN modulo mod2 ON mod2.localizacao_id = tle2.id
+            )
+        WHERE
+            mod2_evento_id = e.id
+    ) AS localizacao,
+    (
+        SELECT
+            LISTAGG(tpa2.descricao,', ') WITHIN GROUP(ORDER BY tpa2.id)
+        FROM
+            evento_tipopublico etp2
+            INNER JOIN evento e2 ON etp2.evento_id = e2.id
+            INNER JOIN tipo_publico_alvo tpa2 ON etp2.publico_alvo_id = tpa2.id
+        WHERE
+            e2.id = e.id
+    ) AS publico_alvo
+FROM
+    evento e
+    INNER JOIN tipo_evento te ON e.tipo_id = te.id
+    INNER JOIN evento_tipopublico etp ON e.id = etp.evento_id
+    INNER JOIN tipo_publico_alvo tpa ON etp.publico_alvo_id = tpa.id
+    INNER JOIN evento_provedor_join epj ON e.id = epj.evento_id
+    INNER JOIN modulo ON modulo.evento_id = e.id
+    INNER JOIN tipo_localizacao_evento tle ON modulo.localizacao_id = tle.id
+    LEFT JOIN srh_tb_municipio m ON tle.cidade_id = m.id
+    LEFT JOIN pais p ON tle.pais_id = p.id
+    LEFT JOIN evento_programa epr ON e.id = epr.evento_id
+    LEFT JOIN eixo_tematico et ON et.id = e.eixo_tematico_id
+$P!{paramWhere}
+GROUP BY
+    e.id,
+    te.descricao,
+    e.titulo,
+    e.carga_horaria,
+    DECODE(e.data_inicio_realizacao,NULL,e.data_inicio_previsto,e.data_inicio_realizacao),
+    DECODE(e.data_fim_realizacao,NULL,e.data_fim_previsto,e.data_fim_realizacao)
+ORDER BY
+    data_inicio_realizacao DESC,
+    tipo_evento ASC,
+    titulo_evento ASC]]>
+	</queryString>
+	<field name="TOTAL_INSCRICOES" class="java.math.BigDecimal"/>
+	<field name="EVENTO" class="java.math.BigDecimal"/>
+	<field name="TIPO_EVENTO" class="java.lang.String"/>
+	<field name="TITULO_EVENTO" class="java.lang.String"/>
+	<field name="DATA_INICIO_REALIZACAO" class="java.sql.Timestamp"/>
+	<field name="DATA_FIM_REALIZACAO" class="java.sql.Timestamp"/>
+	<field name="CARGA_HORARIA" class="java.math.BigDecimal"/>
+	<field name="LOCALIZACAO" class="java.lang.String"/>
+	<field name="PUBLICO_ALVO" class="java.lang.String"/>
+	<variable name="totalDeHoras" class="java.math.BigDecimal" resetType="Group" resetGroup="Eventos" calculation="Sum">
+		<variableExpression><![CDATA[$F{CARGA_HORARIA}]]></variableExpression>
+	</variable>
+	<variable name="totalDeOportunidades" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOTAL_INSCRICOES}]]></variableExpression>
+	</variable>
+	<group name="Eventos">
+		<groupHeader>
+			<band height="327">
+				<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="297" width="250" height="30" backcolor="#CCCCFF" uuid="fac76e85-2bac-4225-9528-032c1b649a9b">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="CustomSans" isBold="true"/>
+					</textElement>
+					<text><![CDATA[EVENTO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="525" y="297" width="55" height="30" backcolor="#CCCCFF" uuid="7b03f7e9-cac7-4331-98ed-beeeba3029e0"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="CustomSans" isBold="true"/>
+					</textElement>
+					<text><![CDATA[CARGA HORÁRIA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="580" y="297" width="127" height="30" backcolor="#CCCCFF" uuid="10562045-b6b1-4d8b-8547-f86e3c73280c"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="CustomSans" isBold="true"/>
+					</textElement>
+					<text><![CDATA[LOCALIZAÇÃO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="422" y="297" width="103" height="30" backcolor="#CCCCFF" uuid="8119c313-4023-40ee-8b82-3b59194a1066"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="CustomSans" isBold="true"/>
+					</textElement>
+					<text><![CDATA[PERÍODO REALIZAÇÃO*]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="130" y="0" width="672" height="20" uuid="9227f9c5-7989-4188-854f-3d0cab335325"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( $P{tipoEvento} != null ? $P{tipoEvento} : "TODOS" )]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="0" width="130" height="20" backcolor="#CCCCFF" uuid="d26f8bea-1c2e-4297-b328-76947e0ca3b9"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans" isBold="true"/>
+					</textElement>
+					<text><![CDATA[TIPO EVENTO:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="130" y="40" width="672" height="20" uuid="14d5c1cf-ca3d-41ee-a572-583e45cf3aee"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( $P{publicoAlvo} != null ? $P{publicoAlvo} : "TODOS" )]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="40" width="130" height="20" backcolor="#CCCCFF" uuid="032d7173-d394-46a8-b1da-5fb310068197"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans" isBold="true"/>
+					</textElement>
+					<text><![CDATA[PÚBLICO ALVO:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="130" y="100" width="672" height="20" uuid="cf9a6f58-8493-4947-af9f-9bd85273522d"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( $P{periodoPrevisto1} != null && $P{periodoPrevisto2} != null ? $P{periodoPrevisto1} +" a " + $P{periodoPrevisto2} : "" )]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="100" width="130" height="20" backcolor="#CCCCFF" uuid="b64ed88f-76ce-4919-9de1-b782da03e173"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans" isBold="true"/>
+					</textElement>
+					<text><![CDATA[PERÍODO PREVISTO:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="130" y="120" width="672" height="20" uuid="fff3fa64-b3fb-4347-abc3-c22ae3c7cc14"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( $P{periodoRealizacao1} != null && $P{periodoRealizacao2} != null ? $P{periodoRealizacao1} + " a " + $P{periodoRealizacao2} : "" )]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="120" width="130" height="20" backcolor="#CCCCFF" uuid="ed20f9b8-05a8-40a8-98a8-cdbfa5182a0e"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans" isBold="true"/>
+					</textElement>
+					<text><![CDATA[PERÍODO REALIZAÇÃO*:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="130" y="140" width="672" height="20" uuid="054bf1de-498c-4758-85f8-25e57901a58f"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( $P{localizacao} != null ? $P{localizacao} : "TODOS" )]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="140" width="130" height="20" backcolor="#CCCCFF" uuid="24ed49ec-c888-4760-abdf-7cc4f8ed43fa"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans" isBold="true"/>
+					</textElement>
+					<text><![CDATA[LOCALIZAÇÃO:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="130" y="160" width="672" height="20" uuid="7a86e1af-5dcc-4eb3-bd64-9ee90438ec15"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( $P{provedor} != null ? $P{provedor} : "TODOS" )]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="160" width="130" height="20" backcolor="#CCCCFF" uuid="e5303a89-e695-4ada-9416-748b1b4e6943"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans" isBold="true"/>
+					</textElement>
+					<text><![CDATA[PROVEDOR:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="180" width="130" height="20" backcolor="#CCCCFF" uuid="4b692eda-a361-4a00-a525-2d4212084e61"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans" isBold="true"/>
+					</textElement>
+					<text><![CDATA[CIDADE:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="130" y="180" width="301" height="20" uuid="3eb55ae4-c2a3-44b6-a0ab-e95607716a88"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( $P{cidade} != null ? $P{cidade} : "TODOS" )]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="431" y="180" width="35" height="20" backcolor="#CCCCFF" uuid="99cb2cd4-42bb-4aac-94d2-ec2da8c6ba42"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans" isBold="true"/>
+					</textElement>
+					<text><![CDATA[UF:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="466" y="180" width="67" height="20" uuid="f4f15814-9014-4f66-8acf-5e51cc340989"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( $P{uf} != null ? $P{uf} : "TODOS" )]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="533" y="180" width="35" height="20" backcolor="#CCCCFF" uuid="aabba716-87b3-404d-823a-5ed62853d896"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans" isBold="true"/>
+					</textElement>
+					<text><![CDATA[PAÍS:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="568" y="180" width="234" height="20" uuid="268ba98a-2e80-4a5b-bbd0-804a456b2783"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( $P{pais} != null ? $P{pais} : "TODOS" )]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="130" y="200" width="672" height="20" uuid="1fc6cc77-f663-4c97-a7b0-3ef58c6de703"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( $P{situacao} != null ? $P{situacao} : "TODOS" )]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="200" width="130" height="20" backcolor="#CCCCFF" uuid="a8922019-d3b8-4de7-99a5-ea65f78c3edc"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans" isBold="true"/>
+					</textElement>
+					<text><![CDATA[SITUAÇÃO:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="130" y="220" width="672" height="20" uuid="2ff6ce33-d1df-41fd-9c1d-322770f4888d"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( $P{modalidade} != null ? $P{modalidade} : "TODOS" )]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="220" width="130" height="20" backcolor="#CCCCFF" uuid="7360cda1-fb65-4892-a63e-6de32619c3e9"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans" isBold="true"/>
+					</textElement>
+					<text><![CDATA[MODALIDADE:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="707" y="297" width="95" height="30" backcolor="#CCCCFF" uuid="7a965887-6299-458a-9082-2af056937f8f"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="CustomSans" isBold="true"/>
+					</textElement>
+					<text><![CDATA[OPORTUNIDADES]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="130" y="240" width="672" height="20" uuid="5b5cd8e0-0d79-4a72-9bbe-04377a5c4690"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( $P{tipoParticipante} != null ? $P{tipoParticipante} : "TODOS" )]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="240" width="130" height="20" backcolor="#CCCCFF" uuid="cb02f215-881c-4e36-8951-2dfdec82e565"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans" isBold="true"/>
+					</textElement>
+					<text><![CDATA[TIPO PARTICIPANTE:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="130" y="60" width="672" height="20" uuid="a306ba8a-bd45-4d0d-b93d-29247d4c850e"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( $P{eixoTematico} != null ? $P{eixoTematico} : "TODOS" )]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="60" width="130" height="20" backcolor="#CCCCFF" uuid="8718d670-3e06-4ec6-b539-d87d422505ec"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans" isBold="true"/>
+					</textElement>
+					<text><![CDATA[EIXO TEMÁTICO:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="332" y="297" width="90" height="30" backcolor="#CCCCFF" uuid="73453bb3-62be-46e0-837a-1ade176b6b4d"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="CustomSans" isBold="true"/>
+					</textElement>
+					<text><![CDATA[PÚBLICO ALVO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="20" width="130" height="20" backcolor="#CCCCFF" uuid="c330f0df-a4d3-498d-bbd7-8cc9125767cf"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans" isBold="true"/>
+					</textElement>
+					<text><![CDATA[TÍTULO EVENTO:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="130" y="20" width="672" height="20" uuid="eea482fb-a463-4333-868a-702f7a7ec727"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( $P{tituloEvento} != null ? $P{tituloEvento} : "" )]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="260" width="130" height="20" backcolor="#CCCCFF" uuid="b0926a5b-8047-4dee-9de9-c59590678439"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans" isBold="true"/>
+					</textElement>
+					<text><![CDATA[ESFERA:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="130" y="260" width="672" height="20" uuid="4a9b8053-b19c-409c-9ecd-f323778e45d0"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( $P{esfera} != null ? $P{esfera}.toUpperCase() : "TODAS" )]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="80" width="130" height="20" backcolor="#CCCCFF" uuid="2eafd393-9762-47b3-963f-0e46445713f8"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans" isBold="true"/>
+					</textElement>
+					<text><![CDATA[PROGRAMA]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="130" y="80" width="672" height="20" uuid="cfcdf209-4ab6-4dce-b215-e75fe80e952d"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( $P{programa} != null ? $P{programa} : "TODOS" )]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="250" y="297" width="82" height="30" backcolor="#CCCCFF" uuid="3fb84b8d-b285-4b16-8292-8299ed25a25a"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="CustomSans" isBold="true"/>
+					</textElement>
+					<text><![CDATA[TIPO EVENTO]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="68">
+				<textField>
+					<reportElement x="568" y="14" width="234" height="18" uuid="82c509ac-d89a-4d6b-97c5-99cee50884ac"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans"/>
+					</textElement>
+					<textFieldExpression><![CDATA["TOTAL DE EVENTOS: " + $V{Eventos_COUNT}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="568" y="32" width="234" height="18" uuid="e243dbcc-382a-45e3-9760-8a2ea0d96bb9"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans"/>
+					</textElement>
+					<textFieldExpression><![CDATA["TOTAL DE HORAS: " + $V{totalDeHoras}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="0" width="341" height="15" uuid="263ca5cc-d528-47ef-b956-164fb0140de2"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans" size="8"/>
+					</textElement>
+					<text><![CDATA[*Para eventos previstos, o período refere-se à previsão de realização destes.]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="568" y="50" width="234" height="18" uuid="d00c3d87-2624-4f68-8ae0-551ec6552d23"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans"/>
+					</textElement>
+					<textFieldExpression><![CDATA["TOTAL DE OPORTUNIDADES: " + $V{totalDeOportunidades}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="52" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="0" width="802" height="23" forecolor="#000000" backcolor="#FFFFFF" uuid="4a5f0884-46d9-4b45-afad-9d3dc89892bf"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="CustomSans" size="18" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Sistema de Gestão Educacional]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="25" width="802" height="27" uuid="4e179dba-244d-4138-963d-883c29513f6b"/>
+				<textElement textAlignment="Center">
+					<font fontName="CustomSans" size="18"/>
+				</textElement>
+				<text><![CDATA[Relatório de Eventos]]></text>
+			</staticText>
+			<image>
+				<reportElement x="6" y="0" width="81" height="40" uuid="51a0f93f-1793-411c-8cbb-0c928a48d8f2"/>
+				<imageExpression><![CDATA["images/logo_IPC.gif"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="667" y="0" width="164" height="34" uuid="5f59b12b-00bc-4980-ad65-81fa64b8c57f"/>
+				<imageExpression><![CDATA["images/logo_TCE2.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="20" splitType="Prevent">
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="250" height="20" uuid="89176c76-d2c1-4f5d-b95c-cd9fd5fb388f"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TITULO_EVENTO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" x="332" y="0" width="90" height="20" uuid="f4824025-77af-417c-9cf7-4ebd5cc843a7"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PUBLICO_ALVO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" x="422" y="0" width="103" height="20" uuid="61f7c5c9-61db-4748-a4d0-066e7a9d3835"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="CustomSans" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($F{DATA_INICIO_REALIZACAO}) + " a " + new SimpleDateFormat("dd/MM/yyyy").format($F{DATA_FIM_REALIZACAO})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" x="525" y="0" width="55" height="20" uuid="de9e79ff-ba3e-459f-8c13-d25d3f1e2bff"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="CustomSans" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CARGA_HORARIA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" x="580" y="0" width="127" height="20" uuid="eaf9445c-31fb-42c1-a2c3-46692ad43183"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LOCALIZACAO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="707" y="0" width="95" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="6b2b1d8c-95b5-4d55-95a2-2632e4c5e81a"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOTAL_INSCRICOES}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" x="250" y="0" width="82" height="20" uuid="fcfee2f1-e190-4009-a5f8-d0aed39d52f9"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TIPO_EVENTO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="690" y="0" width="66" height="20" uuid="6494a8f4-10a1-4022-9ced-09ac86f0204c"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pág. " + $V{PAGE_NUMBER} + " de "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="756" y="0" width="46" height="20" uuid="89f2280e-43a9-4156-adf4-91ca717bfd7a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="20">
+			<textField evaluationTime="Report">
+				<reportElement x="756" y="0" width="46" height="20" uuid="0ed512df-0302-44cd-84b7-ae34267265ff"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="690" y="0" width="66" height="20" uuid="08d2e0bb-701a-4495-8810-3a43dc44ecad"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pág. " + $V{PAGE_NUMBER} + " de "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="341" height="20" uuid="db78cc60-6225-49f8-9d92-7b2cd2a3f6bf"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans" size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Relatório gerado em " + new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss").format(new java.util.Date())]]></textFieldExpression>
+			</textField>
+		</band>
+	</lastPageFooter>
+</jasperReport>

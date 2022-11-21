@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="participantes_por_evento" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="525"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="paramWhere" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     participante.nome AS participante_nome,
+     participante.entidade AS participante_entidade,
+     setor.nmsetor AS setor_descricao,
+     tipo_evento.descricao AS tipo_evento_descricao,
+     evento.titulo AS evento_titulo,
+     evento.data_inicio_realizacao AS evento_data_inicio_realizacao,
+     evento.data_fim_realizacao AS evento_data_fim_realizacao,
+     evento.carga_horaria AS evento_carga_horaria,
+     tipo_localizacao_evento.descricao AS localizacao_evento_descricao,
+     uf.descricao AS uf_descricao,
+     cidade.descricao AS cidade_descricao,
+     pais.descricao AS pais_descricao,
+     tipo_publico_alvo.descricao AS tipo_publico_alvo_descricao
+FROM
+     participante LEFT JOIN inscricao ON participante.id = inscricao.participante_id
+     LEFT JOIN evento ON inscricao.evento_id = evento.id
+     LEFT JOIN tipo_evento ON evento.tipo_id = tipo_evento.id
+     LEFT JOIN tipo_localizacao_evento ON evento.localizacao_id = tipo_localizacao_evento.id
+     LEFT JOIN tipo_publico_alvo ON evento.publico_alvo_id = tipo_publico_alvo.id
+     INNER JOIN sapjava_setor ON participante.setor_id = sapjava_setor.idsetor
+     LEFT JOIN uf ON tipo_localizacao_evento.uf_id = uf.id
+     LEFT JOIN cidade ON tipo_localizacao_evento.cidade_id = cidade.id
+     LEFT JOIN pais ON tipo_localizacao_evento.pais_id = pais.id
+     AND pais.id = uf.pais_id
+     AND uf.id = cidade.uf_id
+$P!{paramWhere}]]>
+	</queryString>
+	<field name="participante_nome" class="java.lang.String"/>
+	<field name="participante_entidade" class="java.lang.String"/>
+	<field name="setor_descricao" class="java.lang.String"/>
+	<field name="tipo_evento_descricao" class="java.lang.String"/>
+	<field name="evento_titulo" class="java.lang.String"/>
+	<field name="evento_data_inicio_realizacao" class="java.sql.Timestamp"/>
+	<field name="evento_data_fim_realizacao" class="java.sql.Timestamp"/>
+	<field name="evento_carga_horaria" class="java.lang.String"/>
+	<field name="localizacao_evento_descricao" class="java.lang.String"/>
+	<field name="uf_descricao" class="java.lang.String"/>
+	<field name="cidade_descricao" class="java.lang.String"/>
+	<field name="pais_descricao" class="java.lang.String"/>
+	<field name="tipo_publico_alvo_descricao" class="java.lang.String"/>
+	<group name="group">
+		<groupExpression><![CDATA[$F{participante_nome}]]></groupExpression>
+		<groupHeader>
+			<band height="44">
+				<rectangle radius="0">
+					<reportElement mode="Opaque" x="1" y="23" width="801" height="17" forecolor="#F0F0F0" backcolor="#F0F0F0"/>
+					<graphicElement fill="Solid"/>
+				</rectangle>
+				<textField>
+					<reportElement style="SubTitle" x="1" y="23" width="272" height="16" forecolor="#000000"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{participante_nome}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="SubTitle" mode="Transparent" x="284" y="23" width="170" height="16" forecolor="#000000"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{participante_entidade}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="SubTitle" x="468" y="23" width="322" height="17" forecolor="#000000"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{setor_descricao}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="Column header" x="284" y="2" width="170" height="19" forecolor="#000000"/>
+					<textElement/>
+					<text><![CDATA[Instituição Vínculo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="468" y="2" width="294" height="19" forecolor="#000000"/>
+					<textElement/>
+					<text><![CDATA[Setor]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="0" y="2" width="273" height="19" forecolor="#000000"/>
+					<textElement/>
+					<text><![CDATA[Participante]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="22"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="50" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="304" y="1" width="196" height="22" forecolor="#000000"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Portal de Educação]]></text>
+			</staticText>
+			<image onErrorType="Blank">
+				<reportElement x="1" y="1" width="81" height="40"/>
+				<imageExpression class="java.lang.String"><![CDATA["images/logo_IPC.gif"]]></imageExpression>
+			</image>
+			<image onErrorType="Blank">
+				<reportElement x="638" y="-2" width="164" height="34"/>
+				<imageExpression class="java.lang.String"><![CDATA["images/logo_TCE2.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="SubTitle" x="304" y="23" width="196" height="20" forecolor="#000000"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Participantes por Evento]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="1" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="50" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" x="0" y="2" width="100" height="13" forecolor="#000000"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Evento:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="284" y="2" width="116" height="13" forecolor="#000000"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Data Início Realização:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="284" y="15" width="116" height="12" forecolor="#000000"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Data Fim Realização:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="541" y="15" width="75" height="12" forecolor="#000000"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Carga Horária:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="100" y="2" width="173" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{evento_titulo}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="100" y="15" width="173" height="15"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tipo_evento_descricao}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="616" y="15" width="186" height="14"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{evento_carga_horaria}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="400" y="2" width="125" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{evento_data_inicio_realizacao}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="400" y="15" width="133" height="14"/>
+				<textElement/>
+				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{evento_data_fim_realizacao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="0" y="15" width="100" height="15" forecolor="#000000"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo do Evento:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="29" width="802" height="1"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="606" y="2" width="196" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{localizacao_evento_descricao} + " (" + $F{cidade_descricao} + ", " + $F{uf_descricao} + " - " + $F{pais_descricao} + ")"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="541" y="2" width="65" height="13" forecolor="#000000"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Localização:]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="8" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="680" y="0" width="82" height="15" forecolor="#000000"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Pág. "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="762" y="0" width="40" height="15" forecolor="#000000"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH:mm:ss">
+				<reportElement x="1" y="2" width="169" height="13"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="19" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" x="638" y="0" width="103" height="16" forecolor="#000000"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total de Eventos:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="741" y="0" width="49" height="16"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

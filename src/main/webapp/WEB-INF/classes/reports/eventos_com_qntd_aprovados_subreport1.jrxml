@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
+<!-- 2018-08-10T14:29:22 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="eventos_com_qntd_aprovados_subreport1" pageWidth="802" pageHeight="20" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="d09767e0-4d29-49a2-9c92-12a7a2304992">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="EVENTO_ID" class="java.math.BigDecimal"/>
+	<parameter name="EVENTO" class="java.lang.String"/>
+	<parameter name="PERIODO_REALIZACAO" class="java.lang.String"/>
+	<parameter name="CARGA_HORARIA" class="java.math.BigDecimal"/>
+	<parameter name="LOCALIZACAO" class="java.lang.String"/>
+	<parameter name="OPORTUNIDADES" class="java.math.BigDecimal"/>
+	<parameter name="tipoParticipanteWhere" class="java.lang.String"/>
+	<parameter name="PUBLICO_ALVO" class="java.lang.String"/>
+	<parameter name="TIPO_EVENTO" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT 
+    TO_CHAR(DECODE(PARCIAL, 0, DECODE(TOTAL_DESEMPENHO, 0, 'NA', TOTAL_APROVADOS), 'AP')) AS APROVADOS 
+  FROM
+    (SELECT COUNT(d.evento_id) AS PARCIAL
+       FROM desempenho d
+      WHERE d.evento_id = $P!{EVENTO_ID}
+      AND d.parcial = 1),
+    (SELECT COUNT(d.evento_id) AS TOTAL_DESEMPENHO
+       FROM desempenho d
+      WHERE d.evento_id = $P!{EVENTO_ID}),
+    (SELECT COUNT(DISTINCT p.id) AS TOTAL_APROVADOS
+       FROM inscricao i
+        INNER JOIN participante p ON i.participante_id = p.id
+        LEFT JOIN  sapjava_entidade o ON p.orgao_id = o.identidade
+      WHERE i.evento_id = $P!{EVENTO_ID}
+        AND i.confirmada = 'S'
+    $P!{tipoParticipanteWhere}
+	AND p.id NOT IN (SELECT DISTINCT participante_id
+                          FROM desempenho
+                          WHERE evento_id = $P!{EVENTO_ID}
+                            AND aprovado = 'N'))]]>
+	</queryString>
+	<field name="APROVADOS" class="java.lang.String"/>
+	<variable name="aprovacoes" class="java.lang.Integer">
+		<variableExpression><![CDATA[( $F{APROVADOS}.equals( "NA" ) || $F{APROVADOS}.equals( "AP" )? new Integer(0) : new Integer($F{APROVADOS}) )]]></variableExpression>
+	</variable>
+	<detail>
+		<band height="20">
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="718" y="0" width="84" height="20" uuid="c29bca59-8036-4aa5-8076-0f98235bce7b"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="CustomSans" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{APROVADOS}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" x="530" y="0" width="93" height="20" uuid="41577966-74fa-4095-8cdc-cbaa302ec79d">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LOCALIZACAO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" x="475" y="0" width="55" height="20" uuid="e5c92465-e183-4e48-b846-89d9a33c10c9"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="CustomSans" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{CARGA_HORARIA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" x="375" y="0" width="100" height="20" uuid="f4818860-72e0-451b-b4e6-94bab9e24b4d">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="CustomSans" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PERIODO_REALIZACAO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="210" height="20" uuid="a03336db-b8e4-4343-8bbc-01f4f7459940">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{EVENTO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="623" y="0" width="95" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="0a7f5b82-2ac7-48ec-a7a8-3e100af7f8e4"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{OPORTUNIDADES}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" x="285" y="0" width="90" height="20" uuid="ed3aa60c-82be-4d77-9720-de46881a423d"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PUBLICO_ALVO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" x="210" y="0" width="75" height="20" uuid="f0878a85-3c83-4cf6-8aab-fdbfd225fbe9"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TIPO_EVENTO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

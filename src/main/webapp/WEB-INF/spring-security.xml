@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:sec="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="        
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/security 
+		http://www.springframework.org/schema/security/spring-security-3.0.xsd" >
+
+	
+	<sec:authentication-manager alias="authenticationManager" >
+        <sec:authentication-provider user-service-ref="userDetailsService" />
+    </sec:authentication-manager>
+
+		
+	<sec:http auto-config="true" access-denied-page="/evento/previstos/acessonegado" >		
+				
+		<sec:form-login 
+			login-page="/evento/previstos"
+			authentication-failure-url="/evento/previstos/logininvalido"
+			default-target-url="/evento/previstos" 
+			always-use-default-target="true" />
+		
+		
+		<sec:intercept-url pattern="/static/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		
+		<sec:intercept-url pattern="/app/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		
+		<sec:intercept-url pattern="/errors/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		
+		<sec:intercept-url pattern="/evento/previstos/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>	
+		<sec:intercept-url pattern="/evento/emandamento/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<sec:intercept-url pattern="/evento/realizados/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<sec:intercept-url pattern="/evento/imagem/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<sec:intercept-url pattern="/evento/eventos/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<sec:intercept-url pattern="/evento/searcheventos" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<sec:intercept-url pattern="/evento/inscricao/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		
+		<sec:intercept-url pattern="/instrutor" method="POST" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<sec:intercept-url pattern="/instrutor/" method="POST" access="IS_AUTHENTICATED_ANONYMOUSLY"/>			
+		<sec:intercept-url pattern="/instrutor/form/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<sec:intercept-url pattern="/instrutor/procuraInstrutor" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<sec:intercept-url pattern="/instrutor/bloqueiaCampos" access="IS_AUTHENTICATED_ANONYMOUSLY"/>		
+		
+		<sec:intercept-url pattern="/material/arquivo/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>				 
+		
+		<sec:intercept-url pattern="/usuario/procuraUsuario" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		
+		<sec:intercept-url pattern="/certificadoEmitido/verificar/form" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<sec:intercept-url pattern="/certificadoEmitido/verificar" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<sec:intercept-url pattern="/certificado/certificadoEmitido/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		
+		
+		<sec:intercept-url pattern="/integracao/siged/ava/autenticacao/usuario" method="POST" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+				
+		
+		<sec:intercept-url pattern="/usuario/esquecisenha/**" access="ROLE_ANONYMOUS"/>
+		<sec:intercept-url pattern="/usuario/login" access="ROLE_ANONYMOUS"/>
+		
+		<sec:intercept-url pattern="/usuario/resetarsenha" access="ROLE_RESET_PASSWORD"/>
+		
+		<sec:intercept-url pattern="/inscricao/indicacao/**" access="ROLE_CHEFE"/>
+		
+		<sec:intercept-url pattern="/eventorecomendar/{id}/formchefe/**" access="ROLE_CHEFE"/>
+		<sec:intercept-url pattern="/eventorecomendar/{id}/chefe/**" access="ROLE_CHEFE"/>
+		<sec:intercept-url pattern="/eventorecomendar/material/{id}" access="ROLE_CHEFE,ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		
+		
+		<sec:intercept-url pattern="/certificadoDeTerceiros/arquivo/**" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS,ROLE_SERVIDOR,ROLE_ALUNO"/>	
+		
+		<sec:intercept-url pattern="/certificado/impressao/**" access="ROLE_ADMINISTRADOR,ROLE_SERVIDOR,ROLE_ALUNO"/>
+		<sec:intercept-url pattern="/certificado/impressaoInstrutor/" access="ROLE_ADMINISTRADOR"/>
+		<sec:intercept-url pattern="/certificado/impressaoInstrutorLogado/" access="ROLE_ALUNO"/>
+		
+		<sec:intercept-url pattern="/relatorio/eventosPorParticipante/**" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS,ROLE_SERVIDOR,ROLE_ALUNO"/>		
+		<sec:intercept-url pattern="/eventorecomendar/{id}" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS,ROLE_CHEFE"/>
+							
+		<sec:intercept-url pattern="/evento/apurardesempenho/**" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/evento/comunicado/**" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/evento/divulgarevento/**" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/evento/{id}/divulgardesempenhopagination/**" access="ROLE_ADMINISTRADOR"/>
+		<sec:intercept-url pattern="/evento/{id}/divulgardesempenho/**" access="ROLE_ADMINISTRADOR"/>			
+		<sec:intercept-url pattern="/evento/{id}/**" method="DELETE" access="ROLE_ADMINISTRADOR"/>
+		<sec:intercept-url pattern="/evento/form/**" access="ROLE_ADMINISTRADOR"/>
+		<sec:intercept-url pattern="/evento/{id}/form/**" access="ROLE_ADMINISTRADOR"/>
+		<sec:intercept-url pattern="/evento/{id}/update/**" access="ROLE_ADMINISTRADOR"/>
+		<sec:intercept-url pattern="/evento/{id}/inscricaoLogado" access="ROLE_ALUNO"/>
+				
+		
+		<sec:intercept-url pattern="/avaliacaoreacao/{id}/**" method="DELETE" access="ROLE_ADMINISTRADOR"/>
+		<sec:intercept-url pattern="/avaliacaoreacao/form/**" access="ROLE_ADMINISTRADOR"/>
+		<sec:intercept-url pattern="/avaliacaoreacao/formadmin/**" access="ROLE_ADMINISTRADOR"/>
+		<sec:intercept-url pattern="/avaliacaoreacao/participanteSemAvaliacaoNoModulo" access="ROLE_ADMINISTRADOR"/>
+		<sec:intercept-url pattern="/avaliacaoreacao/formaluno/**" access="ROLE_ALUNO"/>
+		
+		<sec:intercept-url pattern="/inscricao/confirmacao/**" access="ROLE_ADMINISTRADOR"/>
+		<sec:intercept-url pattern="/inscricao/inclusaolote/**" access="ROLE_ADMINISTRADOR"/>
+		<sec:intercept-url pattern="/inscricao/form/**" access="ROLE_ADMINISTRADOR"/>
+		<sec:intercept-url pattern="/inscricao/{id}/form/**" access="ROLE_ADMINISTRADOR"/>
+		<sec:intercept-url pattern="/inscricao/{id}/enviarEmailConfirmacao" access="ROLE_ADMINISTRADOR"/>
+		<sec:intercept-url pattern="/inscricao/exportar/ava" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		
+		<sec:intercept-url pattern="/avaliacaoeficacia/form/**" access="ROLE_ADMINISTRADOR"/>
+		<sec:intercept-url pattern="/avaliacaoeficacia/{id}/form/**" access="ROLE_ADMINISTRADOR"/>
+		
+		<sec:intercept-url pattern="/instrutor/{id}/form/**" access="ROLE_ADMINISTRADOR"/>
+		
+		
+		<sec:intercept-url pattern="/evento/" method="GET" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/evento" method="GET" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/evento/gastos/{id}" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/evento/search" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+						
+		<sec:intercept-url pattern="/avaliacaoreacao/" method="GET" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/avaliacaoreacao" method="GET" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/avaliacaoreacao/search" method="GET" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		
+		<sec:intercept-url pattern="/inscricao" method="GET" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/inscricao/" method="GET" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/inscricao/search" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		
+		<sec:intercept-url pattern="/avaliacaoeficacia/" method="GET" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/avaliacaoeficacia" method="GET" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		
+		<sec:intercept-url pattern="/instrutor/" method="GET" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/instrutor" method="GET" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		
+
+		<sec:intercept-url pattern="/ajax/procuraMunicipio" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<sec:intercept-url pattern="/ajax/procuraOrgao" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<sec:intercept-url pattern="/ajax/instrutor/procuraPorModulo/{moduloId}" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/ajax/modulo/procuraRealizadosPorEvento/{eventoId}" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS,ROLE_SERVIDOR,ROLE_CHEFE,ROLE_ALUNO"/>
+		<sec:intercept-url pattern="/ajax/participante/buscarInscritos" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/ajax/meta/**" access="ROLE_ADMINISTRADOR"/>
+		<sec:intercept-url pattern="/ajax/malaDireta/**" access="ROLE_ADMINISTRADOR"/>
+		
+		
+		<sec:intercept-url pattern="/modulo/**" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/gasto/**" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/nota/**" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/frequencia/**" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/participante/**" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>		
+		<sec:intercept-url pattern="/certificadoDeTerceiros/**" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/relatorio/**" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/eventorecomendar/**" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/avaliacaoeficacia/**" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS,ROLE_CHEFE"/>
+		<sec:intercept-url pattern="/areaconhecimento/**" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/eixotematico/**" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/programa/**" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/cidade/**" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/uf/**" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/pais/**" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/fontegasto/**" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/formacaoacademica/**" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/provedorevento/**" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/tipoevento/**" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/tipogasto/**" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/tipoinstrutor/**" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/tipolocalizacaoevento/**" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/modalidade/**" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/nivelescolaridade/**" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/questao/**" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/setor/**" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/situacaoinstrutor/**" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/tipoquestao/**" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/tipoareatribunal/**" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/tipopublicoalvo/**" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/responsavelsetor/**" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		
+		<sec:intercept-url pattern="/meta/**" method="GET" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS"/>
+		<sec:intercept-url pattern="/meta/**" method="POST" access="ROLE_ADMINISTRADOR"/>
+		<sec:intercept-url pattern="/meta/**" method="PUT" access="ROLE_ADMINISTRADOR"/>
+		<sec:intercept-url pattern="/meta/**" method="DELETE" access="ROLE_ADMINISTRADOR"/>
+				
+				
+		<sec:intercept-url pattern="/**" access="ROLE_ADMINISTRADOR,ROLE_ADMINISTRADORCONS,ROLE_SERVIDOR,ROLE_CHEFE,ROLE_ALUNO"/>							
+		
+	</sec:http>	
+	
+	
+</beans>

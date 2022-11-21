@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="avaliacoes_reacao_por_evento_em_branco_subreport" pageWidth="555" pageHeight="60" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isSummaryNewPage="true" uuid="e6573db2-7da1-49b1-b976-9e239b87bc24">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<subDataset name="QuestoesDataset" uuid="402c1481-97ca-4d05-87e5-36171f92496a">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="descricao" class="java.lang.String"/>
+	</subDataset>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="descricao" class="java.lang.String"/>
+	<field name="questoes" class="java.util.List">
+		<fieldDescription><![CDATA[questoes]]></fieldDescription>
+	</field>
+	<detail>
+		<band height="55" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<textField>
+				<reportElement x="0" y="0" width="555" height="20" uuid="5e714c5b-fe03-4085-adaa-5cf8d90c2b61"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="0" y="20" width="555" height="25" uuid="491f3f89-b144-47ed-be7e-6af585d17424"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="QuestoesDataset" uuid="a7983909-ab91-4f0b-9e5a-d05d58460267">
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{questoes}) ]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="25" width="555">
+						<textField isStretchWithOverflow="true">
+							<reportElement x="0" y="0" width="275" height="25" uuid="5afd34ca-1307-48e2-8582-bd36dabb49b8"/>
+							<box topPadding="4" leftPadding="2" bottomPadding="4" rightPadding="2"/>
+							<textElement verticalAlignment="Middle">
+								<font fontName="CustomSans"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
+						</textField>
+						<ellipse>
+							<reportElement x="303" y="6" width="14" height="14" uuid="81b253ba-d319-441b-8e6c-c896d51dd32b"/>
+						</ellipse>
+						<ellipse>
+							<reportElement x="373" y="6" width="14" height="14" uuid="4945f450-c562-4ca3-87ec-cff68e8cebf0"/>
+						</ellipse>
+						<ellipse>
+							<reportElement x="443" y="6" width="14" height="14" uuid="1d2ae841-e4e5-47d2-9452-f1c4891f26a7"/>
+						</ellipse>
+						<ellipse>
+							<reportElement x="513" y="6" width="14" height="14" uuid="4abf6838-c430-4f1e-b7b9-aa3701f0c997"/>
+						</ellipse>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

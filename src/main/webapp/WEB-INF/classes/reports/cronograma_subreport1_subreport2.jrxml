@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2016-05-17T15:06:31 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cronograma_subreport1_subreport1" pageWidth="786" pageHeight="20" whenNoDataType="BlankPage" columnWidth="786" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="4bfff531-8cc3-4e1d-ab5e-84b868958c56">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="ano" class="java.lang.String"/>
+	<parameter name="mes" class="java.lang.String"/>
+	<parameter name="evento" class="java.math.BigDecimal"/>
+	<parameter name="evento_titulo" class="java.lang.String" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[SELECT 'X' as x
+FROM
+     "IPCTREINAMENTO"."EVENTO" EVENTO
+WHERE EXTRACT(MONTH FROM DATA_INICIO_REALIZACAO) = $P{mes} and EXTRACT(YEAR FROM DATA_INICIO_REALIZACAO) = $P{ano} and evento.id = $P{evento}]]>
+	</queryString>
+	<field name="X" class="java.lang.String"/>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+				<reportElement mode="Opaque" x="580" y="0" width="206" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="7890d991-e0aa-463b-8968-a73335d7cbe3"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{evento_titulo}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="15" height="20" backcolor="#4FFF6C" uuid="be482ca4-614e-4c0b-9d6e-7c50935f7f79"/>
+				<imageExpression><![CDATA["images/indice_horizontal.jpg"
+]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+</jasperReport>

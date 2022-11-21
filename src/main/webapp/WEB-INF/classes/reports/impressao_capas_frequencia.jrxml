@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
+<!-- 2022-09-23T16:43:50 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="impressao_capas_avaliacao_reacao" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="09ae9e03-376d-4220-90fd-4cafeb52d8a3">
+	<property name="ireport.zoom" value="0.25"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<style name="Titulo_Evento" hTextAlign="Center" vTextAlign="Middle" rotation="None" fontName="Arial" fontSize="40" isBold="true" isItalic="false">
+		<paragraph lineSpacing="Single"/>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{evento_titulo}.length() >= 131 && $F{evento_titulo}.length() < 200]]></conditionExpression>
+			<style forecolor="#000000" hTextAlign="Center" vTextAlign="Middle" rotation="None" fontName="Arial" fontSize="32" isBold="true" isItalic="false"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{evento_titulo}.length() >= 200]]></conditionExpression>
+			<style forecolor="#000000" hTextAlign="Center" vTextAlign="Middle" rotation="None" fontName="Arial" fontSize="24" isBold="true" isItalic="false"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="paramWhere" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     evento.titulo AS evento_titulo,
+     evento.data_inicio_realizacao AS evento_data_inicio_realizacao,
+     evento.data_fim_realizacao AS evento_data_fim_realizacao,
+     evento.id AS evento_id
+FROM
+    evento
+$P!{paramWhere}]]>
+	</queryString>
+	<field name="evento_titulo" class="java.lang.String"/>
+	<field name="evento_data_inicio_realizacao" class="java.sql.Timestamp"/>
+	<field name="evento_data_fim_realizacao" class="java.sql.Timestamp"/>
+	<field name="evento_id" class="java.lang.Long"/>
+	<group name="evento_titulo">
+		<groupExpression><![CDATA[$F{evento_titulo}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="289" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="180" width="555" height="58" uuid="f466653b-88d9-43a2-a5d4-ad3eb8f462c3">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="40" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Registro de Frequência]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="43" width="552" height="100" uuid="9313bcea-66ef-45c1-b538-0d2813242ccb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[INSTITUTO PLÁCIDO CASTELO]]></text>
+			</staticText>
+			<image onErrorType="Icon">
+				<reportElement x="3" y="1" width="81" height="40" uuid="f0100173-c93d-4ce6-a82f-4eaeb21ee701"/>
+				<imageExpression><![CDATA["images/logo_IPC.gif"]]></imageExpression>
+			</image>
+			<image onErrorType="Icon">
+				<reportElement x="425" y="1" width="164" height="34" uuid="2276ced5-961f-4629-ba89-0de6ba94e6cc"/>
+				<imageExpression><![CDATA["images/logo_TCE2.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="443" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement style="Titulo_Evento" x="0" y="0" width="555" height="330" uuid="c4906feb-b3f1-40dd-aab7-4ba54fb727a1">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{evento_titulo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="370" width="313" height="29" uuid="fa8de9ea-8a80-4644-a246-de5fee4b116a">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="20" isBold="true" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[Período:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="210" y="370" width="103" height="29" uuid="1f073083-d022-4e59-9a40-adf7355fa76a"/>
+				<textElement>
+					<font fontName="SansSerif" size="20" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{evento_data_inicio_realizacao}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="346" y="370" width="103" height="29" uuid="ca12699a-2d4c-47be-ac1a-98c130be19a2"/>
+				<textElement>
+					<font fontName="SansSerif" size="20" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{evento_data_fim_realizacao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="313" y="370" width="33" height="29" uuid="1d563400-e7fe-4f12-83a4-901b07409483"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="20" isBold="true" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[a]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="7" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="11" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

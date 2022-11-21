@@ -1,0 +1,63 @@
+#docker-compose -f .\docker-compose_dev.yml up -d --no-deps --build
+
+services:
+  web:
+    build:
+      dockerfile: Dockerfile_dev
+    env_file:
+      - .env_dev
+    ports:
+      - 18080:8080
+    depends_on:
+      - db
+      - mailhog
+    networks:
+      - siged-network
+
+  mailhog:
+    image: mailhog/mailhog
+    logging:
+      driver: 'none'  # disable saving logs
+    ports:
+      - 1025:1025 # smtp server
+      - 8025:8025 # web ui
+    networks:
+      - siged-network
+
+  db:
+    image: postgres:12
+    restart: always
+    environment:
+      POSTGRES_USER: siged
+      POSTGRES_PASSWORD: siged
+    volumes:
+      - ./deploy/postgres_data:/var/lib/postgresql/data
+      - ./db_dev.sql:/docker-entrypoint-initdb.d/db.sql
+    ports:
+      - 5432:5432
+    networks:
+      - siged-network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "postgres@postgres.local"
+      PGADMIN_DEFAULT_PASSWORD: "postgres"
+    ports:
+      - 28080:80
+    depends_on:
+      - db
+    networks:
+      - siged-network
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 38080:8080
+    networks:
+      - siged-network
+
+networks:
+  siged-network:
+    driver: bridge

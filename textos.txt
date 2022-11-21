@@ -1,0 +1,31 @@
+Problemas encontrados ate o momento:
+
+1. Mudança do banco oracle para postgres:
+
+O sistema foi desenvolvido pensando no banco oracle.
+Existem algumas consultas nativas com "Funções" que só existem no oracle.
+Ao converter para o postgres é necessário encontrar a função equivalente.
+
+2. Codigo faz referencia para o padrão ISO-8859-1,o banco tem que ser criado neste padrão, senão da inconcistencias no código e dados no banco
+
+3. Problemas com a criação do banco e os dados necessários para login
+
+Existem consultas em tabelas que não mapeadas no código utilizando o ORM. E estas tabelas são de sistemas externos.
+
+Tabelas externas mapeadas
+
+sca.grupo
+sca.usuario
+sapjava.entidade
+sapjava.localidade
+sapjava.setor
+srh.tb_uf
+srh.tb_funcional
+
+Novas aparições de tabelas não mapeadas.
+
+srh.tb_funcional
+srh.tb_municipio
+srh.tb_ocupacao
+srh.tb_pessoal
+srh.tb_tipoocupacao

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2016-11-25T15:52:38 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="indicadores_desempenho_executado2" pageWidth="79" pageHeight="52" columnWidth="79" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="945cb7f9-464a-4bb3-97d1-e4499c96553e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="data_inicio" class="java.util.Date"/>
+	<parameter name="data_fim" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[SELECT SUM((
+  CASE
+    WHEN ((be.bom + be.excelente) / NULLIF(be.total, 0) * 100) >= 70
+    THEN 1
+    ELSE 0
+  END)) AS avaliacao_reacao_melhoria
+FROM
+  (SELECT a.id, SUM(DECODE(arn.NOTA_ID, 2, 1, 0)) as bom, SUM(DECODE(arn.NOTA_ID, 1, 1, 0)) as excelente,
+    COUNT(arn.nota_id) as total
+    FROM AVALIACAO_REACAO a
+      INNER JOIN AVALIACAO_REACAO_NOTA arn on arn.AVALIACAO_ID = a.ID
+    WHERE TRUNC(a.DATA_CADASTRO) >= TO_DATE($P{data_inicio})
+    AND TRUNC(a.DATA_CADASTRO) <= TO_DATE($P{data_fim})
+    GROUP by a.id) be
+
+ORDER BY be.id]]>
+	</queryString>
+	<field name="AVALIACAO_REACAO_MELHORIA" class="java.lang.Double"/>
+	<variable name="avaliacao_reacao_executado" class="java.lang.Double">
+		<variableExpression><![CDATA[$F{AVALIACAO_REACAO_MELHORIA}]]></variableExpression>
+	</variable>
+	<detail>
+		<band height="52" splitType="Stretch">
+			<textField pattern="###0">
+				<reportElement x="0" y="0" width="79" height="52" uuid="d1744b4d-f1d3-45b3-935b-28452bf644c0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{AVALIACAO_REACAO_MELHORIA} != null ? $F{AVALIACAO_REACAO_MELHORIA} : new Double (0))]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

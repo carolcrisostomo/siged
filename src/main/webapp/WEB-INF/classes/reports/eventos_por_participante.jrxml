@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
+<!-- 2019-01-14T15:50:08 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="eventos_por_participante" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="04bfee4c-0ab3-4cb3-88a1-fc207661830d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Arial" fontSize="26" isBold="true"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="paramWhere" class="java.lang.String"/>
+	<parameter name="tipo_evento" class="java.lang.String"/>
+	<parameter name="periodo" class="java.lang.String"/>
+	<parameter name="localizacao" class="java.lang.String"/>
+	<parameter name="provedor" class="java.lang.String"/>
+	<parameter name="situacao" class="java.lang.String"/>
+	<parameter name="participante" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[/* 
+ * Relatório de Eventos por Participante: Consulta nova (modalidade e localização pelo modulo)  atualizada em 14/01/2019 
+ */
+SELECT DISTINCT
+    participante.id AS participante_id,
+    participante.nome AS participante_nome,
+    participante.cpf AS participante_cpf,
+    tipo_evento.descricao AS tipo_evento_descricao,
+    evento.id AS evento_id,
+    evento.titulo AS evento_titulo,
+    DECODE(evento.data_inicio_realizacao,NULL,evento.data_inicio_previsto,evento.data_inicio_realizacao) AS evento_data_inicio,
+    DECODE(evento.data_fim_realizacao,NULL,evento.data_fim_previsto,evento.data_fim_realizacao) AS evento_data_fim,
+    to_number(evento.carga_horaria) AS evento_carga_horaria,
+    (
+        SELECT
+            CASE
+                WHEN subquery_modalidade.modulos_presenciais >= 1 THEN 'Presencial'
+                WHEN subquery_modalidade.modulos_presenciais = 0 AND subquery_modalidade.modulos_ead >= 1 THEN 'A Distância (EAD)'
+            END
+        FROM
+            (
+                SELECT
+                    e.id AS evento_id,
+                    COUNT(CASE WHEN m.modalidade_id = 1 THEN 1 END) AS modulos_presenciais,
+                    COUNT(CASE WHEN m.modalidade_id = 2 THEN 1 END) AS modulos_ead
+                FROM
+                    modulo m
+                INNER JOIN evento e ON m.evento_id = e.id
+                GROUP BY e.id
+            ) subquery_modalidade
+        WHERE
+            subquery_modalidade.evento_id = evento.id
+    ) AS modalidade_descricao
+FROM
+    participante
+    INNER JOIN inscricao ON participante.id = inscricao.participante_id
+    INNER JOIN evento ON inscricao.evento_id = evento.id
+    INNER JOIN tipo_evento ON evento.tipo_id = tipo_evento.id
+    INNER JOIN modulo on evento.id = modulo.evento_id
+    INNER JOIN tipo_localizacao_evento ON modulo.localizacao_id = tipo_localizacao_evento.id
+    INNER JOIN evento_provedor_join epj ON evento.id = epj.evento_id
+    INNER JOIN modulo ON evento.id = modulo.evento_id
+$P!{paramWhere}
+ORDER BY
+    evento_data_inicio DESC]]>
+	</queryString>
+	<field name="PARTICIPANTE_ID" class="java.math.BigDecimal"/>
+	<field name="PARTICIPANTE_NOME" class="java.lang.String"/>
+	<field name="PARTICIPANTE_CPF" class="java.lang.String"/>
+	<field name="TIPO_EVENTO_DESCRICAO" class="java.lang.String"/>
+	<field name="EVENTO_ID" class="java.math.BigDecimal"/>
+	<field name="EVENTO_TITULO" class="java.lang.String"/>
+	<field name="EVENTO_DATA_INICIO" class="java.sql.Timestamp"/>
+	<field name="EVENTO_DATA_FIM" class="java.sql.Timestamp"/>
+	<field name="EVENTO_CARGA_HORARIA" class="java.math.BigDecimal"/>
+	<field name="MODALIDADE_DESCRICAO" class="java.lang.String"/>
+	<variable name="Total_CargaHoraria" class="java.math.BigDecimal" resetType="Group" resetGroup="group" calculation="Sum">
+		<variableExpression><![CDATA[$F{EVENTO_CARGA_HORARIA}]]></variableExpression>
+	</variable>
+	<variable name="Total_paginas" class="java.lang.Integer" calculation="Count"/>
+	<group name="group">
+		<groupExpression><![CDATA[]]></groupExpression>
+		<groupHeader>
+			<band height="220">
+				<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				<textField pattern="" isBlankWhenNull="false">
+					<reportElement style="SubTitle" mode="Opaque" x="110" y="15" width="445" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="f9ba90da-1036-4949-931c-7f7da5d57b97"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{participante}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="SubTitle" mode="Opaque" x="0" y="15" width="110" height="20" forecolor="#000000" backcolor="#CCCCFF" uuid="cb3e1cba-f608-459f-860d-7fcbdda6f820"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[PARTICIPANTE:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="SubTitle" mode="Opaque" x="0" y="35" width="110" height="20" forecolor="#000000" backcolor="#CCCCFF" uuid="64f9a792-584a-40fe-8af4-cd7c0fba9f41"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[TIPO DO EVENTO:]]></text>
+				</staticText>
+				<textField pattern="" isBlankWhenNull="false">
+					<reportElement mode="Opaque" x="110" y="35" width="445" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="9213aaed-78b1-4d2e-b378-b044b1b79db2"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{tipo_evento}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="SubTitle" mode="Opaque" x="0" y="55" width="110" height="30" forecolor="#000000" backcolor="#CCCCFF" uuid="464f86c5-9eba-4b94-a469-10d6e6d9d1a1"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[PERÍODO DE REALIZAÇÃO*:]]></text>
+				</staticText>
+				<textField pattern="" isBlankWhenNull="false">
+					<reportElement mode="Opaque" x="110" y="55" width="445" height="30" forecolor="#000000" backcolor="#FFFFFF" uuid="fbc23e28-d44b-4726-a318-81cc0f4a3e93"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{periodo}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="SubTitle" mode="Opaque" x="0" y="85" width="110" height="30" forecolor="#000000" backcolor="#CCCCFF" uuid="5117cc41-e535-472f-93f2-3e8ac4295aa1"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[LOCALIZAÇÃO DO EVENTO:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="SubTitle" mode="Opaque" x="0" y="145" width="110" height="20" forecolor="#000000" backcolor="#CCCCFF" uuid="e55ce9e7-d139-41f3-8e22-0f7068debb7a"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[SITUAÇÃO:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="SubTitle" mode="Opaque" x="0" y="115" width="110" height="30" forecolor="#000000" backcolor="#CCCCFF" uuid="8ccde820-9add-41cd-820a-075a58a8da19"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[PROVEDOR DO EVENTO:]]></text>
+				</staticText>
+				<textField pattern="" isBlankWhenNull="false">
+					<reportElement mode="Opaque" x="110" y="85" width="445" height="30" forecolor="#000000" backcolor="#FFFFFF" uuid="eab2ba0f-b78b-4775-95d0-970ba3bcf3ac"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{localizacao}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="false">
+					<reportElement mode="Opaque" x="110" y="115" width="445" height="30" forecolor="#000000" backcolor="#FFFFFF" uuid="03d4ae64-0138-4ab5-bc9f-99489306eee6"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{provedor}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="false">
+					<reportElement mode="Opaque" x="110" y="145" width="445" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="99733d87-0d5b-4024-a0aa-9de1f435e9a8"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{situacao}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="Column header" mode="Opaque" x="0" y="180" width="220" height="40" forecolor="#000000" backcolor="#CCCCFF" uuid="39f82fe6-09a2-48b8-9b7a-694028c02811"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[EVENTO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" mode="Opaque" x="468" y="180" width="87" height="40" forecolor="#000000" backcolor="#CCCCFF" uuid="df7ed941-4e2e-441d-8a15-e41511ee3df8"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[DESEMPENHO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" mode="Opaque" x="220" y="180" width="94" height="40" forecolor="#000000" backcolor="#CCCCFF" uuid="ed931425-89b5-4c10-a812-4fb9b4c30101"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[PERÍODO DE REALIZAÇÃO*]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" mode="Opaque" x="314" y="180" width="64" height="40" forecolor="#000000" backcolor="#CCCCFF" uuid="4b5a41b6-9d63-4d0f-8f17-58cf5a8dc0cb"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[CARGA HORÁRIA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" mode="Opaque" x="378" y="180" width="90" height="40" forecolor="#000000" backcolor="#CCCCFF" uuid="85aa16f7-f998-4dd2-9a91-8862cf500836"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[MODALIDADE]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="50">
+				<textField evaluationTime="Column" isBlankWhenNull="true">
+					<reportElement x="285" y="30" width="270" height="20" uuid="f3ee2336-5ab8-4a62-9fef-ed5426f4524a"/>
+					<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Top">
+						<font size="10" isBold="false" isPdfEmbedded="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["TOTAL DE HORAS: " + $V{Total_CargaHoraria}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="Column header" x="0" y="0" width="280" height="15" forecolor="#000000" uuid="97e40e2e-5b58-4e4f-a6db-64857fffbb4c"/>
+					<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="8" isBold="false" isPdfEmbedded="false"/>
+					</textElement>
+					<text><![CDATA[*Para eventos previstos, o período refere-se à previsão de realização destes]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="285" y="9" width="270" height="20" uuid="d39aad8f-c69e-4f24-b41b-f6fcb1a7a7ac"/>
+					<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font size="10" isBold="false" isPdfEmbedded="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["TOTAL DE EVENTOS: "+$V{group_COUNT}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<title>
+		<band height="43" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" mode="Transparent" x="100" y="0" width="330" height="23" forecolor="#000000" backcolor="#FFFFFF" uuid="9f0a6468-7c27-41d4-ab12-3cf178b850e9"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="SansSerif" size="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Sistema de Gestão Educacional]]></text>
+			</staticText>
+			<image onErrorType="Blank">
+				<reportElement x="0" y="0" width="81" height="40" uuid="717d78c3-b344-4996-b322-351e0cd0a5b9"/>
+				<imageExpression><![CDATA["images/logo_IPC.gif"]]></imageExpression>
+			</image>
+			<image onErrorType="Blank">
+				<reportElement x="431" y="0" width="164" height="34" uuid="b5ad2755-64be-4697-bc33-da015b5a9f17"/>
+				<imageExpression><![CDATA["images/logo_TCE2.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="SubTitle" mode="Transparent" x="100" y="23" width="330" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="1556dcde-1e8e-4a27-9850-86a84210e1a5"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="SansSerif" size="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Relatório de Eventos por Participante]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="20" splitType="Prevent">
+			<subreport isUsingCache="false">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="555" height="20" uuid="1cdbda43-e39f-4930-968b-c73b47ce5df3"/>
+				<subreportParameter name="pId">
+					<subreportParameterExpression><![CDATA[$F{PARTICIPANTE_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="cargaHoraria">
+					<subreportParameterExpression><![CDATA[$F{EVENTO_CARGA_HORARIA} + ""]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="modalidade">
+					<subreportParameterExpression><![CDATA[$F{MODALIDADE_DESCRICAO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="eId">
+					<subreportParameterExpression><![CDATA[$F{EVENTO_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="evento">
+					<subreportParameterExpression><![CDATA[$F{TIPO_EVENTO_DESCRICAO} +" "+ $F{EVENTO_TITULO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="periodo">
+					<subreportParameterExpression><![CDATA[new String((new SimpleDateFormat("dd/MM/yyyy").format($F{EVENTO_DATA_INICIO})))
+    + " a " +
+new String((new SimpleDateFormat("dd/MM/yyyy").format($F{EVENTO_DATA_FIM})))]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reports/eventos_por_participante_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="435" y="10" width="80" height="20" uuid="37581646-2613-455a-bcc5-5df084e7cd34"/>
+				<textElement textAlignment="Right">
+					<font isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pág. "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="515" y="10" width="40" height="20" uuid="faf91536-8a66-4f47-87d2-06fa02bca98f"/>
+				<textElement>
+					<font isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="30">
+			<textField evaluationTime="Report">
+				<reportElement x="515" y="10" width="40" height="20" uuid="9eed273d-5d85-43ab-afdf-b429461bcc4c"/>
+				<textElement>
+					<font isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="435" y="10" width="80" height="20" uuid="c1b196e0-e5df-4a98-98bf-03a1567527fc"/>
+				<textElement textAlignment="Right">
+					<font isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pág. "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="10" width="369" height="20" uuid="698875b4-e002-4be3-acdc-f46419dde2b3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isItalic="true" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Relatório gerado em " + new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss").format(new java.util.Date())]]></textFieldExpression>
+			</textField>
+		</band>
+	</lastPageFooter>
+</jasperReport>

@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
+<!-- 2016-07-04T09:43:44 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="avaliacoes_eficacia_chefe_por_evento_participante" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="65d67849-87d2-4019-a3b6-ba4dc667994e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="paramWhere" class="java.lang.String"/>
+	<parameter name="nomeEvento" class="java.lang.String"/>
+	<parameter name="participante" class="java.lang.String"/>
+	<parameter name="data1" class="java.lang.String"/>
+	<parameter name="data2" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT * FROM
+      (SELECT
+        evento.id AS id,
+        tipo_evento.descricao AS tipo_evento,
+        evento.titulo AS titulo,
+        evento.data_inicio_realizacao AS data_inicio,
+        evento.data_fim_realizacao AS data_fim,
+        COUNT(avaliacao_eficacia.evento_id) AS total
+        FROM avaliacao_eficacia
+        INNER JOIN evento ON evento.id = avaliacao_eficacia.evento_id
+        INNER JOIN tipo_evento ON evento.tipo_id = tipo_evento.id
+        $P!{paramWhere}
+        GROUP BY evento.id, evento.titulo,evento.data_inicio_realizacao,evento.data_fim_realizacao,
+                  tipo_evento.descricao, avaliacao_eficacia.evento_id) tabelaTotal
+
+        LEFT JOIN
+
+        (SELECT evento_id, CAST(COUNT(*) AS INTEGER) AS satisTotal
+           FROM
+              (SELECT
+               avaliacao_eficacia.evento_id, avaliacao_eficacia.desempenho_servico, avaliacao_eficacia.melhoria
+                FROM avaliacao_eficacia
+                INNER JOIN evento ON avaliacao_eficacia.evento_id = evento.id
+              $P!{paramWhere})
+          WHERE (desempenho_servico IN ('Melhoria','Significativa Melhoria') OR melhoria = 'S')
+          GROUP BY evento_id) tabelaSatisfatoria
+
+          ON tabelaTotal.id=tabelaSatisfatoria.evento_id
+
+          LEFT JOIN
+
+          (SELECT evento_id , CAST(COUNT(*) AS INTEGER) AS naoSatisTotal
+           FROM
+              (SELECT
+               avaliacao_eficacia.evento_id, avaliacao_eficacia.desempenho_servico, avaliacao_eficacia.melhoria
+                FROM avaliacao_eficacia
+                INNER JOIN evento ON avaliacao_eficacia.evento_id = evento.id
+              $P!{paramWhere})
+          WHERE (desempenho_servico IN ('Nenhuma Melhoria','Pouca Melhoria') OR melhoria = 'N')
+          GROUP BY evento_id) tabelaNaoSatisfatoria
+
+          ON tabelaTotal.id=tabelaNaoSatisfatoria.evento_id
+          ORDER BY data_inicio DESC]]>
+	</queryString>
+	<field name="ID" class="java.math.BigDecimal"/>
+	<field name="TIPO_EVENTO" class="java.lang.String"/>
+	<field name="TITULO" class="java.lang.String"/>
+	<field name="DATA_INICIO" class="java.sql.Timestamp"/>
+	<field name="DATA_FIM" class="java.sql.Timestamp"/>
+	<field name="TOTAL" class="java.math.BigDecimal"/>
+	<field name="EVENTO_ID" class="java.math.BigDecimal"/>
+	<field name="SATISTOTAL" class="java.lang.Number"/>
+	<field name="NAOSATISTOTAL" class="java.lang.Number"/>
+	<group name="totalEventos">
+		<groupFooter>
+			<band height="67">
+				<textField>
+					<reportElement x="377" y="22" width="178" height="20" uuid="8013b690-4ccf-4eb7-9132-66467b3c52f0"/>
+					<textElement verticalAlignment="Top"/>
+					<textFieldExpression><![CDATA["TOTAL DE EVENTOS: " + $V{REPORT_COUNT}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="2" width="555" height="14" uuid="d59cd793-40b2-4428-85e8-3ff0646666b6"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[(*)Em alguns casos, devido à falta de clareza na avaliação, a soma das avaliações satisfatórias e não satisfatórias poderá não corresponder ao total.
+]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="198" splitType="Stretch">
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="79" width="100" height="20" backcolor="#CCCCFF" uuid="788e79d7-b24e-411f-b58d-31431932eeba"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[EVENTO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" mode="Opaque" x="0" y="99" width="100" height="20" backcolor="#CCCCFF" uuid="3be7b9fc-4ea1-4bea-a939-af5fc5d828cb"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[PARTICIPANTE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" mode="Opaque" x="0" y="119" width="100" height="30" backcolor="#CCCCFF" uuid="91a9f43f-e064-4bef-8294-948ad98dcaf6"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[PERÍODO REALIZAÇÃO:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="100" y="79" width="455" height="20" uuid="a11730cb-e892-4ac5-a707-507d5252a448"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[( $P{nomeEvento} != null ? $P{nomeEvento}  : "TODOS" )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="100" y="99" width="455" height="20" uuid="f323d05e-400a-419b-b891-7e868c5a007d"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[( $P{participante} != null ? $P{participante} : "TODOS" )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="100" y="119" width="455" height="30" uuid="324b1bc5-8a4d-49ab-9a19-901f3bd2fc02"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[( $P{data1} != null ? $P{data1} + " a " + $P{data2}: "" )]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" mode="Opaque" x="0" y="168" width="200" height="30" backcolor="#CCCCFF" uuid="0ee4c385-6d92-40d3-a4b6-e9b7b9b848eb"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[EVENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" mode="Opaque" x="200" y="168" width="110" height="30" backcolor="#CCCCFF" uuid="c0714ea6-668d-4364-8d48-7bceb90bc803"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[PERÍODO REALIZAÇÃO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" mode="Opaque" x="310" y="168" width="67" height="30" backcolor="#CCCCFF" uuid="51a9524b-5ba7-4ce1-996a-9ab7b5e9f616"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[TOTAL* AVALIAÇÕES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" mode="Opaque" x="377" y="168" width="89" height="30" backcolor="#CCCCFF" uuid="3bc43ecc-809f-4611-9f05-199946fc70c4"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[SATISFATÓRIAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" mode="Opaque" x="466" y="168" width="89" height="30" backcolor="#CCCCFF" uuid="ab286094-1c4f-4047-a83f-b84d928963c2"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[NÃO SATISFATÓRIAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="126" y="3" width="278" height="23" uuid="08f8c7fc-baf6-45df-9db5-e18a630dd3d5"/>
+				<textElement textAlignment="Center">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Sistema de Gestão Educacional]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="94" y="29" width="336" height="23" uuid="cb77e588-37e4-4cb5-91e8-1d68a6004d48"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório de Avaliações de Eficácia Realizadas]]></text>
+			</staticText>
+			<image>
+				<reportElement x="6" y="4" width="81" height="40" uuid="5b483d80-0154-41f3-9d07-048fdd36b0a5"/>
+				<imageExpression><![CDATA["images/logo_IPC.gif"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="436" y="4" width="164" height="34" uuid="63f32c9b-ff96-4216-ae9c-a9fc2289558f"/>
+				<imageExpression><![CDATA["images/logo_TCE2.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="20" splitType="Prevent">
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="200" height="20" uuid="c309d281-f562-474a-a12d-57cc31fbfa55"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{TIPO_EVENTO} + " DE " + $F{TITULO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" x="200" y="0" width="110" height="20" uuid="64a688b2-6768-42a0-ab0e-4886f2f92348"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($F{DATA_INICIO}) + " a " + new SimpleDateFormat("dd/MM/yyyy").format($F{DATA_FIM})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="310" y="0" width="67" height="20" uuid="703e4b2c-97b7-4e3d-9d2f-5fd6014797fb"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{TOTAL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="377" y="0" width="89" height="20" uuid="672abb21-619f-4479-a157-ab0c89efabf1"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[( $F{SATISTOTAL} != null ? $F{SATISTOTAL} : 0 )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="466" y="0" width="89" height="20" uuid="96ff75a7-59bb-4750-b3c7-b9adacb758ab"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[( $F{NAOSATISTOTAL} != null ? $F{NAOSATISTOTAL} : 0 )]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="21" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement x="509" y="1" width="46" height="20" uuid="a91c5970-0e23-401a-ae4d-e96a5f55b123"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="443" y="1" width="66" height="20" uuid="35205d2e-7f04-4e3e-8291-407784929b22"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Pág. " + $V{PAGE_NUMBER} + " de"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="21">
+			<textField evaluationTime="Report">
+				<reportElement x="509" y="0" width="46" height="20" uuid="7b8c3538-f4e7-4b5a-bdaf-2cc8883eb280"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="443" y="0" width="66" height="20" uuid="bcacbcac-93a3-411d-bfaf-bf238c7c4b43"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Pág. " + $V{PAGE_NUMBER} + " de"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="11" y="1" width="266" height="20" uuid="a9f5a38e-f235-4648-8b5b-01ba7da4a59a"/>
+				<textElement>
+					<font size="8" isItalic="true" pdfFontName="Helvetica-Oblique"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Relatório gerado em " + new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss").format(new Date())]]></textFieldExpression>
+			</textField>
+		</band>
+	</lastPageFooter>
+</jasperReport>

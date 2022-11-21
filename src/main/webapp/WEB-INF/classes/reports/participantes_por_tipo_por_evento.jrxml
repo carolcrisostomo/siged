@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
+<!-- 2018-10-18T11:31:42 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="participantes_por_tipo_por_evento" pageWidth="595" pageHeight="842" orientation="Landscape" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="1b7c0dd2-5609-4569-bfd2-0f35aabce9cb">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#A9A9A9">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#FFBFBF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#73B0E6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#CFDBE6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#73B0E6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#CFDBE6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TH" mode="Opaque" backcolor="#73B0E6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_CH" mode="Opaque" backcolor="#CFDBE6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<parameter name="evento_id" class="java.lang.String"/>
+	<parameter name="total_participante" class="java.lang.String"/>
+	<parameter name="instrutores" class="java.lang.String"/>
+	<parameter name="localizacao" class="java.lang.String"/>
+	<parameter name="participante_tipo_id" class="java.lang.String"/>
+	<parameter name="simplificado" class="java.lang.Boolean"/>
+	<parameter name="total_questao_excelente" class="java.lang.Integer"/>
+	<parameter name="total_questao_bom" class="java.lang.Integer"/>
+	<parameter name="total_questao_regular" class="java.lang.Integer"/>
+	<parameter name="total_questao_insuficiente" class="java.lang.Integer"/>
+	<parameter name="total_questoes" class="java.lang.Integer"/>
+	<parameter name="percentual_questao_excelente" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="percentual_questao_bom" class="java.lang.String"/>
+	<parameter name="percentual_questao_regular" class="java.lang.String"/>
+	<parameter name="percentual_questao_insuficiente" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+    evento.id AS evento_id,
+    evento.titulo AS evento_titulo,
+    evento.data_inicio_realizacao AS evento_data_inicio_realizacao,
+    evento.data_fim_realizacao AS evento_data_fim_realizacao,
+    evento.carga_horaria AS evento_carga_horaria,
+    tipo_evento.descricao AS tipo_evento_descricao
+FROM evento
+INNER JOIN tipo_evento ON evento.tipo_id = tipo_evento.id
+WHERE 1=1
+AND evento.id = $P!{evento_id}]]>
+	</queryString>
+	<field name="EVENTO_ID" class="java.math.BigDecimal"/>
+	<field name="EVENTO_TITULO" class="java.lang.String"/>
+	<field name="EVENTO_DATA_INICIO_REALIZACAO" class="java.sql.Timestamp"/>
+	<field name="EVENTO_DATA_FIM_REALIZACAO" class="java.sql.Timestamp"/>
+	<field name="EVENTO_CARGA_HORARIA" class="java.lang.String"/>
+	<field name="TIPO_EVENTO_DESCRICAO" class="java.lang.String"/>
+	<title>
+		<band height="168">
+			<image onErrorType="Blank">
+				<reportElement x="6" y="11" width="81" height="40" uuid="5a87e1b4-9271-48a0-9f5e-601ca91c9ca5"/>
+				<imageExpression><![CDATA["images/logo_IPC.gif"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="10" width="555" height="23" forecolor="#000000" uuid="fe4fe5ec-e23c-4d4f-836b-4301b9d61bc1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="CustomSans" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sistema de Gestão Educacional]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="33" width="555" height="20" uuid="f5ec7ba1-4558-4572-a13b-1e83717398dc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="CustomSans" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Resumo de Evento]]></text>
+			</staticText>
+			<image onErrorType="Blank">
+				<reportElement x="425" y="11" width="164" height="34" uuid="dcaaba5c-6edf-45a0-ac17-611452c95168"/>
+				<imageExpression><![CDATA["images/logo_TCE2.jpg"]]></imageExpression>
+			</image>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="table_TD" x="103" y="68" width="452" height="20" uuid="f3d44a27-7f10-4092-bcbc-45ded361f8a8"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TIPO_EVENTO_DESCRICAO} + " " + $F{EVENTO_TITULO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="table 3_TH" stretchType="RelativeToTallestObject" x="0" y="68" width="103" height="20" backcolor="#CCCCFF" uuid="b6e89c6e-30be-49fc-b644-3e4467298ff0"/>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EVENTO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" positionType="Float" x="0" y="88" width="103" height="20" backcolor="#CCCCFF" uuid="ad334813-31e4-42d0-a9dd-af487d4b16a4"/>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PERÍODO:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="table_TD" positionType="Float" x="103" y="88" width="311" height="20" uuid="fced5aa3-5d92-4af4-84e4-0ae53dfa39b2"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new String((new SimpleDateFormat("dd/MM/yyyy").format($F{EVENTO_DATA_INICIO_REALIZACAO})).toString()) + " a " + new String((new SimpleDateFormat("dd/MM/yyyy").format($F{EVENTO_DATA_FIM_REALIZACAO})).toString())]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="table 3_TH" positionType="Float" x="414" y="88" width="77" height="20" backcolor="#CCCCFF" uuid="a23f3457-6518-46d5-be55-927dbf2fa647"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="CustomSans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[C. H.:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="table_TD" positionType="Float" x="491" y="88" width="64" height="20" uuid="a5741b95-c956-45f0-91de-1363e2a0a179"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EVENTO_CARGA_HORARIA} + "h"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="table 3_TH" positionType="Float" x="0" y="108" width="103" height="20" backcolor="#CCCCFF" uuid="b423a1da-0ba4-4090-91cc-05789273f7db"/>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LOCALIZAÇÃO:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="table_TD" positionType="Float" x="103" y="108" width="452" height="20" uuid="0b0c7ffa-dd11-4202-9fe1-e38fed4e2984"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{localizacao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="table 3_TH" positionType="Float" x="0" y="128" width="103" height="20" backcolor="#CCCCFF" uuid="33adac32-252a-4ac2-9b61-6503ca23a6d5"/>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INSTRUTOR(ES):]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="table_TD" positionType="Float" x="103" y="128" width="452" height="20" uuid="bbd65613-b013-4850-ae48-96315edbc44a"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{instrutores}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="60">
+			<printWhenExpression><![CDATA[!$P{simplificado}]]></printWhenExpression>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="0" width="555" height="40" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="bf4da515-f5cd-4e7f-9497-e63ae86057ac"/>
+				<subreportParameter name="evento_id">
+					<subreportParameterExpression><![CDATA[$P{evento_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reports/participantes_por_tipo_por_evento_total.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="60">
+			<printWhenExpression><![CDATA[!$P{simplificado}]]></printWhenExpression>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="0" width="555" height="40" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="36f2a485-0d07-48f8-9d11-fe047e7ec2c6"/>
+				<subreportParameter name="evento_id">
+					<subreportParameterExpression><![CDATA[$P{evento_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reports/participantes_por_tipo_por_evento_total_por_cidade.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="60">
+			<printWhenExpression><![CDATA[!$P{simplificado}]]></printWhenExpression>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="0" width="555" height="40" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="6c0867d5-3d22-4444-ada7-9a251e83d231"/>
+				<subreportParameter name="evento_id">
+					<subreportParameterExpression><![CDATA[$P{evento_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reports/participantes_por_tipo_por_evento_total_por_orgao.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="60">
+			<subreport>
+				<reportElement positionType="Float" x="0" y="0" width="555" height="40" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="1b20ee52-0f26-4600-8022-0c6b3d29abf9"/>
+				<subreportParameter name="participante_tipo_id">
+					<subreportParameterExpression><![CDATA[$P{participante_tipo_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="evento_id">
+					<subreportParameterExpression><![CDATA[$P{evento_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reports/participantes_por_tipo_por_evento_principal.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20">
+			<textField>
+				<reportElement x="443" y="0" width="66" height="20" uuid="38209c69-27a1-46b1-b61e-6f487a35bae2"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pág. " + $V{PAGE_NUMBER} + " de "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="509" y="0" width="46" height="20" uuid="516be639-401b-4a55-a740-aa9283a7fd3a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="20">
+			<textField>
+				<reportElement x="0" y="0" width="341" height="20" uuid="5175c686-59a4-4459-9349-eba3f63a22ac"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans" size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Relatório gerado em " + new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss").format(new java.util.Date())]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="443" y="0" width="66" height="20" uuid="574ee405-4e71-4ab4-b1bc-07823ea1aff2"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pág. " + $V{PAGE_NUMBER} + " de "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="509" y="0" width="46" height="20" uuid="4ba30eb3-a5dd-443c-87bb-36475d100bf5"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</lastPageFooter>
+	<summary>
+		<band height="135">
+			<printWhenExpression><![CDATA[$P{total_questoes} > 0]]></printWhenExpression>
+			<staticText>
+				<reportElement positionType="Float" x="340" y="2" width="71" height="20" uuid="2523f30e-2a92-497b-8485-41327a338190"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="CustomSans" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Bom]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="270" y="26" width="71" height="20" uuid="8ac25446-dbc4-4218-b300-beebf6715b85"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{percentual_questao_excelente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="270" y="2" width="71" height="20" uuid="5977fad5-d666-4d71-8846-0b2343504d73"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="CustomSans" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Excelente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="2" width="229" height="20" uuid="2d4cf18c-8c98-4f37-8948-a9a29fc5311d"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="CustomSans" isBold="false"/>
+				</textElement>
+				<text><![CDATA[AVALIAÇÃO GERAL DO EVENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="480" y="2" width="73" height="20" uuid="2c8c8ab7-cad5-439a-87a7-42df9f608029"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="CustomSans" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Insuficiente]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="480" y="26" width="71" height="20" uuid="0e894d2e-202b-431d-b194-17dee104591b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{percentual_questao_insuficiente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="340" y="26" width="71" height="20" uuid="7e8df914-75f6-4bd8-8387-f822bcf4ea64"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{percentual_questao_bom}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="410" y="2" width="71" height="20" uuid="31bee87c-a3dd-4415-aafd-6a40a24af097"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="CustomSans" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Regular]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="410" y="26" width="71" height="20" uuid="3aca14d6-cf59-4d11-9e77-a3126d521f85"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{percentual_questao_regular}]]></textFieldExpression>
+			</textField>
+			<pieChart>
+				<chart>
+					<reportElement x="1" y="26" width="234" height="109" uuid="99b6f45a-75e7-4cea-b1d0-2d4afda666aa"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend>
+						<font fontName="CustomSans"/>
+					</chartLegend>
+				</chart>
+				<pieDataset>
+					<pieSeries>
+						<keyExpression><![CDATA["Excelente"]]></keyExpression>
+						<valueExpression><![CDATA[$P{total_questao_excelente}]]></valueExpression>
+						<labelExpression><![CDATA[$P{percentual_questao_excelente}]]></labelExpression>
+					</pieSeries>
+					<pieSeries>
+						<keyExpression><![CDATA["Bom"]]></keyExpression>
+						<valueExpression><![CDATA[$P{total_questao_bom}]]></valueExpression>
+						<labelExpression><![CDATA[$P{percentual_questao_bom}]]></labelExpression>
+					</pieSeries>
+					<pieSeries>
+						<keyExpression><![CDATA["Regular"]]></keyExpression>
+						<valueExpression><![CDATA[$P{total_questao_regular}]]></valueExpression>
+						<labelExpression><![CDATA[$P{percentual_questao_regular}]]></labelExpression>
+					</pieSeries>
+					<pieSeries>
+						<keyExpression><![CDATA["Insuficiente"]]></keyExpression>
+						<valueExpression><![CDATA[$P{total_questao_insuficiente}]]></valueExpression>
+						<labelExpression><![CDATA[$P{percentual_questao_insuficiente}]]></labelExpression>
+					</pieSeries>
+				</pieDataset>
+				<piePlot>
+					<plot>
+						<seriesColor seriesOrder="0" color="#00A480"/>
+						<seriesColor seriesOrder="1" color="#0F4FA8"/>
+						<seriesColor seriesOrder="2" color="#FF9F00"/>
+						<seriesColor seriesOrder="3" color="#FF6200"/>
+					</plot>
+					<itemLabel color="#000000" backgroundColor="#FFFFFF"/>
+				</piePlot>
+			</pieChart>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
+<!-- 2021-07-07T08:52:47 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="indicadores_outros" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6f4b219c-79cb-4209-9a4b-b229869f3cfb">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="38"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Arial" fontSize="26" isBold="true"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#A9A9A9">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#FFBFBF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#73B0E6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#CFDBE6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#73B0E6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#CFDBE6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TH" mode="Opaque" backcolor="#73B0E6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_CH" mode="Opaque" backcolor="#CFDBE6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Heading 3" fontSize="14" isBold="true"/>
+	<style name="Text Body" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+	<style name="Style_1" fill="Solid" scaleImage="Clip" markup="none" pattern="" isBlankWhenNull="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+	<parameter name="periodoRealizacao" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="tipoParticipante" class="java.lang.String"/>
+	<parameter name="tipoParticipanteId" class="java.lang.String"/>
+	<parameter name="tipoEvento" class="java.lang.String"/>
+	<parameter name="modalidade" class="java.lang.String"/>
+	<parameter name="relatorioBean" class="br.com.siged.entidades.RelatorioBean"/>
+	<parameter name="esfera" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<group name="group">
+		<groupHeader>
+			<band height="371">
+				<staticText>
+					<reportElement style="table 3_TH" x="0" y="0" width="24" height="27" backcolor="#CCCCFF" uuid="c462c58d-8bff-4c1e-b3e4-3ea7658df9f8"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="CustomSans" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[N°]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="table 3_TH" x="24" y="0" width="406" height="27" backcolor="#CCCCFF" uuid="73ddd1f9-7d44-4b6e-85bf-0c6b8ec4fccf"/>
+					<box>
+						<bottomPen lineStyle="Solid"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="CustomSans" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[INDICADOR]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="table 3_TH" x="430" y="0" width="125" height="27" backcolor="#CCCCFF" uuid="4a9352b3-3db6-42cc-8382-4235d630b97d"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="CustomSans" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[RESULTADO]]></text>
+				</staticText>
+				<textField>
+					<reportElement style="table_TD" x="0" y="27" width="24" height="40" uuid="adccb41c-349e-4994-a533-cd83fb634adc"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="CustomSans"/>
+					</textElement>
+					<textFieldExpression><![CDATA[1]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="table_TD" mode="Opaque" x="24" y="27" width="406" height="40" forecolor="#000000" uuid="f266a5a9-5df9-4857-be56-085ec01ea213"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Média de horas de capacitação por participante no período"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="table_TD" x="430" y="27" width="125" height="40" backcolor="#E4E4E3" uuid="560e1cc8-0557-4734-93db-050d227c5a2a"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="CustomSans" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{relatorioBean}.getField1()]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="table_TD" x="0" y="67" width="24" height="40" isRemoveLineWhenBlank="true" uuid="4d4457b6-cfb8-47c9-9d0b-b5a2f9ba8ead">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<printWhenExpression><![CDATA[$P{tipoParticipanteId}.equals("1")]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="CustomSans"/>
+					</textElement>
+					<textFieldExpression><![CDATA[2]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="table_TD" x="24" y="67" width="406" height="40" isRemoveLineWhenBlank="true" uuid="b55586ec-d10e-4a1b-9c45-970f3e22de35">
+						<printWhenExpression><![CDATA[$P{tipoParticipanteId}.equals("1")]]></printWhenExpression>
+					</reportElement>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Percentual de participação de servidores efetivos e comissionados em eventos, no período, em relação ao total de servidores efetivos ativos e comissionados do TCE"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Band" pattern="" isBlankWhenNull="true">
+					<reportElement style="table_TD" x="430" y="67" width="125" height="40" isRemoveLineWhenBlank="true" backcolor="#E4E4E3" uuid="28c7ecb1-a889-4c7e-8e87-969d1a925444">
+						<property name="net.sf.jasperreports.export.pdf.tag.h3"/>
+						<printWhenExpression><![CDATA[$P{tipoParticipanteId}.equals("1")]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="CustomSans" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{relatorioBean}.getField2()]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="table_TD" x="0" y="107" width="24" height="40" isRemoveLineWhenBlank="true" uuid="938dc05c-2eb2-4d95-8c89-367f00714e43">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<printWhenExpression><![CDATA[$P{tipoParticipanteId}.equals("1")]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="CustomSans"/>
+					</textElement>
+					<textFieldExpression><![CDATA[3]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="table_TD" x="24" y="107" width="406" height="40" isRemoveLineWhenBlank="true" uuid="c0fc7c67-6e4c-4afa-b939-fe9324b00259">
+						<printWhenExpression><![CDATA[$P{tipoParticipanteId}.equals("1")]]></printWhenExpression>
+					</reportElement>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Qtde. de servidores efetivos e comissionados do TCE que não participaram de nenhum evento no período"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="table_TD" mode="Opaque" x="430" y="107" width="125" height="40" isRemoveLineWhenBlank="true" backcolor="#E4E4E3" uuid="68743d1f-f60e-4810-adb0-ffa4bccafc9f">
+						<printWhenExpression><![CDATA[$P{tipoParticipanteId}.equals("1")]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="CustomSans" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{relatorioBean}.getField3()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="table_TD" x="0" y="147" width="24" height="40" uuid="3ac1ea1a-0872-428f-acc9-1c4c507a3a35">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="CustomSans"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($P{tipoParticipanteId}.equals("1") ? 4 : 2)]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="table_TD" mode="Opaque" x="24" y="147" width="406" height="40" forecolor="#000000" uuid="13de9eea-b503-459d-8834-2b638e0c6877"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Média de horas de capacitação por oportunidade no período"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="table_TD" x="430" y="147" width="125" height="40" backcolor="#E4E4E3" uuid="12f35033-3c19-400e-99c8-3c128ad12805"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="CustomSans" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{relatorioBean}.getField4()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="table_TD" x="0" y="187" width="24" height="40" uuid="7f7ceba9-ea17-4b80-a80f-1a2c4a7a244b">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="CustomSans"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($P{tipoParticipanteId}.equals("1") ? 5 : 3)]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="table_TD" mode="Opaque" x="24" y="187" width="406" height="40" forecolor="#000000" uuid="5678b38d-49b1-4e18-9d67-4b955c975a70"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Média de oportunidades por participante no período"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="table_TD" x="430" y="187" width="125" height="40" backcolor="#E4E4E3" uuid="ff094936-da69-4e0b-9dc4-4ee4ecc321fc"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="CustomSans" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{relatorioBean}.getField5()]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="table_TD" x="0" y="227" width="24" height="40" isRemoveLineWhenBlank="true" uuid="e7e991cc-dddf-44ec-8e3a-5ef140d119ec">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<printWhenExpression><![CDATA[$P{tipoParticipanteId}.equals("1")]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="CustomSans"/>
+					</textElement>
+					<textFieldExpression><![CDATA[6]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="table_TD" mode="Opaque" x="24" y="227" width="406" height="40" isRemoveLineWhenBlank="true" forecolor="#000000" uuid="4e4472b8-e28e-435f-aeba-726c69fa5596">
+						<printWhenExpression><![CDATA[$P{tipoParticipanteId}.equals("1")]]></printWhenExpression>
+					</reportElement>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Média de horas de capacitação por setor do TCE no período"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="table_TD" x="430" y="227" width="125" height="40" isRemoveLineWhenBlank="true" backcolor="#E4E4E3" uuid="17bba02c-8239-4eff-9100-d67d2a02c772">
+						<printWhenExpression><![CDATA[$P{tipoParticipanteId}.equals("1")]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="CustomSans" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{relatorioBean}.getField6()]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="table_TD" x="0" y="267" width="24" height="40" isRemoveLineWhenBlank="true" uuid="f691a248-250f-4ae8-8f5f-b4d7321e5468">
+						<printWhenExpression><![CDATA[$P{tipoParticipanteId}.equals("1")]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="CustomSans"/>
+					</textElement>
+					<textFieldExpression><![CDATA[7]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="table_TD" mode="Opaque" x="24" y="267" width="406" height="40" isRemoveLineWhenBlank="true" forecolor="#000000" uuid="ee8dd988-cec5-4dc3-8e50-e95791043d14">
+						<printWhenExpression><![CDATA[$P{tipoParticipanteId}.equals("1")]]></printWhenExpression>
+					</reportElement>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Percentual de participação de setores do TCE em eventos, em relação ao total de setores no período"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="table_TD" x="430" y="267" width="125" height="40" isRemoveLineWhenBlank="true" backcolor="#E4E4E3" uuid="b16692c6-fca0-4ca3-b927-801f871659a3">
+						<printWhenExpression><![CDATA[$P{tipoParticipanteId}.equals("1")]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="CustomSans" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{relatorioBean}.getField7()]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="table_TD" x="0" y="307" width="24" height="40" isRemoveLineWhenBlank="true" uuid="13fc0cda-1efd-4703-8392-33dd3b0b99cd">
+						<printWhenExpression><![CDATA[$P{tipoParticipanteId}.equals("1")]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="CustomSans"/>
+					</textElement>
+					<textFieldExpression><![CDATA[8]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="table_TD" mode="Opaque" x="24" y="307" width="406" height="40" isRemoveLineWhenBlank="true" forecolor="#000000" uuid="1d125a2b-ed5b-4f18-b3f8-970d3b3b9033">
+						<printWhenExpression><![CDATA[$P{tipoParticipanteId}.equals("1")]]></printWhenExpression>
+					</reportElement>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Qtde. de setores do TCE que não foram contemplados em nenhum evento no período (participante do tipo servidor do TCE)"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="table_TD" x="430" y="307" width="125" height="40" isRemoveLineWhenBlank="true" backcolor="#E4E4E3" uuid="cc9c646e-6082-44ee-acc2-73ab422a01ef">
+						<printWhenExpression><![CDATA[$P{tipoParticipanteId}.equals("1")]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="CustomSans" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{relatorioBean}.getField8()]]></textFieldExpression>
+				</textField>
+				<textField pattern="">
+					<reportElement x="1" y="358" width="275" height="13" uuid="0af9f5a8-aa20-4bdd-8686-c42a7857eae4"/>
+					<textElement textAlignment="Justified">
+						<font fontName="CustomSans" size="8" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Relatório gerado em " + new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss").format(new java.util.Date())]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<title>
+		<band height="55" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="0" y="1" width="555" height="22" forecolor="#000000" uuid="bb645d44-f67d-412a-8eba-147c8756be7c">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="CustomSans" size="14"/>
+				</textElement>
+				<text><![CDATA[Sistema de Gestão Educacional]]></text>
+			</staticText>
+			<image onErrorType="Blank">
+				<reportElement x="1" y="1" width="81" height="40" uuid="be110952-b783-4dec-b49c-8d2ab4c293ee"/>
+				<imageExpression><![CDATA["images/logo_IPC.gif"]]></imageExpression>
+			</image>
+			<image onErrorType="Blank">
+				<reportElement x="430" y="1" width="164" height="34" uuid="693440de-9adf-48aa-bdcf-c331ae97ffc3"/>
+				<imageExpression><![CDATA["images/logo_TCE2.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="SubTitle" x="0" y="23" width="555" height="20" forecolor="#000000" uuid="4a8f906f-a66d-419b-930a-dc3a237b58e0">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="CustomSans" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Outros Indicadores - Médias]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="115">
+			<staticText>
+				<reportElement style="table 3_TH" x="0" y="0" width="130" height="20" backcolor="#CCCCFF" uuid="3aecd0bd-6504-4c29-9a6a-147be6ec4a4c">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box leftPadding="2"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="CustomSans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PERÍODO REALIZAÇÃO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="0" y="20" width="130" height="20" backcolor="#CCCCFF" uuid="1f556e96-d297-4a94-b1fb-b0b2c5fa1568">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box leftPadding="2"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="CustomSans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TIPO PARTICIPANTE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="0" y="60" width="130" height="20" backcolor="#CCCCFF" uuid="8760bc11-7efd-480b-8d0a-456ca2538a4d">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box leftPadding="2"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="CustomSans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TIPO EVENTO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="0" y="80" width="130" height="20" backcolor="#CCCCFF" uuid="974a207f-f908-4d2f-bf97-765f8f043cda">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box leftPadding="2"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="CustomSans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MODALIDADE:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="130" y="0" width="424" height="20" uuid="53e3097b-7e05-489e-9b72-ca8c147cbed7"/>
+				<box leftPadding="5">
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{periodoRealizacao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="20" width="424" height="20" uuid="d43e6a49-7181-4713-b351-bf6e6c17e7ba"/>
+				<box leftPadding="5">
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{tipoParticipante}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="60" width="424" height="20" uuid="02d5ac5e-17ac-467a-8a1e-df1f671af06f"/>
+				<box leftPadding="5">
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{tipoEvento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="80" width="424" height="20" uuid="abe3ab5c-054b-4cc4-8165-192b17ae96ec"/>
+				<box leftPadding="5">
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{modalidade}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="table 3_TH" x="0" y="40" width="130" height="20" backcolor="#CCCCFF" uuid="0bc65e49-9cbf-4c70-8d76-51f7d279171d">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box leftPadding="2"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="CustomSans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ESFERA:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="130" y="40" width="424" height="20" uuid="092fa3b5-0b62-4ae9-bd02-3636ed85a397"/>
+				<box leftPadding="5">
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{esfera}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<pageFooter>
+		<band height="121" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="94" width="555" height="14" uuid="02c76ccb-4d42-42ea-bc09-ddc6427b9fac">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="CustomSerif" size="10" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Diretora Executiva do Instituto Plácido Castelo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="80" width="555" height="14" uuid="49147afb-f2ec-4525-8ab4-ed3a06a75ac7">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="CustomSerif" size="10" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Maria Hilária de Sá Barreto]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

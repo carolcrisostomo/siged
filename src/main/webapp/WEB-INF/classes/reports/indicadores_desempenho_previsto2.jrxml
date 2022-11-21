@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2016-11-25T15:48:48 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="indicadores_desempenho_previsto2" pageWidth="79" pageHeight="52" columnWidth="79" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="879b96c5-0644-4a4e-958c-562d89f27fc7">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="data_inicio" class="java.util.Date"/>
+	<parameter name="data_fim" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[SELECT COUNT(*) AS avaliacao_reacao_melhoria
+
+FROM AVALIACAO_REACAO a
+
+WHERE TRUNC(a.DATA_CADASTRO) >= TO_DATE($P{data_inicio})
+AND   TRUNC(a.DATA_CADASTRO) <= TO_DATE($P{data_fim})
+
+ORDER BY a.id]]>
+	</queryString>
+	<field name="AVALIACAO_REACAO_MELHORIA" class="java.lang.Double"/>
+	<variable name="avaliacao_reacao_previsto" class="java.lang.Double">
+		<variableExpression><![CDATA[$F{AVALIACAO_REACAO_MELHORIA}]]></variableExpression>
+	</variable>
+	<detail>
+		<band height="52" splitType="Stretch">
+			<textField pattern="###0">
+				<reportElement x="0" y="0" width="79" height="52" uuid="586e5f72-764e-4704-94c3-a1f4c0e83634"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{AVALIACAO_REACAO_MELHORIA} != null ? $F{AVALIACAO_REACAO_MELHORIA} : new Double (0))]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
+<!-- 2019-07-04T11:34:21 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="avaliacaoEficaciaPorEvento" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="591d60a9-13b1-489e-81e9-5404c3e50e16">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="paramWhere" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+    participante.id, participante.nome, sapjava_setor.nmsetor
+FROM participante
+    LEFT  JOIN sapjava_setor ON participante.setor_id = sapjava_setor.idsetor
+WHERE
+    participante.tipo_id = 1
+    AND participante.id NOT IN (SELECT participante_id FROM avaliacao_eficacia WHERE evento_id = $P!{paramWhere})
+    AND participante.id IN (SELECT DISTINCT participante_id FROM desempenho WHERE evento_id = $P!{paramWhere} AND aprovado = 'S')
+ORDER BY
+      participante.nome]]>
+	</queryString>
+	<field name="ID" class="java.math.BigDecimal"/>
+	<field name="NOME" class="java.lang.String"/>
+	<field name="NMSETOR" class="java.lang.String"/>
+	<group name="EventosRealizados">
+		<groupFooter>
+			<band height="20">
+				<textField evaluationTime="Report">
+					<reportElement x="300" y="0" width="255" height="20" uuid="6610b057-997a-4c78-8a6b-04307405a95f"/>
+					<textElement verticalAlignment="Bottom"/>
+					<textFieldExpression><![CDATA["TOTAL DE AVALIAÇÕES PENDENTES: " + $V{REPORT_COUNT}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="41" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="21" width="300" height="20" backcolor="#CCCCFF" uuid="aabdd1cb-ee57-41c2-ae27-66088e999706"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PARTICIPANTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="300" y="21" width="255" height="20" backcolor="#CCCCFF" uuid="f6d0f95c-ddf9-46a4-ad9a-bddc78f9351d"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[SETOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="1" width="163" height="20" uuid="b32a3d9e-8b16-4b12-91f5-b6e2f6957c74"/>
+				<text><![CDATA[.: AVALIAÇÕES PENDENTES :.]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="300" height="20" uuid="b527361f-15e0-4216-b4b2-9cc5717e746a"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NOME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="300" y="0" width="255" height="20" uuid="59dac2f0-03d3-4558-8ca7-aa3cc4f427e1"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[( $F{NMSETOR} != null ? $F{NMSETOR} : "-" )]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

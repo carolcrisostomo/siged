@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
+<!-- 2019-08-30T09:48:24 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="declaracao" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d3b292fb-c014-4f04-8dd8-a5dc0eb81111">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="paramWhere" class="java.lang.String"/>
+	<parameter name="assinatura" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     participante.nome AS participante_nome,
+     tipo_evento.descricao AS tipo_evento,
+     evento.titulo AS evento_titulo,
+     evento.data_inicio_realizacao AS evento_data_inicio_realizacao,
+     evento.data_fim_realizacao AS evento_data_fim_realizacao,
+     evento.carga_horaria AS evento_carga_horaria
+FROM
+     evento INNER JOIN inscricao ON evento.id = inscricao.evento_id
+     INNER JOIN participante ON inscricao.participante_id = participante.id
+     INNER JOIN tipo_evento ON tipo_evento.id = evento.tipo_id
+$P!{paramWhere}]]>
+	</queryString>
+	<field name="PARTICIPANTE_NOME" class="java.lang.String"/>
+	<field name="TIPO_EVENTO" class="java.lang.String"/>
+	<field name="EVENTO_TITULO" class="java.lang.String"/>
+	<field name="EVENTO_DATA_INICIO_REALIZACAO" class="java.sql.Timestamp"/>
+	<field name="EVENTO_DATA_FIM_REALIZACAO" class="java.sql.Timestamp"/>
+	<field name="EVENTO_CARGA_HORARIA" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="665" splitType="Stretch">
+			<image onErrorType="Blank">
+				<reportElement x="0" y="2" width="81" height="40" uuid="aa4b2f7d-45cb-43c1-9a43-d006f9431671"/>
+				<imageExpression><![CDATA["images/logo_IPC.gif"]]></imageExpression>
+			</image>
+			<image onErrorType="Blank">
+				<reportElement x="420" y="2" width="164" height="34" uuid="bda8697a-a415-4e1b-b852-b79d53a80d6e"/>
+				<imageExpression><![CDATA["images/logo_TCE2.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="112" width="555" height="29" uuid="242f12e7-4210-4c01-9077-5efe9523a30d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DECLARAÇÃO]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="">
+				<reportElement positionType="Float" x="0" y="250" width="555" height="18" uuid="faf6c9d4-d213-49d9-90da-092c7e1c66c4"/>
+				<box leftPadding="20" rightPadding="20">
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="none">
+					<font size="14" isBold="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["           DECLARO, para os devidos fins que " + $F{PARTICIPANTE_NOME}.toUpperCase() +
+( $F{EVENTO_DATA_INICIO_REALIZACAO}.equals( $F{EVENTO_DATA_FIM_REALIZACAO} )
+    ? " está inscrito(a) como participante do evento "+$F{TIPO_EVENTO}+" "+$F{EVENTO_TITULO} + ", realizado no dia " + new String((new SimpleDateFormat("dd/MM/yyyy").format($F{EVENTO_DATA_INICIO_REALIZACAO})).toString()) + ", com carga horária de " + $F{EVENTO_CARGA_HORARIA} + " h/a."
+    : " está inscrito(a) como participante do evento "+$F{TIPO_EVENTO}+" "+$F{EVENTO_TITULO} + ", realizado de " + new String((new SimpleDateFormat("dd/MM/yyyy").format($F{EVENTO_DATA_INICIO_REALIZACAO})).toString()) + " a " + new String((new SimpleDateFormat("dd/MM/yyyy").format($F{EVENTO_DATA_FIM_REALIZACAO})).toString()) + ", com carga horária de " + $F{EVENTO_CARGA_HORARIA} + " h/a."
+)]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="549" width="555" height="20" uuid="706b9691-83a4-4a29-8abd-67bbbcc53656">
+					<printWhenExpression><![CDATA[$P{assinatura} == null || $P{assinatura}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<text><![CDATA[____________________________________________________]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="569" width="555" height="19" uuid="0cb7c8f8-f33e-4a44-b620-4562afd821f7">
+					<printWhenExpression><![CDATA[$P{assinatura} == null || $P{assinatura}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Maria Hilária de Sá Barreto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="588" width="555" height="20" uuid="5ab90665-ad71-4899-9c28-f6c1b0f85618">
+					<printWhenExpression><![CDATA[$P{assinatura} == null || $P{assinatura}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Diretora Executiva do Instituto Plácido Castelo]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+				<reportElement positionType="Float" mode="Transparent" x="0" y="268" width="555" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="8f28e536-abee-4b20-8b78-6ab34ea61a4a"/>
+				<box leftPadding="20" rightPadding="20">
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["\nInstituto Escola Superior de Contas e Gestão Pública Ministro Plácido Castelo do Tribunal de Contas do Estado do Ceará, em Fortaleza, " + new String((new SimpleDateFormat("dd 'de' MMMMM 'de' yyyy", new Locale("pt","BR")).format(new java.util.Date())).toString()) + "."]]></textFieldExpression>
+			</textField>
+			<image hAlign="Center">
+				<reportElement positionType="Float" x="152" y="490" width="250" height="75" uuid="352ef7f7-cefb-40f7-856c-c32bf292035d"/>
+				<imageExpression><![CDATA[$P{assinatura}]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="registro_frequencia" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#A9A9A9">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#FFBFBF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#73B0E6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#CFDBE6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#73B0E6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#CFDBE6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TH" mode="Opaque" backcolor="#73B0E6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_CH" mode="Opaque" backcolor="#CFDBE6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<parameter name="paramWhere" class="java.lang.String"/>
+	<parameter name="data" class="java.lang.String"/>
+	<parameter name="turno" class="java.lang.String"/>
+	<parameter name="tipo" class="java.lang.String"/>
+	<parameter name="modulo" class="java.lang.Long"/>
+	<parameter name="instrutores" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT DISTINCT
+     evento.titulo AS evento_titulo,
+     NVL(evento.data_inicio_realizacao, evento.data_inicio_previsto) AS evento_data_inicio,
+     NVL(evento.data_fim_realizacao, evento.data_fim_previsto) AS evento_data_fim,
+     evento.carga_horaria AS evento_carga_horaria,
+     participante.nome AS participante_nome,
+     setor.nmsetor AS setor_nmsetor,
+     tipo_evento.descricao AS tipo_evento_descricao,
+     modulo.titulo AS modulo_titulo,
+     modulo.carga_horaria AS modulo_carga_horaria,
+     modulo.data_inicio AS modulo_data_inicio,
+     modulo.data_fim AS modulo_data_fim,
+     modulo.hora_inicio_turno1 AS modulo_hora_inicio_turno1,
+     modulo.hora_fim_turno1 AS modulo_hora_fim_turno1,
+     modulo.hora_inicio_turno2 AS modulo_hora_inicio_turno2,
+     modulo.hora_fim_turno2 AS modulo_hora_fim_turno2,
+     entidade.identidade AS entidade_identidade,
+     entidade.dsentidade AS entidade_dsentidade,
+     participante.tipo_id AS participante_tipo_id,
+     participante.entidade AS participante_entidade,
+     decode(participante.tipo_id, 1, setor.nmsetor, 2, participante.entidade, 3, entidade.dsentidade, '-') AS set_org_ent
+FROM
+     evento
+     INNER JOIN inscricao ON evento.id = inscricao.evento_id
+     INNER JOIN participante ON inscricao.participante_id = participante.id
+     LEFT JOIN sapjava_setor ON participante.setor_id = sapjava_setor.idsetor
+     INNER JOIN tipo_evento ON evento.tipo_id = tipo_evento.id
+     INNER JOIN modulo ON evento.id = modulo.evento_id
+     INNER JOIN modulo_instrutor ON modulo_instrutor.modulo_id = modulo.id
+     INNER JOIN instrutor ON instrutor.id = modulo_instrutor.instrutor_id
+     LEFT JOIN sapjava_entidade ON sapjava_entidade.identidade = participante.orgao_id
+$P!{paramWhere}
+ORDER BY
+     participante.nome]]>
+	</queryString>
+	<field name="EVENTO_TITULO" class="java.lang.String"/>
+	<field name="EVENTO_DATA_INICIO" class="java.util.Date"/>
+	<field name="EVENTO_DATA_FIM" class="java.util.Date"/>
+	<field name="EVENTO_CARGA_HORARIA" class="java.lang.String"/>
+	<field name="PARTICIPANTE_NOME" class="java.lang.String"/>
+	<field name="SETOR_NMSETOR" class="java.lang.String"/>
+	<field name="TIPO_EVENTO_DESCRICAO" class="java.lang.String"/>
+	<field name="MODULO_TITULO" class="java.lang.String"/>
+	<field name="MODULO_CARGA_HORARIA" class="java.lang.String"/>
+	<field name="MODULO_DATA_INICIO" class="java.util.Date"/>
+	<field name="MODULO_DATA_FIM" class="java.util.Date"/>
+	<field name="MODULO_HORA_INICIO_TURNO1" class="java.lang.String"/>
+	<field name="MODULO_HORA_FIM_TURNO1" class="java.lang.String"/>
+	<field name="MODULO_HORA_INICIO_TURNO2" class="java.lang.String"/>
+	<field name="MODULO_HORA_FIM_TURNO2" class="java.lang.String"/>
+	<field name="ENTIDADE_IDENTIDADE" class="java.lang.Integer"/>
+	<field name="ENTIDADE_DSENTIDADE" class="java.lang.String"/>
+	<field name="PARTICIPANTE_TIPO_ID" class="java.lang.Integer"/>
+	<field name="PARTICIPANTE_ENTIDADE" class="java.lang.String"/>
+	<field name="SET_ORG_ENT" class="java.lang.String"/>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="218" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="23" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Registro de Frequência]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="1" width="555" height="23" forecolor="#000000"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sistema de Gestão Educacional]]></text>
+			</staticText>
+			<image onErrorType="Blank">
+				<reportElement x="6" y="0" width="81" height="40"/>
+				<imageExpression class="java.lang.String"><![CDATA["images/logo_IPC.gif"]]></imageExpression>
+			</image>
+			<image onErrorType="Blank">
+				<reportElement x="425" y="0" width="164" height="34"/>
+				<imageExpression class="java.lang.String"><![CDATA["images/logo_TCE2.jpg"]]></imageExpression>
+			</image>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="table_TD" positionType="Float" x="103" y="55" width="452" height="20"/>
+				<box topPadding="2" leftPadding="3" bottomPadding="2" rightPadding="2"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{TIPO_EVENTO_DESCRICAO} + " " + $F{EVENTO_TITULO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="table 3_TH" positionType="Float" stretchType="RelativeToTallestObject" x="0" y="55" width="103" height="20" backcolor="#CCCCFF"/>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[EVENTO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" positionType="Float" x="0" y="75" width="103" height="20" backcolor="#CCCCFF"/>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PERÍODO*:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="table_TD" positionType="Float" x="103" y="75" width="311" height="20"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[new String((new SimpleDateFormat("dd/MM/yyyy").format($F{EVENTO_DATA_INICIO})).toString()) + " a " + new String((new SimpleDateFormat("dd/MM/yyyy").format($F{EVENTO_DATA_FIM})).toString())]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="table 3_TH" positionType="Float" x="414" y="75" width="77" height="20" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[C. H.:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="table_TD" positionType="Float" x="491" y="75" width="64" height="20"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{EVENTO_CARGA_HORARIA} + "h"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="table 3_TH" positionType="Float" x="0" y="95" width="103" height="20" isRemoveLineWhenBlank="true" backcolor="#CCCCFF">
+					<printWhenExpression><![CDATA[!$F{MODULO_TITULO}.equals("MÓDULO ÚNICO")]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[MÓDULO:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="103" y="95" width="452" height="20" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[!$F{MODULO_TITULO}.equals("MÓDULO ÚNICO")]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="3">
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{MODULO_TITULO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="table 3_TH" positionType="Float" x="0" y="115" width="103" height="20" isRemoveLineWhenBlank="true" backcolor="#CCCCFF">
+					<printWhenExpression><![CDATA[!$F{MODULO_TITULO}.equals("MÓDULO ÚNICO")]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PERÍODO:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="table_TD" positionType="Float" x="103" y="115" width="311" height="20" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[!$F{MODULO_TITULO}.equals("MÓDULO ÚNICO")]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($F{MODULO_DATA_INICIO}) + " a " + new SimpleDateFormat("dd/MM/yyyy").format($F{MODULO_DATA_FIM})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="table 3_TH" positionType="Float" x="414" y="115" width="77" height="20" isRemoveLineWhenBlank="true" backcolor="#CCCCFF">
+					<printWhenExpression><![CDATA[!$F{MODULO_TITULO}.equals("MÓDULO ÚNICO")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[C. H.:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="table_TD" positionType="Float" x="491" y="115" width="64" height="20" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[!$F{MODULO_TITULO}.equals("MÓDULO ÚNICO")]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{MODULO_CARGA_HORARIA} + "h"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="table 3_TH" positionType="Float" x="0" y="135" width="103" height="20" backcolor="#CCCCFF"/>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[INSTRUTOR(ES):]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="table_TD" positionType="Float" x="103" y="135" width="452" height="20" isRemoveLineWhenBlank="true"/>
+				<box leftPadding="3">
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{instrutores}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="0" y="166" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{tipo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="0" y="186" width="555" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{data} + " - " + $P{turno}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement style="table 3_TH" x="0" y="0" width="27" height="20" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N°]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="370" y="0" width="185" height="20" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ASSINATURA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="27" y="0" width="205" height="20" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOME DO PARTICIPANTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="232" y="0" width="138" height="20" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[SETOR/INSTITUIÇÃO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="table_TD" stretchType="RelativeToTallestObject" x="27" y="0" width="205" height="26"/>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{PARTICIPANTE_NOME}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="table_TD" stretchType="RelativeToTallestObject" x="0" y="0" width="27" height="26"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement style="table_TD" stretchType="RelativeToTallestObject" x="232" y="0" width="138" height="26"/>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[($F{PARTICIPANTE_TIPO_ID} == 1 || $F{PARTICIPANTE_TIPO_ID} == 4
+    ? ($F{SETOR_NMSETOR} != null ? $F{SETOR_NMSETOR} : "-" )
+    : ($F{PARTICIPANTE_TIPO_ID} == 2
+        ? ($F{ENTIDADE_DSENTIDADE} != null && $F{ENTIDADE_IDENTIDADE} != 0 ? $F{ENTIDADE_DSENTIDADE} : "-")
+        : ($F{PARTICIPANTE_ENTIDADE} != null ? $F{PARTICIPANTE_ENTIDADE} : "-")
+      )
+)]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="table_TD" stretchType="RelativeToTallestObject" x="370" y="0" width="185" height="26" isPrintInFirstWholeBand="true"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="15">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[*Para eventos previstos, o período refere-se à previsão de realização destes.]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

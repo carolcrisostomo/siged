@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
+<!-- 2018-09-11T13:18:38 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="avaliacoes_reacao_por_evento_subreport1" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e6573db2-7da1-49b1-b976-9e239b87bc24">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="questaoDescricao" class="java.lang.String">
+		<fieldDescription><![CDATA[descricao]]></fieldDescription>
+	</field>
+	<field name="qtdExcelente" class="java.lang.Integer">
+		<fieldDescription><![CDATA[excelente]]></fieldDescription>
+	</field>
+	<field name="qtdBom" class="java.lang.Integer">
+		<fieldDescription><![CDATA[bom]]></fieldDescription>
+	</field>
+	<field name="qtdRegular" class="java.lang.Integer">
+		<fieldDescription><![CDATA[regular]]></fieldDescription>
+	</field>
+	<field name="qtdInsuficiente" class="java.lang.Integer">
+		<fieldDescription><![CDATA[insuficiente]]></fieldDescription>
+	</field>
+	<field name="totalNotas" class="java.lang.Integer">
+		<fieldDescription><![CDATA[totalNotas]]></fieldDescription>
+	</field>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<textField>
+				<reportElement x="0" y="0" width="269" height="20" uuid="70845968-ff75-4949-9676-19e43e03891c">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{questaoDescricao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="269" y="0" width="71" height="20" uuid="f8c64409-6de8-47a7-9147-7338e9492004">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalNotas} > 0
+? $F{qtdExcelente} + "(" + String.format("%.0f", ( 100 * ( Double.valueOf($F{qtdExcelente})/$F{totalNotas}) ))  + "%)"
+: $F{qtdExcelente} + "(0%)"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="340" y="0" width="71" height="20" uuid="c0955f09-3580-44c4-9e50-723c5ac91557">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalNotas} > 0
+? $F{qtdBom} + "(" + String.format("%.0f", ( 100 * ( Double.valueOf($F{qtdBom})/$F{totalNotas}) ))  + "%)"
+: $F{qtdBom} + "(0%)"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="411" y="0" width="71" height="20" uuid="0aa0f156-5bcb-4f98-9a90-265d9e4eb3f5">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalNotas} > 0
+? $F{qtdRegular} + "(" + String.format("%.0f", ( 100 * ( Double.valueOf($F{qtdRegular})/$F{totalNotas}) ))  + "%)"
+: $F{qtdRegular} + "(0%)"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="482" y="0" width="73" height="20" uuid="c2ccef42-dd8b-4c06-82e9-fe8fb3195cde"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalNotas} > 0
+? $F{qtdInsuficiente} + "(" + String.format("%.0f", ( 100 * ( Double.valueOf($F{qtdInsuficiente})/$F{totalNotas}) ))  + "%)"
+: $F{qtdInsuficiente} + "(0%)"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

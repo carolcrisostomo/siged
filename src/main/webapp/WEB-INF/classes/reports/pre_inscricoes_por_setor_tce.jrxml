@@ -1,0 +1,544 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
+<!-- 2021-07-07T15:20:41 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="pre_inscricoes_por_participante" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c76584ea-bda1-4da5-9f3e-73fb6779bf20">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="SIGED_DEV"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="tipoEvento" class="java.lang.String"/>
+	<parameter name="participante" class="java.lang.String"/>
+	<parameter name="indicada" class="java.lang.String"/>
+	<parameter name="confirmada" class="java.lang.String"/>
+	<parameter name="respIndicacao" class="java.lang.String"/>
+	<parameter name="data1" class="java.lang.String"/>
+	<parameter name="tituloEvento" class="java.lang.String"/>
+	<parameter name="data2" class="java.lang.String"/>
+	<parameter name="paramWhere" class="java.lang.String"/>
+	<parameter name="tipoParticipante" class="java.lang.String"/>
+	<parameter name="agruparPor" class="java.lang.String"/>
+	<parameter name="tipoEventoFiltro" class="java.lang.String"/>
+	<parameter name="programa" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT 
+      setor_id,
+      setor_tce,
+      count(inscricao_id) as inscricoes,
+      SUM(carga_horaria) as total_carga_horaria
+    FROM
+        (SELECT
+            s.IDSETOR AS setor_id,
+            s.NMSETOR AS setor_tce,
+            i.id as inscricao_id,
+            e.CARGA_HORARIA as carga_horaria
+        FROM inscricao i
+            LEFT JOIN SCA_usuario u ON i.chefe_id = u.id
+            INNER JOIN participante p ON p.id = i.participante_id
+            INNER JOIN evento e ON e.id = i.evento_id
+            INNER JOIN tipo_evento t ON t.id = e.tipo_id
+            INNER JOIN SAPJAVA_SETOR s ON s.IDSETOR = p.SETOR_ID
+            LEFT JOIN evento_programa ep ON ep.evento_id = e.id
+            LEFT JOIN programa prog ON prog.id = ep.programa_id
+        $P!{paramWhere})
+GROUP BY setor_id, setor_tce
+ORDER BY setor_tce ASC --total_carga_horaria DESC]]>
+	</queryString>
+	<field name="SETOR_ID" class="java.lang.String"/>
+	<field name="SETOR_TCE" class="java.lang.String"/>
+	<field name="INSCRICOES" class="java.lang.String"/>
+	<field name="TOTAL_CARGA_HORARIA" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="320" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement x="0" y="0" width="801" height="28" uuid="2c198817-2a25-49f0-a3c0-005c509264a1"/>
+				<textElement textAlignment="Center">
+					<font fontName="CustomSans" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sistema de Gestão Educacional]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="29" width="801" height="23" uuid="ca64d782-729e-46ae-8e13-81308360ec1e"/>
+				<textElement textAlignment="Center">
+					<font fontName="CustomSans" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório de Pré-Inscrições]]></text>
+			</staticText>
+			<image>
+				<reportElement x="38" y="0" width="81" height="40" uuid="081e0745-fcbe-4740-a172-d1b14dcd67bd"/>
+				<imageExpression><![CDATA["images/logo_IPC.gif"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="638" y="0" width="164" height="34" uuid="cd4c72bc-5823-43b8-8e32-8398a6f18260"/>
+				<imageExpression><![CDATA["images/logo_TCE2.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="105" width="110" height="20" backcolor="#CCCCFF" uuid="ae1380fa-01ac-4bfe-9188-a99a3077487c"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TIPO PARTICIPANTE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="165" width="110" height="20" backcolor="#CCCCFF" uuid="623d0815-62d5-4711-9a96-5efce6b29c38"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INDICADA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="185" width="110" height="20" backcolor="#CCCCFF" uuid="593c8f54-c1c6-47c6-b3dd-c6036cd88b97"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONFIRMADA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="205" width="110" height="29" backcolor="#CCCCFF" uuid="230c9450-f5f6-4359-adba-941a3e2c2da6"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RESPONS. INDICAÇÃO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="234" width="110" height="29" backcolor="#CCCCFF" uuid="f870ac98-e323-49cf-a94b-84dfe626d8bf">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PERÍODO PRÉ-INSCRIÇÃO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="110" y="105" width="692" height="20" uuid="9888b450-301c-42e8-85fd-0b03037f6dfd"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $P{tipoParticipante} != null ? $P{tipoParticipante} : "TODOS" )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="165" width="692" height="20" uuid="0e2d9109-0957-4fdf-8373-20ddb0731341"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $P{indicada} != null ? $P{indicada} : "TODOS" )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="185" width="692" height="20" uuid="f47b9640-176e-472c-ab7d-eb98b302adea"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $P{confirmada} != null ? $P{confirmada} : "TODOS" )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="205" width="692" height="29" uuid="4998c79f-170b-4143-bde9-0fd5005c1f52"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $P{respIndicacao} != null ? $P{respIndicacao} : "TODOS" )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="234" width="692" height="29" uuid="496b3e31-9b6b-41b1-b90f-bf30014bfe7b">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $P{data1} != null ? $P{data1} + " a " + $P{data2}: "" )]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="65" width="110" height="20" backcolor="#CCCCFF" uuid="42eb4b42-ea45-4237-9591-b1b0f7d527d6">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EVENTO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="110" y="65" width="692" height="20" uuid="02b043f3-4698-4ce4-b428-611b3ba367e1">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $P{tipoEvento} != null && $P{tituloEvento} != null ? $P{tipoEvento} + " " + $P{tituloEvento}  : "TODOS")]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="125" width="110" height="20" backcolor="#CCCCFF" uuid="369613e8-0ea3-48f3-97c9-58a769e143f0"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PARTICIPANTE:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="110" y="125" width="692" height="20" uuid="e65ca099-e187-4a7d-bdc4-3cf68e54b3fb"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $P{participante} != null ? $P{participante} : "TODOS" )]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="263" width="110" height="20" backcolor="#CCCCFF" uuid="f81f0cbf-9c90-4291-88e1-0f6bc611821f">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[AGRUPAR:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="110" y="263" width="692" height="20" uuid="1f40aebc-272a-4da4-9c4c-fe0284fd4825">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{agruparPor}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="85" width="110" height="20" backcolor="#CCCCFF" uuid="2b9e37a6-a4c7-46ae-82ba-86ef78a5d942"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TIPO EVENTO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="110" y="85" width="692" height="20" uuid="913917f8-8131-4efb-bccb-a0e70d0a1429"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($P{tipoEventoFiltro} != null  ? $P{tipoEventoFiltro}  : "TODOS")]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="290" width="438" height="30" backcolor="#CCCCFF" uuid="838a61c7-a9ef-4615-87d9-9100e96f76c2">
+					<property name="com.jaspersoft.layout.grid.x" value="2"/>
+					<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+					<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="CustomSans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SETOR TCE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="620" y="290" width="182" height="30" backcolor="#CCCCFF" uuid="bdec6455-8439-42f1-a65b-8178f6148a1b">
+					<property name="com.jaspersoft.layout.grid.x" value="4"/>
+					<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+					<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="CustomSans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CARGA HORÁRIA TOTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="438" y="290" width="182" height="30" backcolor="#CCCCFF" uuid="25d8406a-1db0-423e-a609-44f2af735c15">
+					<property name="com.jaspersoft.layout.grid.x" value="4"/>
+					<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+					<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="CustomSans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[QTDE. DE PRÉ-INSCRIÇÕES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="145" width="110" height="20" backcolor="#CCCCFF" uuid="bb3502ed-bedd-4729-b4c9-f6dc4fcd9187">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PROGRAMA:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="110" y="145" width="692" height="20" uuid="36da992f-4a27-4859-b1a9-b1d4bd42775d">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($P{programa} != null ? $P{programa} : "TODOS")]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="30" splitType="Prevent">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="438" height="30" uuid="3ed8853d-b064-4f85-aa77-f07930c70b51">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.layout.grid.x" value="2"/>
+					<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+					<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $F{SETOR_TCE} != null ? $F{SETOR_TCE} : "")]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" x="620" y="0" width="182" height="30" uuid="f7d62a54-9087-495a-886f-8ae570a98d42">
+					<property name="com.jaspersoft.layout.grid.x" value="4"/>
+					<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+					<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOTAL_CARGA_HORARIA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" x="438" y="0" width="182" height="30" uuid="db334323-4c87-4dc6-ad2b-a76349d2aa22">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.layout.grid.x" value="2"/>
+					<property name="com.jaspersoft.layout.grid.y" value="-1"/>
+					<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.weight.fixed" value="true"/>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INSCRICOES}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="50" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement x="763" y="30" width="39" height="20" uuid="c9be290c-12c4-4fc1-8aa5-180f848ef566"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="683" y="30" width="80" height="20" uuid="8a0901bc-2ded-4110-bb4c-68c563273d14"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="20">
+			<textField>
+				<reportElement x="0" y="0" width="280" height="20" uuid="5dacbc86-e5b6-46c6-b83e-73fae781495c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans" size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Relatório gerado em " + new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss").format(new Date())]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="763" y="0" width="39" height="20" uuid="33cc8505-f353-49a6-a167-fc2a1ce0ed3f"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="683" y="0" width="80" height="20" uuid="1d8ceafb-30bc-4e57-b505-fd2e13196022"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+		</band>
+	</lastPageFooter>
+</jasperReport>

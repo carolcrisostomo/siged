@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2016-05-17T15:28:49 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cronograma_subreport1" pageWidth="45" pageHeight="20" columnWidth="45" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="afc0fd1e-bb0c-493a-8257-38c649688425">
+	<property name="ireport.zoom" value="4.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ano" class="java.lang.String"/>
+	<parameter name="mes" class="java.lang.String"/>
+	<parameter name="evento" class="java.math.BigDecimal"/>
+	<parameter name="evento_titulo" class="java.lang.String" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[SELECT
+     1
+FROM
+     DUAL]]>
+	</queryString>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<subreport>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="15" height="20" uuid="c80ff969-d345-4850-82ae-d27822882bd4"/>
+				<subreportParameter name="mes">
+					<subreportParameterExpression><![CDATA[$P{mes}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ano">
+					<subreportParameterExpression><![CDATA[$P{ano}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="evento">
+					<subreportParameterExpression><![CDATA[$P{evento}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="evento_titulo">
+					<subreportParameterExpression><![CDATA[$P{evento_titulo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reports/cronograma_subreport1_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="15" y="0" width="15" height="20" uuid="7e1f4d54-3a9b-4199-9616-e386b0b044b4"/>
+				<subreportParameter name="mes">
+					<subreportParameterExpression><![CDATA[$P{mes}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ano">
+					<subreportParameterExpression><![CDATA[$P{ano}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="evento">
+					<subreportParameterExpression><![CDATA[$P{evento}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="evento_titulo">
+					<subreportParameterExpression><![CDATA[$P{evento_titulo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reports/cronograma_subreport1_subreport2.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="30" y="0" width="15" height="20" uuid="f8d09885-3a06-4601-aa25-f09c1ed6dc01"/>
+				<subreportParameter name="mes">
+					<subreportParameterExpression><![CDATA[$P{mes}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ano">
+					<subreportParameterExpression><![CDATA[$P{ano}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="evento">
+					<subreportParameterExpression><![CDATA[$P{evento}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="evento_titulo">
+					<subreportParameterExpression><![CDATA[$P{evento_titulo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reports/cronograma_subreport1_subreport3.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

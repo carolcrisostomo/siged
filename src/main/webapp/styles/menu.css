@@ -1,0 +1,141 @@
+/* menu */
+#menu{
+    background-image:url(../images/bkg_menu.png);
+    background-repeat: repeat-x;
+    margin:0px;
+    padding:0px;
+    list-style:none outside none;
+    color:#fff;
+    line-height:33px;
+    display:inline-block;
+    z-index:1000;
+    font-size:14px;
+}
+#menu a { 
+    color:#FFFFFF;
+    text-decoration:none;
+    font-size:13px;
+    font-weight:bolder;
+    text-shadow: 1px 1px #003366;
+}
+#menu > li {
+    background-image:url(../images/separador_menu.png);
+    background-repeat: no-repeat;
+    background-position: right top;
+    cursor:pointer;
+    float:left;
+    position:relative;
+    padding:0px 10px;
+    padding-right:40px;
+}
+#menu > li a:hover {color: #7FCDFE;}
+#menu .logo {
+    background:transparent none repeat scroll 0% 0%;
+    padding:0px;
+    background-color:Transparent;
+}
+/* sub-menus */
+#menu ul {
+    padding:0px;
+    margin:0px;
+    display: inline;
+}
+#menu li ul {
+    position:absolute;
+    left:-10px;
+    top:0px;
+    margin-top:33px;
+    width:170px;
+    line-height:16px;
+    background-color:#26558C;
+    color:#0395CC;
+    z-index: 1000000;
+    /* for IE */
+    display:none;
+}
+#menu li:hover > ul { display:block;}
+#menu li ul li{ 
+    display:block;
+    margin:2px 20px;
+    padding: 3px 0px;
+    border-top: dotted 1px #CCCCCC;
+    list-style-type:none;
+    position: relative;
+}
+
+#menu ul ul {
+	display: none;
+}
+#menu li ul li:hover > ul {
+    position: absolute;
+    display: block;
+    top: -2px;
+    margin: 0;
+    left: 100%;
+    border-radius: 5px; 
+}
+
+#menu li ul li:first-child { border-top: none; }
+#menu li ul li a { display:block; color:#FFFFFF; font-size:11px; font-weight:bold; }
+#menu li ul li a:hover { color:#7FCDFE; }
+/* main submenu */
+#menu #main { left:0px; top:-20px; padding-top:20px; background-color:#000061; color:#fff; z-index:999;}
+/* search */
+.searchContainer div { background-color:#fff; display:inline; padding:5px;}
+.searchContainer input[type="text"] {border:none;}
+.searchContainer img { vertical-align:middle;}
+/* corners*/
+#menu .corner_inset_left { position:absolute; top:-2px; left:-36px;}
+#menu .corner_inset_right { position:absolute; top:-2px; left:150px;}
+#menu .last { background:transparent none repeat scroll 0% 0%; margin:0px; padding:0px; border:none; position:relative; border:none; height:0px;}
+#menu .corner_left { position:absolute; left:0px; top:0px;}
+#menu .corner_right { position:absolute; left:152px; top:0px;}
+#menu .middle { position:absolute; left:18px; height: 20px; width: 135px; top:0px;}
+
+/*---------------tabela css----------------------------------------------------------------------------------*/
+
+#rounded-corner
+{
+    font-size: 12px;
+    margin: 45px;
+    width: 700px;
+    text-align: left;
+    border-collapse: collapse;
+}
+#rounded-corner thead th.rounded-company
+{
+    background: #26558C url('../images/left.png') left -1px no-repeat;
+}
+#rounded-corner thead th.rounded-q4
+{
+    background: #26558C url('../images/right.png') right -1px no-repeat;
+}
+#rounded-corner th
+{
+    padding: 8px;
+    font-weight: bold;
+    font-size: 13px;
+    color: #FFFFFF;
+    background: #26558C;
+}
+#rounded-corner td
+{
+    padding: 8px;
+    background: #e8edff;
+    border-top: 1px solid #fff;
+    color: #669;
+    font-weight:bold;
+}
+#rounded-corner tfoot td.rounded-foot-left
+{
+    background: #e8edff url('../images/botleft.png') left bottom no-repeat;
+}
+#rounded-corner tfoot td.rounded-foot-right
+{
+    background: #e8edff url('../images/botright.png') right bottom no-repeat;
+}
+#rounded-corner tbody tr:hover td
+{
+    background: #d0dafd;
+}
+

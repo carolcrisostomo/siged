@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
+<!-- 2018-09-12T09:39:18 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="avaliacoes_reacao_por_evento_subreport1" pageWidth="555" pageHeight="842" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e6573db2-7da1-49b1-b976-9e239b87bc24">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="totalExcelente" class="java.lang.Integer">
+		<fieldDescription><![CDATA[totalExcelente]]></fieldDescription>
+	</field>
+	<field name="totalBom" class="java.lang.Integer">
+		<fieldDescription><![CDATA[totalBom]]></fieldDescription>
+	</field>
+	<field name="totalRegular" class="java.lang.Integer">
+		<fieldDescription><![CDATA[totalRegular]]></fieldDescription>
+	</field>
+	<field name="totalInsuficiente" class="java.lang.Integer">
+		<fieldDescription><![CDATA[totalInsuficiente]]></fieldDescription>
+	</field>
+	<field name="totalRespondidas" class="java.lang.Integer">
+		<fieldDescription><![CDATA[totalRespondidas]]></fieldDescription>
+	</field>
+	<field name="percentualExcelente" class="java.lang.String">
+		<fieldDescription><![CDATA[percentualExcelente]]></fieldDescription>
+	</field>
+	<field name="percentualBom" class="java.lang.String">
+		<fieldDescription><![CDATA[percentualBom]]></fieldDescription>
+	</field>
+	<field name="percentualRegular" class="java.lang.String">
+		<fieldDescription><![CDATA[percentualRegular]]></fieldDescription>
+	</field>
+	<field name="percentualInsuficiente" class="java.lang.String">
+		<fieldDescription><![CDATA[percentualInsuficiente]]></fieldDescription>
+	</field>
+	<field name="percentualSatisfatorias" class="java.lang.String">
+		<fieldDescription><![CDATA[percentualSatisfatorias]]></fieldDescription>
+	</field>
+	<detail>
+		<band height="160" splitType="Stretch">
+			<pieChart>
+				<chart isShowLegend="true" theme="default">
+					<reportElement key="" x="-70" y="27" width="336" height="127" uuid="c8753a58-1e96-4080-8355-59a09870e628">
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					</reportElement>
+					<chartTitle>
+						<font size="8"/>
+					</chartTitle>
+					<chartSubtitle>
+						<font size="8"/>
+					</chartSubtitle>
+					<chartLegend position="Bottom">
+						<font size="8"/>
+					</chartLegend>
+				</chart>
+				<pieDataset maxCount="4">
+					<pieSeries>
+						<keyExpression><![CDATA["Excelente"]]></keyExpression>
+						<valueExpression><![CDATA[$F{totalExcelente}]]></valueExpression>
+						<labelExpression><![CDATA[$F{percentualExcelente}]]></labelExpression>
+					</pieSeries>
+					<pieSeries>
+						<keyExpression><![CDATA["Bom"]]></keyExpression>
+						<valueExpression><![CDATA[$F{totalBom}]]></valueExpression>
+						<labelExpression><![CDATA[$F{percentualBom}]]></labelExpression>
+					</pieSeries>
+					<pieSeries>
+						<keyExpression><![CDATA["Regular"]]></keyExpression>
+						<valueExpression><![CDATA[$F{totalRegular}]]></valueExpression>
+						<labelExpression><![CDATA[$F{percentualRegular}]]></labelExpression>
+					</pieSeries>
+					<pieSeries>
+						<keyExpression><![CDATA["Insuficiente"]]></keyExpression>
+						<valueExpression><![CDATA[$F{totalInsuficiente}]]></valueExpression>
+						<labelExpression><![CDATA[$F{percentualInsuficiente}]]></labelExpression>
+					</pieSeries>
+				</pieDataset>
+				<piePlot isCircular="true" labelFormat="">
+					<plot>
+						<seriesColor seriesOrder="0" color="#00A480"/>
+						<seriesColor seriesOrder="1" color="#0F4FA8"/>
+						<seriesColor seriesOrder="2" color="#FF9F00"/>
+						<seriesColor seriesOrder="3" color="#FF6200"/>
+					</plot>
+					<itemLabel color="#000000" backgroundColor="#FFFFFF">
+						<font fontName="SansSerif" size="8"/>
+					</itemLabel>
+				</piePlot>
+			</pieChart>
+			<staticText>
+				<reportElement positionType="Float" x="269" y="0" width="71" height="20" uuid="fe10c86a-771a-4569-bf89-5e6fed687f8e"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="CustomSans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Excelente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="340" y="0" width="71" height="20" uuid="0864a241-550c-4c95-874e-d3f6d137cef8"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="CustomSans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bom]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="411" y="0" width="71" height="20" uuid="0b99d5bd-3a23-4f6b-b7ae-332ca3761a0c"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="CustomSans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Regular]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="482" y="0" width="73" height="20" uuid="2bf951c8-af13-497b-b647-e814fa41bacc"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="CustomSans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Insuficiente]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="482" y="24" width="73" height="20" uuid="546590f3-67f8-4591-b727-3c96a3b0c0f6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalInsuficiente} + "(" + $F{percentualInsuficiente} + ")"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="411" y="24" width="71" height="20" uuid="da7a85c2-984a-4285-92ff-b181751ebe69"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalRegular} + "(" + $F{percentualRegular} + ")"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="340" y="24" width="71" height="20" uuid="86392099-f06d-4f5c-b003-61283ffec76b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalBom} + "(" + $F{percentualBom} + ")"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="269" y="24" width="71" height="20" uuid="744085c5-bbd9-4964-924a-dc363fe85b7c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalExcelente} + "(" + $F{percentualExcelente} + ")"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="248" y="138" width="248" height="20" uuid="80adc237-fc0b-491e-b36a-eaec15de93fd"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="CustomSans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Percentual de avaliações satisfatórias no módulo:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="498" y="138" width="48" height="20" uuid="6bacdabe-e87a-41c6-b6c8-ba2f61cc9a35">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{percentualSatisfatorias}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="0" width="266" height="20" uuid="aecbbcb5-aa1a-413c-b939-1086658072ba"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[AVALIAÇÃO DO MÓDULO]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
+<!-- 2018-12-11T17:09:50 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="certificado" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="70a0dc58-635d-4857-917c-406ecab43ede">
+	<property name="ireport.zoom" value="0.75"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="96"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<style name="Nome" forecolor="#000000" hTextAlign="Center" vTextAlign="Middle" fontName="CustomSans" fontSize="30" isBold="true">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{PARTICIPANTE_NOME}.length() >= 32 && $F{PARTICIPANTE_NOME}.length() < 41]]></conditionExpression>
+			<style fontSize="28"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{PARTICIPANTE_NOME}.length() >= 41 && $F{PARTICIPANTE_NOME}.length() < 45]]></conditionExpression>
+			<style fontSize="26"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{PARTICIPANTE_NOME}.length() >= 45 && $F{PARTICIPANTE_NOME}.length() < 49]]></conditionExpression>
+			<style fontSize="24"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{PARTICIPANTE_NOME}.length() >= 49 && $F{PARTICIPANTE_NOME}.length() < 53]]></conditionExpression>
+			<style fontSize="22"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{PARTICIPANTE_NOME}.length() >= 53 && $F{PARTICIPANTE_NOME}.length() < 57]]></conditionExpression>
+			<style fontSize="18"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{PARTICIPANTE_NOME}.length() >= 57]]></conditionExpression>
+			<style fontSize="16"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="paramWhere" class="java.lang.String"/>
+	<parameter name="assinatura1" class="java.lang.Object"/>
+	<parameter name="assinatura2" class="java.lang.Object">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="isProvedorRedeEscolas" class="java.lang.Boolean">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="periodo" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="tituloEvento" class="java.lang.String"/>
+	<parameter name="cargaHoraria" class="java.lang.String"/>
+	<parameter name="dataEventoPorExtenso" class="java.lang.String"/>
+	<parameter name="local" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     evento.titulo AS evento_titulo,
+     evento.data_inicio_realizacao AS evento_data_inicio_realizacao,
+     evento.data_fim_realizacao AS evento_data_fim_realizacao,
+     evento.carga_horaria AS evento_carga_horaria,
+     evento.modalidade_id AS evento_modalidade_id,
+     evento.conteudo AS evento_conteudo_programatico,
+     participante.nome AS participante_nome,
+     tipo_evento.descricao AS tipo_id,
+     certificado_emitido.codigoverificacao AS codigo_verificacao
+FROM evento
+     INNER JOIN inscricao ON inscricao.evento_id = evento.id
+     INNER JOIN participante ON participante.id = inscricao.participante_id
+     INNER JOIN tipo_evento ON tipo_evento.id = evento.tipo_id
+     INNER JOIN certificado_emitido ON certificado_emitido.evento_id = evento.id AND certificado_emitido.participante_id = participante.id
+$P!{paramWhere}]]>
+	</queryString>
+	<field name="EVENTO_TITULO" class="java.lang.String"/>
+	<field name="EVENTO_DATA_INICIO_REALIZACAO" class="java.sql.Timestamp"/>
+	<field name="EVENTO_DATA_FIM_REALIZACAO" class="java.sql.Timestamp"/>
+	<field name="EVENTO_CARGA_HORARIA" class="java.lang.String"/>
+	<field name="EVENTO_MODALIDADE_ID" class="java.math.BigDecimal"/>
+	<field name="EVENTO_CONTEUDO_PROGRAMATICO" class="java.lang.String"/>
+	<field name="PARTICIPANTE_NOME" class="java.lang.String"/>
+	<field name="TIPO_ID" class="java.lang.String"/>
+	<field name="CODIGO_VERIFICACAO" class="java.lang.String"/>
+	<variable name="dataInicio" class="java.lang.String">
+		<initialValueExpression><![CDATA[(new SimpleDateFormat("dd/MM/yyyy hh:mm").format(java.util.Calendar.getInstance().getTime()))]]></initialValueExpression>
+	</variable>
+	<detail>
+		<band height="595" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle" isUsingCache="true" onErrorType="Blank">
+				<reportElement positionType="Float" x="0" y="0" width="842" height="595" uuid="5309a070-30d3-4cb0-9ec5-6459658b758d">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<imageExpression><![CDATA["images/certificado_1_sem_aud_cex.jpg"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement style="Nome" x="40" y="229" width="760" height="39" uuid="1cb996f0-792b-4b30-81ac-aaf56479b874"/>
+				<textFieldExpression><![CDATA[$F{PARTICIPANTE_NOME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="284" y="580" width="440" height="13" isPrintWhenDetailOverflows="true" forecolor="#FFFFFF" uuid="33b3da33-36a6-4ce2-9910-b64e3221ca47"/>
+				<box rightPadding="0"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+					<font fontName="CustomSans" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Este certificado poderá ser comprovado em http://siged.ipc.tce.ce.gov.br/ utilizando o código " + $F{CODIGO_VERIFICACAO}.substring(0, 4) + "." + $F{CODIGO_VERIFICACAO}.substring(4, 8) + "." + $F{CODIGO_VERIFICACAO}.substring(8, 12) + "." + $F{CODIGO_VERIFICACAO}.substring(12, 16) + "."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="40" y="177" width="760" height="52" uuid="cdaaab81-4127-403e-b1f2-58fb5b2edafc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="CustomSans" size="15" isItalic="false"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="1.0" spacingBefore="0" spacingAfter="0"/>
+				</textElement>
+				<text><![CDATA[Certificamos que]]></text>
+			</staticText>
+			<textField>
+				<reportElement key="" positionType="Float" x="40" y="287" width="760" height="78" uuid="2348c14a-23d7-4f06-9967-33624f9624f6"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" markup="html">
+					<font fontName="CustomSans" size="15" isItalic="false"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.5"/>
+				</textElement>
+				<textFieldExpression><![CDATA["participou do <b>I Seminário dos Auditores de Controle Externo do Tribunal de Contas do Estado do Ceará</b>, realizado em Fortaleza - Ceará, dia " +
+new String(new SimpleDateFormat("dd 'de' MMMMM 'de' yyyy", new Locale("pt","BR")).format($F{EVENTO_DATA_FIM_REALIZACAO}).toString()) + 
+", com carga horária de " + $F{EVENTO_CARGA_HORARIA} + " horas."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="40" y="365" width="760" height="22" uuid="56bf7eb8-05ea-4d6a-a0a1-e928523e95ac"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="CustomSans" size="15" isItalic="false" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Fortaleza, " + new String(new SimpleDateFormat("dd 'de' MMMMM 'de' yyyy", new Locale("pt","BR")).format($F{EVENTO_DATA_FIM_REALIZACAO}).toString()) + "."]]></textFieldExpression>
+			</textField>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="115" y="388" width="300" height="90" uuid="4ac540cc-1b17-48d0-b7f0-a40179e7cc1a"/>
+				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage((byte[]) $P{assinatura1})]]></imageExpression>
+			</image>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="425" y="388" width="300" height="90" uuid="8946125c-f3bf-4312-ad3b-f1a8384abb08"/>
+				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage((byte[]) $P{assinatura2})]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+</jasperReport>

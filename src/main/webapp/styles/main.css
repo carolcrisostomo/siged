@@ -1,0 +1,985 @@
+ html * {
+	margin: 0;
+}
+
+/* GENERAL */
+.spinner {
+	padding: 5px;
+	position: absolute;
+	right: 0;
+}
+
+.filter {	
+	color: #666;
+	font-size: 10px;
+	margin-bottom: 5px;
+}
+
+body {
+	background: #fff;
+	color: #333;
+	min-width: 1000px;
+}
+
+
+.carregando {
+	color: #666;
+	display: none;
+}
+
+#grailsLogo {
+	padding: 20px;
+}
+
+
+
+h1 {
+	color: #48802c;
+	font-weight: normal;
+	font-size: 16px;
+	margin: .8em 0 .8em 0;	
+	display: inline-block;
+	padding: 15px;
+}
+
+h3 {
+	font-style: italic;
+}
+
+input, select, textarea {
+	background: #fff;
+	border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 5px;
+    font: 12px verdana, arial, helvetica, sans-serif;
+}
+
+select {
+	padding: 2px;
+	max-width: 780px;
+}
+
+textarea {
+	width: 250px;
+	height: 150px;
+	vertical-align: top;
+}
+
+input:focus, select:focus, textarea:focus {
+	border: 1px solid #b2d1ff; 
+}
+
+.body {
+	float: left;
+	margin: 0 0px 0px 0px;
+	text-align: left;
+	width: 100%;
+}
+
+
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+    background-color: #377CBA !important;
+    border-color: #2D66A0 !important;
+}
+
+.btn-outline-secondary,  .btn-outline-secondary:active, .btn-outline-secondary:visited {
+    color: #377CBA !important;
+     border-color:  #377CBA !important;
+    
+    }
+    
+    .btn-outline-secondary:hover{
+    background-color: #EBEBEB !important;
+    
+    }
+
+/* Button Voltar */
+.voltarButton{
+	background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
+    border: 1px solid #E9E9E9;
+    border-radius: 2px;
+    padding: 3px 2px;
+    width: 93px;
+  	height: 20px;
+    position: absolute;
+    margin-left: 250px;
+    margin-top: -28px  
+    
+}
+/* Button Resetar Senha  */
+.senhaButton{
+	background: transparent url(../images/skin/database_edit.png) 5px 50% no-repeat;
+    border: 1px solid #E9E9E9;
+    border-radius: 2px;
+   /* padding: 3px 2px;*/
+    width: 130px;
+   /* height: 20px;*/
+    margin: auto;
+    cursor: pointer;
+   font: 12px verdana, arial, helvetica, sans-serif;
+   font-size: 10px;
+   font-weight: bold;
+  
+   
+}
+/* Button Relatorios/Capas de eventos */
+
+.frenquenciaButton{
+	background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
+    border: 1px solid #E9E9E9;
+    border-radius: 2px;
+    padding: 3px 2px;
+    width: 93px;
+    /* position: absolute; */
+    margin-left: px;
+    margin: auto;
+    margin-top: 30px;
+}
+
+.avalizacaoEficaciaButton{
+	background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
+    border: 1px solid #E9E9E9;
+    border-radius: 2px;
+    padding: 3px 2px;
+    width: 150px;
+    margin-left: 10px;
+}
+
+.avaliacaoReacaoButton{
+	background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
+    border: 1px solid #E9E9E9;
+    border-radius: 2px;
+    padding: 3px 2px;
+    width: 150px;
+    margin-left: 400px;
+    position: relative;
+    margin-top: -25px;
+}
+	
+
+.indicacaoButton{
+	background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
+    border: 1px solid #E9E9E9;
+    border-radius: 2px;
+    padding: 3px 2px;
+    width: 210px;
+    margin-left: 10px;
+    position: relative;
+    left: 735px;
+    margin-top: -24px;
+}
+.frequenciaCapasButton{
+	background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
+    border: 1px solid #E9E9E9;
+    border-radius: 2px;
+    padding: 3px 2px;
+    width: 150px;
+    margin-left: 10px;
+    position: relative;
+    left: 735px;
+    margin-top: -24px;
+}
+
+/* NAVIGATION MENU */
+.nav {
+	background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
+	border: 1px solid #E9E9E9;
+	border-radius: 2px;
+	/*border-style: solid none solid none;
+	margin-top: 5px;*/
+	padding: 3px 2px;
+    width: 93px;
+  /*  heigth: 23px;
+    float: right;
+    margin-right: 50%;
+    margin: auto;*/
+    position: absolute;
+   margin-left: 95px;
+    margin-top: 5px;
+}
+
+/* */
+.incluirButton{
+	background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
+    border: 1px solid #E9E9E9;
+    border-radius: 2px;
+    padding: 3px 2px;
+    width: 93px;
+    position: absolute;
+    margin-left: 170px;
+    margin-top: 5px
+}
+
+.questButton{
+	background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
+    border: 1px solid #E9E9E9;
+    border-radius: 2px;
+    padding: 3px 2px;
+    width: 100px;
+    position: absolute;
+    margin-left: 290px;
+    margin-top: 5px
+	
+}
+
+.materialButton{
+	background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
+    border: 1px solid #E9E9E9;
+    border-radius: 2px;
+    padding: 3px 2px;
+    width: 93px;
+    position: absolute;
+    margin-left: 230px;
+    margin-top: 5px
+}
+
+.participanteButton{
+	background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
+    border: 1px solid #E9E9E9;
+    border-radius: 2px;
+    padding: 3px 2px;
+    width: 93px;
+    position: absolute;
+    margin-left: 110px;
+    margin-top: 5px
+}
+.certTerceirosButton{
+	background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
+    border: 1px solid #E9E9E9;
+    border-radius: 2px;
+    padding: 3px 2px;
+    width: 93px;
+    position: absolute;
+    margin-left: 180px;
+    margin-top: 5px
+}
+.areaConhecimentoButton{
+	background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
+    border: 1px solid #E9E9E9;
+    border-radius: 2px;
+    padding: 3px 2px;
+    width: 93px;
+    position: absolute;
+    margin-left: 185px;
+    margin-top: 5px
+}
+.eixoTematicoButton{
+	background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
+    border: 1px solid #E9E9E9;
+    border-radius: 2px;
+    padding: 3px 2px;
+    width: 93px;
+    position: absolute;
+    margin-left: 120px;
+    margin-top: 5px	
+}
+.formacaoAcademicaButton{
+	background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
+    border: 1px solid #E9E9E9;
+    border-radius: 2px;
+    padding: 3px 2px;
+    width: 93px;
+    position: absolute;
+    margin-left: 160px;
+    margin-top: 5px	
+}
+.questaoButton{
+	background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
+    border: 1px solid #E9E9E9;
+    border-radius: 2px;
+    padding: 3px 2px;
+    width: 93px;
+    position: absolute;
+    margin-left: 250px;
+    margin-top: 5px	
+}
+.metaIndicadoresButton{
+	background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
+    border: 1px solid #E9E9E9;
+    border-radius: 2px;
+    padding: 3px 2px;
+    width: 93px;
+    position: absolute;
+    margin-left: 400px;
+    margin-top: 5px	
+}
+
+.menuButton {
+	font: 11px verdana, arial, helvetica, sans-serif;
+	font-size: 10px;
+	padding: 0 5px;
+}
+
+/* Button Listagem 
+.moduloListagemButton{
+	background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
+    border: 1px solid #E9E9E9;
+    border-radius: 2px;
+    padding: 3px 2px;
+    width: 93px;
+    position: absolute;
+    margin-left: 130px;
+    margin-top: 5px	
+}
+.materialListageButton{
+	background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
+    border: 1px solid #E9E9E9;
+    border-radius: 2px;
+    padding: 3px 2px;
+    width: 93px;
+    position: absolute;
+    margin-left: 280px;
+    margin-top: 55px	
+}
+.avaliacaoreacaoButton{
+	background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
+    border: 1px solid #E9E9E9;
+    border-radius: 2px;
+    padding: 3px 2px;
+    width: 93px;
+    position: absolute;
+    margin-left: 230px;
+    margin-top: 5px	
+}
+
+.sugestaoListagemButton{
+	background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
+    border: 1px solid #E9E9E9;
+    border-radius: 2px;
+    padding: 3px 2px;
+    width: 93px;
+    position: absolute;
+    margin-left: 160px;
+    margin-top: 5px	
+}
+
+.participarListButton{
+	background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
+    border: 1px solid #E9E9E9;
+    border-radius: 2px;
+    padding: 3px 2px;
+    width: 93px;
+    position: absolute;
+    margin-left: 180px;
+    margin-top: 5px	
+}
+.eixoTematicoListButton{
+	background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
+    border: 1px solid #E9E9E9;
+    border-radius: 2px;
+    padding: 3px 2px;
+    width: 93px;
+    position: absolute;
+    margin-left: 190px;
+    margin-top: 5px	
+}
+.questaoListButton{
+	background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
+    border: 1px solid #E9E9E9;
+    border-radius: 2px;
+    padding: 3px 2px;
+    width: 93px;
+    position: absolute;
+    margin-left: 290px;
+    margin-top: 5px	
+}
+.responsavelsetorListButton{
+	background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
+    border: 1px solid #E9E9E9;
+    border-radius: 2px;
+    padding: 3px 2px;
+    width: 93px;
+    position: absolute;
+    margin-left: 230px;
+    margin-top: 5px	
+}
+.metaListButton{
+	background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
+    border: 1px solid #E9E9E9;
+    border-radius: 2px;
+    padding: 3px 2px;
+    width: 93px;
+    position: absolute;
+    margin-left: 460px;
+    margin-top: 5px	
+}
+*/
+.menuButton a {
+	color: #333;
+	padding: 4px 6px;
+	padding-left: 20px;
+	margin-right: 5px;
+}
+.frequenciaListButton{
+	background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
+    border: 1px solid #E9E9E9;
+    border-radius: 2px;
+    padding: 3px 2px;
+    width: 93px;
+    position: absolute;
+    margin-left: 160px;
+    margin-top: 5px	
+}
+.certificadoTerceiroListButton{
+	background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
+    border: 1px solid #E9E9E9;
+    border-radius: 2px;
+    padding: 3px 2px;
+    width: 93px;
+    position: absolute;
+    margin-left: 240px;
+    margin-top: 5px	
+}
+
+.menuButton a.home {
+	background: url(../images/skin/house.png) top left no-repeat;	
+}
+
+.menuButton a.list {
+	background: url(../images/skin/database_table.png) top left no-repeat;
+}
+
+.menuButton a.create {
+	background: url(../images/skin/database_add.png) top left no-repeat;
+}
+
+.menuButton a.update {
+	background: url(../images/update.png) top left no-repeat;
+}
+
+.menuButton a.delete {
+	background: url(../images/delete_file.png) top left no-repeat;	
+}
+.menuButton a.insert {
+	background: url(../images/add_file.png) top left no-repeat;	
+}
+/* MESSAGES AND ERRORS */
+.message {
+	background: #f3f8fc url(../images/skin/information.png) 8px 50%	no-repeat;
+	border: 1px solid #b2d1ff;
+	color: #006dba;
+	margin: 10px 0 5px 0;
+	padding: 10px 5px 10px 32px;
+	border-radius: 3px;
+	font-size: 1.1em;
+    line-height: 1.3em;
+}
+
+.messageErro {
+	background: #f2dede url(../images/skin/exclamation.png) 8px 50%	no-repeat;
+	border: 1px solid #ebccd1;
+	color: #a94442;
+	margin: 10px 0 5px 0;
+	padding: 10px 5px 10px 32px;
+	border-radius: 3px;
+	font-size: 1.1em;
+    line-height: 1.3em;
+}
+
+.messageAlerta {
+	background: #fcf8e3 url(../images/msgwarn.png) 8px 50%	no-repeat;
+	border: 1px solid #faebcc;
+	color: #8a6d3b;
+	margin: 10px 0 5px 0;
+	padding: 10px 5px 10px 32px;
+	border-radius: 3px;
+	font-size: 1.1em;
+    line-height: 1.3em;
+}
+
+.messageSucesso {
+	background: #dff0d8 url(../images/true.png) 8px 50%	no-repeat;
+	border: 1px solid #d6e9c6;
+	color: #3c763d;
+	margin: 10px 0 5px 0;
+	padding: 10px 5px 10px 32px;
+	border-radius: 3px;
+	font-size: 1.1em;
+    line-height: 1.3em;
+}
+
+.formatosArquivo{
+	color: #666666;
+	font-size: 1.1em;
+    line-height: 1.3em;}
+
+.inscricoesEncerradas {
+	display: inline;
+	background: #fcf8e3 url(../images/msgwarn.png) 5px 50% no-repeat;
+	color: #8a6d3b;	
+	border: 1px solid;
+	border-color: #faebcc;
+	border-radius: 3px;
+	padding: 1px 5px 1px 25px;	
+}
+
+div.errors {
+	background: #fff3f3;
+	border: 1px solid red;
+	color: #cc0000;
+	margin: 10px 0 5px 0;
+	padding: 5px 0 5px 0;
+}
+
+div.errors ul {
+	list-style: none;
+	padding: 0;
+}
+
+div.errors li {
+	background: url(../images/skin/exclamation.png) 8px 0% no-repeat;
+	line-height: 16px;
+	padding-left: 30px;
+}
+
+td.errors select {
+	border: 1px solid red;
+}
+
+td.errors input {
+	border: 1px solid red;
+}
+
+/* TABLES */
+table {
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	width: 100%;
+	padding-top: 10px;
+}
+
+tr {
+	border: 0;
+}
+
+td, th {
+	font: 12px verdana, arial, helvetica, sans-serif;	
+	padding: 8px 6px;
+	text-align: left;
+	vertical-align: center;
+}
+
+th {
+	background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
+	color: #333;
+	font-size: 10px;
+	font-weight: bold;
+	line-height: 17px;
+	padding: 2px 6px;
+}
+
+th a:link, th a:visited, th a:hover {
+	color: #333;
+	display: block;
+	font-size: 10px;
+	text-decoration: none;
+	width: 100%;
+}
+
+th.asc a, th.desc a {
+	background-position: right;
+	background-repeat: no-repeat;
+}
+
+th.asc a {
+	background-image: url(../images/skin/sorted_asc.gif);
+}
+
+th.desc a {
+	background-image: url(../images/skin/sorted_desc.gif);
+}
+
+.odd {
+	background: #f7f7f7;
+}
+
+.even {
+	background: #fff;
+}
+
+.hidden {
+	display: none;
+}
+
+/* LIST */
+.list table {
+	border-collapse: collapse;
+}
+
+.list th, .list td {
+	border-left: 1px solid #ddd;
+}
+
+.list th:hover, .list tr:hover {
+	background: #b2d1ff;
+}
+
+/* PAGINATION */
+.paginateButtons {
+	background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
+	border: 1px solid #ccc;
+	border-top: 0;
+	color: #666;
+	font-size: 10px;
+	overflow: hidden;
+	padding: 10px 3px;
+}
+
+.paginateButtons a {
+	background: #fff;
+	border: 1px solid #ccc;
+	border-color: #ccc #aaa #aaa #ccc;
+	color: #666;
+	margin: 0 3px;
+	padding: 2px 6px;
+}
+
+.paginateButtons span {
+	padding: 2px 3px;
+}
+
+/* DIALOG */
+.dialog table {
+	padding: 5px 0;
+}
+
+.prop {
+	padding: 5px;
+}
+
+.prop .name {
+	text-align: left;
+	width: 15%;
+	white-space: nowrap;
+}
+
+.prop .name2 {
+	text-align: left;
+	width: 15%;
+	white-space: nowrap;
+}
+
+.prop .name3 {
+	text-align: left;
+	width: 40%;
+	white-space: normal;
+}
+
+.prop .value {
+	text-align: left;
+	width: 85%;
+}
+
+.prop .value3 {
+	text-align: left;
+	width: 60%;
+}
+
+
+
+/* ACTION BUTTONS */
+.buttons {
+	background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
+    border: 1px solid #E9E9E9;
+    border-radius: 2px;
+    padding: 3px 2px;
+    width: 93px;
+  	height: 20px;
+    margin-left: 560px;
+    
+}
+
+.buttons input {
+	background: #fff;
+	border: 0;
+	color: #333;
+	cursor: pointer;
+	font-size: 10px;
+	font-weight: bold;
+	overflow: visible;
+	/*padding: 8px 10px;*/
+	margin: auto;
+}
+
+.buttons #command {
+	display: inline-block;
+}
+
+.buttons input.delete {
+	background: transparent url(../images/skin/database_delete.png) 5px 50% no-repeat;
+	padding-left: 28px;
+}
+
+.buttons input.edit {
+	background: transparent url(../images/skin/database_edit.png) 5px 50% no-repeat;
+	padding-left: 28px;
+}
+
+.buttons input.save {
+	background: transparent url(../images/skin/database_save.png) 5px 50% no-repeat;
+	padding-left: 28px;
+}
+
+.buttons input.filter {
+	background: transparent url(../images/skin/funnel.png) 5px 50% no-repeat;
+	padding-left: 28px;
+}
+
+#linkPreInscricao {	
+	background: #367ab7; /* Old browsers */
+	background: -moz-linear-gradient(top,  #367ab7 0%, #285c93 60%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#367ab7), color-stop(60%,#285c93)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #367ab7 0%,#285c93 60%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #367ab7 0%,#285c93 60%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #367ab7 0%,#285c93 60%); /* IE10+ */
+	background: linear-gradient(to bottom,  #367ab7 0%,#285c93 60%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#367ab7', endColorstr='#285c93',GradientType=0 ); /* IE6-9 */	
+	
+	padding: 10px 20px;    
+    color: #FFF;
+    
+    font-size: 15px;
+    
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    border: solid 1px #20538D;
+    text-shadow: 1px -1px #003366;
+    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba;
+    
+    -webkit-transition-duration: 0.3s;
+    -moz-transition-duration: 0.3s;
+    transition-duration: 0.3s;    
+}
+
+#linkPreInscricao:hover, #linkPreInscricao:focus {
+   	background: #285c93; /* Old browsers */
+	background: -moz-linear-gradient(top,  #285c93 40%, #367ab7 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(40%,#285c93), color-stop(100%,#367ab7)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #285c93 40%,#367ab7 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #285c93 40%,#367ab7 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #285c93 40%,#367ab7 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #285c93 40%,#367ab7 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#285c93', endColorstr='#367ab7',GradientType=0 ); /* IE6-9 */    
+    
+    border: solid 1px #2A4E77;
+    text-decoration: none;
+}
+
+.search {
+	background: url(../images/lupa.png) no-repeat;
+	width: 25px;
+    border: 0;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.search:hover {
+	background: url(../images/lupa-azul.png) no-repeat;
+	width: 25px;
+    border: 0;
+    cursor: pointer;
+}
+
+.search:focus {
+    border: 0;
+}
+
+.botao{
+	cursor: pointer;
+    padding: 5px 8px;		   
+    border: 1px solid #23507C;
+    border-radius: 2px;
+    margin: 15px 6px 5px 0px;
+	background-color:#2A6098;
+    color: #FFF;
+    transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	-o-transition: all 0.3s;
+	-ms-transition: all 0.3s;      
+}
+
+.botao:hover {
+    background-color: #377CBA;
+    border: 1px solid #2D66A0;
+    border-radius: 2px;
+}
+
+.botao:disabled{
+	cursor: default;
+    padding: 5px 8px;		   
+    border: 1px solid #CCCCCC;
+    border-radius: 2px;
+    margin-top: 14px;
+	background: #F1F1F1; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#FCFCFC, #F1F1F1); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#FCFCFC, #F1F1F1); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#FCFCFC, #F1F1F1); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#FCFCFC, #F1F1F1); /* Standard syntax */
+    color: #777;
+    text-shadow: none;   
+}
+
+.botaoSair{
+	background:url(../images/power.png) no-repeat center;
+	background-size: 14px 14px;
+	cursor: pointer;
+    padding: 3px 12px;		   
+    border: none;
+    background-color: rgba(46, 105, 163, 0);   
+    transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	-o-transition: all 0.3s;
+	-ms-transition: all 0.3s;         
+}
+
+.botaoSair:hover {
+	background:url(../images/poweron.png) no-repeat center;
+	background-size: 14px 14px;
+}
+
+.botaoSairDiv{
+	float: right;
+    width: 10%;
+    margin-top: 14px;
+    margin-right: 14px;
+}
+
+.bemVindoDiv{
+	float: left;
+    text-align: center;
+    display: block;
+    width: 80%;
+    margin-top: 15px;
+    margin-left: 30px;
+}
+
+.divcheck {
+	float: left;
+}
+
+.check {
+	float: left;
+}
+
+.divcheck label{
+	margin-left: 5px;
+    margin-right: 15px;
+}
+
+fieldset {		
+   	padding: 12px;
+	border: 1px solid #CCCCCC;
+	border-radius: 3px;
+}
+
+legend {
+	padding: 0px 4px;
+}
+
+.chosen-container {
+	min-width: 200px;
+}
+
+.chosen-container .chosen-drop {
+	border-color: #ccc;
+	border-radius: 3px;
+}
+
+.chosen-container .chosen-results {
+	margin: 0;
+	padding: 0;	
+}
+
+.chosen-container .chosen-results li {
+    padding: 10px;
+    color: #333;
+}
+
+.chosen-container .chosen-results li em {
+    font-weight: bold;
+}
+
+.chosen-container .chosen-results li.highlighted {
+	background-color: DodgerBlue;
+	background-image: none !important;
+}
+
+.chosen-container .chosen-results li.no-results {
+    color: #777;  
+    background: transparent;
+}
+
+.chosen-container-single .chosen-single {
+	background: none;
+	background-image: none !important;
+	font-weight: normal;
+	font-size: 12px;
+	color: #333;
+	height: 26px;
+	padding: 0 0 0 5px;
+	box-shadow: none;
+	border-color: #ccc;
+	border-radius: 3px;
+}
+
+.chosen-container-single .chosen-search {    
+    padding: 6px;
+}
+
+.chosen-container-single .chosen-search input[type=text] {	
+	padding: 4px 5px 4px 30px;
+    margin: 0;
+	background: url(../images/lupa.png) no-repeat 2px 1px;
+	background-color: #fff;
+	border-radius: 3px;
+    font-size: 12px;
+    font-family: inherit;
+    color: #777;
+}
+
+.chosen-container-single .chosen-search input[type=text]:focus {
+	border-color: #b2d1ff;
+}
+
+.chosen-container-single .chosen-drop {
+    border-radius: 0 0 3px 3px;
+}
+
+.chosen-container-multi .chosen-choices {
+	border-radius: 3px;
+    background-image: none;
+    border-color: #ccc;
+    box-shadow: none;
+}
+
+.chosen-container-multi .chosen-choices li.search-choice {
+	background-image: none;
+}
+
+.chosen-container-multi .chosen-choices li.search-field input[type=text] {        
+    background-color: #fff;
+    color: #777;
+    margin: 0;
+    font-size: 12px;
+    font-family: inherit;
+    height: 24px;
+}
+
+.chosen-container-active .chosen-single {
+	border-color: #b2d1ff;
+	box-shadow: none;
+}
+
+.chosen-container-active .chosen-choices {
+	border-color: #b2d1ff;
+	box-shadow: none;
+}
+
+.chosen-container-active.chosen-with-drop .chosen-single {
+	border-color: #ccc;
+}

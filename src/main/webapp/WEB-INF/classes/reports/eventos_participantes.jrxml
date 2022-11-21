@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="eventos_participantes" columnCount="2" printOrder="Horizontal" pageWidth="547" pageHeight="802" columnWidth="268" columnSpacing="10" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="eventoid" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     participante.nome AS participante_nome,
+     evento.id AS evento_id
+FROM
+     participante INNER JOIN inscricao ON participante.id = inscricao.participante_id
+     INNER JOIN evento ON inscricao.evento_id = evento.id
+WHERE
+     evento.id = $P{eventoid} AND
+     inscricao.confirmada = 'S'
+ORDER BY
+     participante.nome]]>
+	</queryString>
+	<field name="participante_nome" class="java.lang.String"/>
+	<field name="EVENTO_ID" class="java.math.BigDecimal"/>
+	<variable name="total" class="java.lang.Integer" resetType="None" incrementType="Column" calculation="Count"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="13" splitType="Stretch">
+			<textField>
+				<reportElement positionType="Float" x="0" y="0" width="264" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{participante_nome}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

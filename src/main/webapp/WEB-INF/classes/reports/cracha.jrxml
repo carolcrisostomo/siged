@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cracha" columnCount="2" pageWidth="595" pageHeight="842" columnWidth="277" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="paramWhere" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     tipo_evento.descricao AS evento_tipo,
+     evento.titulo AS evento_titulo,
+     evento.data_inicio_realizacao AS evento_data_inicio_realizacao,
+     evento.data_fim_realizacao AS evento_data_fim_realizacao,
+     participante.nome AS participante_nome,
+     participante.tipo_id AS participante_tipo,
+     entidade.dsentidade AS orgao_descricao,
+     participante.entidade AS participante_entidade,
+     setor.nmsetor AS setor_descricao
+FROM
+     evento INNER JOIN tipo_evento ON evento.tipo_id = tipo_evento.id
+     INNER JOIN inscricao ON evento.id = inscricao.evento_id
+     INNER JOIN participante ON inscricao.participante_id = participante.id
+     LEFT JOIN sapjava_setor ON sapjava_setor.idsetor = participante.setor_id
+     LEFT JOIN sapjava_entidade ON participante.orgao_id = sapjava_entidade.identidade
+$P!{paramWhere}
+
+ORDER BY participante.nome]]>
+	</queryString>
+	<field name="EVENTO_TIPO" class="java.lang.String"/>
+	<field name="EVENTO_TITULO" class="java.lang.String"/>
+	<field name="EVENTO_DATA_INICIO_REALIZACAO" class="java.sql.Timestamp"/>
+	<field name="EVENTO_DATA_FIM_REALIZACAO" class="java.sql.Timestamp"/>
+	<field name="PARTICIPANTE_NOME" class="java.lang.String"/>
+	<field name="PARTICIPANTE_TIPO" class="java.math.BigDecimal"/>
+	<field name="ORGAO_DESCRICAO" class="java.lang.String"/>
+	<field name="PARTICIPANTE_ENTIDADE" class="java.lang.String"/>
+	<field name="SETOR_DESCRICAO" class="java.lang.String"/>
+	<detail>
+		<band height="235" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="4" width="217" height="223"/>
+			</rectangle>
+			<textField>
+				<reportElement x="5" y="7" width="208" height="55"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{EVENTO_TIPO}.toUpperCase()+" "+$F{EVENTO_TITULO}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="5" y="61" width="208" height="18"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[( $F{EVENTO_DATA_INICIO_REALIZACAO} != null ? (new String((new SimpleDateFormat("dd/MM/yyyy").format($F{EVENTO_DATA_INICIO_REALIZACAO})).toString()) + " a " + new String((new SimpleDateFormat("dd/MM/yyyy").format($F{EVENTO_DATA_FIM_REALIZACAO})).toString())).toUpperCase() : "" )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="5" y="83" width="208" height="82"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{PARTICIPANTE_NOME}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="5" y="171" width="208" height="17" isRemoveLineWhenBlank="true"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[( $F{PARTICIPANTE_TIPO}.equals(new BigDecimal(1))? $F{SETOR_DESCRICAO}.toUpperCase() : null )]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="5" y="187" width="208" height="35" isRemoveLineWhenBlank="true"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[( $F{PARTICIPANTE_TIPO}.equals(new BigDecimal(3))
+    ? $F{PARTICIPANTE_ENTIDADE}.toUpperCase() :
+      $F{ORGAO_DESCRICAO}.toUpperCase() )]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

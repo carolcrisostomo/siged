@@ -1,0 +1,10 @@
+set ENV_TARGET=development
+set CI_REPOSITORY
+set EMAIL_PREPARATOR=emailPreparatorDEV
+set EMAIL_PREPARATOR_TESTE=dev@gmail.com
+set HOST_MAIL=mailhog
+set NAME_MAIL=
+set PASSWORD_MAIL=
+set PORT_MAIL=1025
+set SHOW_SQL=true
+set VOL_MATERIAL_PATH=.

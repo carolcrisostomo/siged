@@ -1,0 +1,1516 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
+<!-- 2018-12-21T16:16:20 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cronograma" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0744b5b1-81a1-484e-8c1d-72692fc85819">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table" fontName="CustomSans">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#A9A9A9" fontName="CustomSans">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#FFBFBF" fontName="CustomSans">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF" fontName="CustomSans">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1" fontName="CustomSans">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#73B0E6" fontName="CustomSans">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#CFDBE6" fontName="CustomSans">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF" fontName="CustomSans">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2" fontName="CustomSans">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#73B0E6" fontName="CustomSans">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#CFDBE6" fontName="CustomSans">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF" fontName="CustomSans">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3" fontName="CustomSans">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TH" mode="Opaque" backcolor="#73B0E6" fontName="CustomSans">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_CH" mode="Opaque" backcolor="#CFDBE6" fontName="CustomSans">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TD" mode="Opaque" backcolor="#FFFFFF" fontName="CustomSans">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<parameter name="param" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ano" class="java.lang.String"/>
+	<parameter name="tipo" class="java.lang.String"/>
+	<parameter name="modalidade" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT DISTINCT
+	evento.id AS evento_id,
+     evento.titulo AS evento_titulo,
+     evento.carga_horaria AS evento_carga_horaria,
+     tipo_evento.descricao AS tipo_evento_descricao,
+     evento.data_inicio_previsto AS data_inicio_previsto
+$P!{param}]]>
+	</queryString>
+	<field name="EVENTO_ID" class="java.math.BigDecimal"/>
+	<field name="EVENTO_TITULO" class="java.lang.String"/>
+	<field name="EVENTO_CARGA_HORARIA" class="java.math.BigDecimal"/>
+	<field name="TIPO_EVENTO_DESCRICAO" class="java.lang.String"/>
+	<variable name="CH_SUM" class="java.math.BigDecimal" incrementType="Group" incrementGroup="group" calculation="Sum">
+		<variableExpression><![CDATA[$F{EVENTO_CARGA_HORARIA}]]></variableExpression>
+	</variable>
+	<group name="group">
+		<groupExpression><![CDATA[$F{EVENTO_ID}]]></groupExpression>
+	</group>
+	<pageHeader>
+		<band height="113" splitType="Stretch">
+			<image isUsingCache="false" onErrorType="Blank">
+				<reportElement x="10" y="2" width="81" height="40" uuid="3d64d64a-d8bd-49fc-9e23-cb81f155356c"/>
+				<imageExpression><![CDATA["images/logo_IPC.gif"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="0" y="11" width="800" height="28" uuid="13f2d328-c2f1-4ab3-b39a-5d8329a312d0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="17" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Cronograma de Treinamento Anual - " +  $P{ano}]]></textFieldExpression>
+			</textField>
+			<image isUsingCache="false" onErrorType="Blank">
+				<reportElement x="651" y="2" width="164" height="34" uuid="f991ce25-8023-45c2-9f8e-c3c205fcab16"/>
+				<imageExpression><![CDATA["images/logo_TCE2.jpg"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="0" y="58" width="802" height="20" uuid="79814ce0-b59b-45ce-b388-b282caf7af9e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["PÚBLICO ALVO: " + $P{tipo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="78" width="802" height="20" uuid="afb98918-8b7d-47ca-828d-5a4221d75053"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["MODALIDADE: " + $P{modalidade}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="table 3_TH" x="0" y="46" width="120" height="15" backcolor="#FFFFFF" uuid="584d7e16-65fb-4b83-82f9-6e277a6a9382"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[LEGENDA:]]></text>
+			</staticText>
+			<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="63" width="20" height="15" backcolor="#00B0F0" uuid="41a0fb21-4713-4317-b31f-7bcdf98a1c48"/>
+				<imageExpression><![CDATA["images/indice_vertical.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="table 3_TH" x="20" y="63" width="100" height="15" backcolor="#FFFFFF" uuid="85c889bc-bd6b-457a-8118-83b1964905b9"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[PREVISTO]]></text>
+			</staticText>
+			<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="78" width="20" height="15" backcolor="#4FFF6C" uuid="6981075f-6eae-4476-8f03-219aae35ad57"/>
+				<imageExpression><![CDATA["images/indice_horizontal.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="table 3_TH" x="20" y="78" width="100" height="15" backcolor="#FFFFFF" uuid="f7adcdb0-b77f-43bb-a4ed-00f6a26eee32"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[REALIZADO]]></text>
+			</staticText>
+			<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="93" width="20" height="15" backcolor="#FFFB00" uuid="80d3e1d8-ed18-428c-9ad5-dfaa36bcf6dc"/>
+				<imageExpression><![CDATA["images/indice_diagonal.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="table 3_TH" x="20" y="93" width="100" height="15" backcolor="#FFFFFF" uuid="38030899-63a9-43e5-bf57-4847a041cc06"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[REPROGRAMADO]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement style="table 3_TH" x="0" y="0" width="22" height="30" backcolor="#CCCCFF" uuid="e5e709ae-bbff-4be0-b2a3-1ecd35240acd"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[N°]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="22" y="0" width="206" height="30" backcolor="#CCCCFF" uuid="f39923ca-98e7-4ce1-9dfc-d7447ec3f913"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<text><![CDATA[EVENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="228" y="0" width="34" height="30" backcolor="#CCCCFF" uuid="4f859949-4649-4a7c-a831-eadfd8289133"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[C.H.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="262" y="0" width="45" height="15" backcolor="#CCCCFF" uuid="a5e324be-116b-47cf-9a77-4f0093c2b024"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[JAN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="262" y="15" width="15" height="15" backcolor="#CCCCFF" uuid="7397b23c-a7fd-40de-a194-0fc865b7f5ad"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[P]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="277" y="15" width="15" height="15" backcolor="#CCCCFF" uuid="32381438-f4d8-4d88-8dcf-74eaa297cf80"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[R]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="292" y="15" width="15" height="15" backcolor="#CCCCFF" uuid="77859bc2-6c36-49a7-8adc-57d75ba67336"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[RP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="307" y="0" width="45" height="15" backcolor="#CCCCFF" uuid="f1610cc6-ec28-4bb3-a640-67fb6ef84c08"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[FEV]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="307" y="15" width="15" height="15" backcolor="#CCCCFF" uuid="1885c857-c27e-490b-8872-2dc935dcc791"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[P]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="322" y="15" width="15" height="15" backcolor="#CCCCFF" uuid="d26ddc89-0226-4845-9359-d3b6f102417a"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[R]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="337" y="15" width="15" height="15" backcolor="#CCCCFF" uuid="95fab113-432d-4251-8a25-8513a75914ca"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[RP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="352" y="0" width="45" height="15" backcolor="#CCCCFF" uuid="a0020517-a9a4-4deb-a2cb-7fd5abfbdb46"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[MAR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="352" y="15" width="15" height="15" backcolor="#CCCCFF" uuid="1782116a-b740-46ee-a6e0-e86e14596d0d"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[P]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="367" y="15" width="15" height="15" backcolor="#CCCCFF" uuid="18b364ff-9a52-45cf-a903-0cb567a98354"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[R]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="382" y="15" width="15" height="15" backcolor="#CCCCFF" uuid="a024249e-aadd-4329-a551-ab53a9dee6f8"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[RP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="397" y="0" width="45" height="15" backcolor="#CCCCFF" uuid="988c5fe1-1b6d-46ab-a3f1-8a587c5ed4d7"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[ABR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="397" y="15" width="15" height="15" backcolor="#CCCCFF" uuid="789b31a8-0e9f-420f-9f27-bd6e48873959"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[P]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="412" y="15" width="15" height="15" backcolor="#CCCCFF" uuid="81b666f1-3123-4aa1-b159-c1ad19ba3faa"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[R]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="427" y="15" width="15" height="15" backcolor="#CCCCFF" uuid="c2f228be-542d-46a5-a314-8f9092d3fda2"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[RP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="442" y="0" width="45" height="15" backcolor="#CCCCFF" uuid="4fc0470a-7047-49d7-a8b9-6967b307a89c"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[MAI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="442" y="15" width="15" height="15" backcolor="#CCCCFF" uuid="23b20e5d-5c4a-4ae3-81f5-53f4d1f7c53c"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[P]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="457" y="15" width="15" height="15" backcolor="#CCCCFF" uuid="9421d68d-c566-4817-b36b-7ec060d1bbdc"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[R]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="472" y="15" width="15" height="15" backcolor="#CCCCFF" uuid="f4fe6304-e7bf-4381-8946-9cd4c51bc0cf"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[RP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="487" y="0" width="45" height="15" backcolor="#CCCCFF" uuid="64249464-d503-4376-95de-6cc4099be59f"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[JUN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="487" y="15" width="15" height="15" backcolor="#CCCCFF" uuid="7dd01d70-d3f7-4b6f-a47a-a804532336fa"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[P]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="502" y="15" width="15" height="15" backcolor="#CCCCFF" uuid="2b1831f6-7f5f-49c0-a3d7-614499e239c0"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[R]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="517" y="15" width="15" height="15" backcolor="#CCCCFF" uuid="dae7452c-6c51-488a-a163-67e6b83c49f9"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[RP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="532" y="0" width="45" height="15" backcolor="#CCCCFF" uuid="fb296874-d18c-416c-a743-cf64d2ae7308"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[JUL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="532" y="15" width="15" height="15" backcolor="#CCCCFF" uuid="99ef73a5-f0b0-4b3c-b97b-6e435f9c944a"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[P]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="547" y="15" width="15" height="15" backcolor="#CCCCFF" uuid="919cd5b5-524c-4670-b9ff-a8ed874ee3b0"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[R]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="562" y="15" width="15" height="15" backcolor="#CCCCFF" uuid="eaa7bfa9-97af-41f9-9fd9-94b0bcd7bb41"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[RP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="577" y="0" width="45" height="15" backcolor="#CCCCFF" uuid="f40f9e67-a719-4a45-b293-1f2a93c9ddd7"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[AGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="577" y="15" width="15" height="15" backcolor="#CCCCFF" uuid="c9c10b50-269b-406c-a948-a026adfe38e7"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[P]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="592" y="15" width="15" height="15" backcolor="#CCCCFF" uuid="207c562b-eda5-4cf9-8316-97a74ddc1509"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[R]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="607" y="15" width="15" height="15" backcolor="#CCCCFF" uuid="47b4a20b-b511-44b7-9c72-3e086e9c43dd"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[RP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="622" y="0" width="45" height="15" backcolor="#CCCCFF" uuid="df6858af-a84d-49d3-bc80-5e0053d01e42"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[SET]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="622" y="15" width="15" height="15" backcolor="#CCCCFF" uuid="c41b0aab-dfa5-4196-b11d-76fa8aaa345d"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[P]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="637" y="15" width="15" height="15" backcolor="#CCCCFF" uuid="73e125d2-b7c7-4e57-990d-8df0615fd9e5"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[R]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="652" y="15" width="15" height="15" backcolor="#CCCCFF" uuid="e7433aca-7402-4c35-a022-fd68ef0672f0"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[RP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="667" y="0" width="45" height="15" backcolor="#CCCCFF" uuid="69c3c9b4-9da8-4d0f-9fd2-85cb1d0f96b3"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[OUT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="667" y="15" width="15" height="15" backcolor="#CCCCFF" uuid="fd1e9178-74de-4cd9-8432-72bb6d877a96"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[P]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="682" y="15" width="15" height="15" backcolor="#CCCCFF" uuid="6c3199ad-42b3-43ef-815a-7af210890dcb"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[R]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="697" y="15" width="15" height="15" backcolor="#CCCCFF" uuid="39e9cb7b-c553-4499-a83b-d1845f59383b"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[RP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="712" y="0" width="45" height="15" backcolor="#CCCCFF" uuid="7232439d-2bc1-4e5a-99f9-3a2b2e885402"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[NOV]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="712" y="15" width="15" height="15" backcolor="#CCCCFF" uuid="aa07ed82-ca60-42fa-bd7a-672abf5a1594"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[P]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="727" y="15" width="15" height="15" backcolor="#CCCCFF" uuid="25b8c455-7314-4537-85ec-bc4a74aadb79"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[R]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="742" y="15" width="15" height="15" backcolor="#CCCCFF" uuid="a8fe7905-7da6-4534-920e-46cd14134db3"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[RP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="757" y="0" width="45" height="15" backcolor="#CCCCFF" uuid="cd961909-420c-4deb-a442-4bf0a1221d1e"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[DEZ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="757" y="15" width="15" height="15" backcolor="#CCCCFF" uuid="04dc7547-1b32-4613-b032-88812c200ef2"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[P]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="772" y="15" width="15" height="15" backcolor="#CCCCFF" uuid="b3d49e13-06ae-404f-aa04-2136d6e213d6"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[R]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 3_TH" x="787" y="15" width="15" height="15" backcolor="#CCCCFF" uuid="be7414f5-f633-4522-82d6-ff3b7d5bd5cd"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[RP]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement style="table_TD" stretchType="RelativeToTallestObject" x="0" y="0" width="22" height="20" uuid="b32f1173-5213-4724-b9ea-8cd98af5025f"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="table_TD" stretchType="RelativeToTallestObject" x="22" y="0" width="206" height="20" uuid="5ce7bfcc-c72c-46a7-a260-abe019354106"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TIPO_EVENTO_DESCRICAO}+" "+$F{EVENTO_TITULO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="228" y="0" width="34" height="20" uuid="8769a87e-0203-4aeb-a5cd-8ff49f2c489f"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{EVENTO_CARGA_HORARIA}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="262" y="0" width="45" height="20" uuid="6bfad05c-469e-41bb-8941-0117dd3aae46"/>
+				<subreportParameter name="mes">
+					<subreportParameterExpression><![CDATA["1"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ano">
+					<subreportParameterExpression><![CDATA[$P{ano}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="evento">
+					<subreportParameterExpression><![CDATA[$F{EVENTO_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="evento_titulo">
+					<subreportParameterExpression><![CDATA[$F{TIPO_EVENTO_DESCRICAO}+" "+$F{EVENTO_TITULO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reports/cronograma_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="262" y="0" width="15" height="20" uuid="8aefe517-576b-40ec-9076-cdc2de7d842a"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="277" y="0" width="15" height="20" uuid="bd2a6f18-dcd2-4913-bfb9-0b79eb209e16"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="292" y="0" width="15" height="20" uuid="694f4aa1-2cd5-4f43-b6bf-4eeaf17ce431"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</textField>
+			<subreport>
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="307" y="0" width="45" height="20" uuid="213cfdd4-5445-468f-a821-58282cbb30e2"/>
+				<subreportParameter name="mes">
+					<subreportParameterExpression><![CDATA["2"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ano">
+					<subreportParameterExpression><![CDATA[$P{ano}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="evento">
+					<subreportParameterExpression><![CDATA[$F{EVENTO_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="evento_titulo">
+					<subreportParameterExpression><![CDATA[$F{TIPO_EVENTO_DESCRICAO}+" "+$F{EVENTO_TITULO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reports/cronograma_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="307" y="0" width="15" height="20" uuid="9dcc4ab5-84e2-419a-90fb-c99cf45e1a08"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="322" y="0" width="15" height="20" uuid="3e0b914d-261f-4c5d-a69e-2f2c558e8dc5"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="337" y="0" width="15" height="20" uuid="326f4b4d-ebed-440d-ae2d-84f2083bf8a4"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</textField>
+			<subreport>
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="352" y="0" width="45" height="20" uuid="db00b815-ed0b-40c7-abac-c9df08db886b"/>
+				<subreportParameter name="mes">
+					<subreportParameterExpression><![CDATA["3"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ano">
+					<subreportParameterExpression><![CDATA[$P{ano}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="evento">
+					<subreportParameterExpression><![CDATA[$F{EVENTO_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="evento_titulo">
+					<subreportParameterExpression><![CDATA[$F{TIPO_EVENTO_DESCRICAO}+" "+$F{EVENTO_TITULO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reports/cronograma_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="352" y="0" width="15" height="20" uuid="b541f5bd-f7fc-4ea7-89d7-baea776c33ba"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="367" y="0" width="15" height="20" uuid="6433a02b-a63d-43af-a1cf-a455e79ccfe1"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="382" y="0" width="15" height="20" uuid="91604fcb-6754-49b4-8dab-67c9d8a04c67"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</textField>
+			<subreport>
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="397" y="0" width="45" height="20" isPrintInFirstWholeBand="true" uuid="928eebd0-120a-4b13-8efd-72746f39fbe8"/>
+				<subreportParameter name="mes">
+					<subreportParameterExpression><![CDATA["4"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ano">
+					<subreportParameterExpression><![CDATA[$P{ano}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="evento">
+					<subreportParameterExpression><![CDATA[$F{EVENTO_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="evento_titulo">
+					<subreportParameterExpression><![CDATA[$F{TIPO_EVENTO_DESCRICAO}+" "+$F{EVENTO_TITULO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reports/cronograma_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="397" y="0" width="15" height="20" uuid="83c42943-3f6e-4629-a630-5f3ad12504a4"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="412" y="0" width="15" height="20" uuid="68e8002a-1c3b-45d4-89ee-01fd87dc3db0"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="427" y="0" width="15" height="20" uuid="90d4cb92-c1da-492b-b923-3ba73961f26a"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</textField>
+			<subreport>
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="442" y="0" width="45" height="20" uuid="b8afa97f-4b43-4818-9bfb-909fa39cace9"/>
+				<subreportParameter name="mes">
+					<subreportParameterExpression><![CDATA["5"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ano">
+					<subreportParameterExpression><![CDATA[$P{ano}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="evento">
+					<subreportParameterExpression><![CDATA[$F{EVENTO_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="evento_titulo">
+					<subreportParameterExpression><![CDATA[$F{TIPO_EVENTO_DESCRICAO}+" "+$F{EVENTO_TITULO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reports/cronograma_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="442" y="0" width="15" height="20" uuid="41fe0e5b-4d2b-4027-a66a-c142cd302aad"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="457" y="0" width="15" height="20" uuid="67c9de3f-47c0-487e-8875-5e80777637ea"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="472" y="0" width="15" height="20" uuid="512b7fe9-8b9f-45e6-b889-a918df5084e2"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</textField>
+			<subreport>
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="487" y="0" width="45" height="20" uuid="085a23fd-4e76-4614-b59f-97e8d3f5a782"/>
+				<subreportParameter name="mes">
+					<subreportParameterExpression><![CDATA["6"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ano">
+					<subreportParameterExpression><![CDATA[$P{ano}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="evento">
+					<subreportParameterExpression><![CDATA[$F{EVENTO_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="evento_titulo">
+					<subreportParameterExpression><![CDATA[$F{TIPO_EVENTO_DESCRICAO}+" "+$F{EVENTO_TITULO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reports/cronograma_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="487" y="0" width="15" height="20" uuid="a8364c86-9537-49ad-84c5-5dcdc92d771e"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="502" y="0" width="15" height="20" uuid="0c3950c4-cd7a-45fa-a39e-b2b249a751e2"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="517" y="0" width="15" height="20" uuid="3452f397-ef82-4524-81bb-988a1df22dc3"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</textField>
+			<subreport>
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="532" y="0" width="45" height="20" uuid="6cec3a7c-1e66-4d5b-ac84-612f7a27c357"/>
+				<subreportParameter name="mes">
+					<subreportParameterExpression><![CDATA["7"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ano">
+					<subreportParameterExpression><![CDATA[$P{ano}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="evento">
+					<subreportParameterExpression><![CDATA[$F{EVENTO_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="evento_titulo">
+					<subreportParameterExpression><![CDATA[$F{TIPO_EVENTO_DESCRICAO}+" "+$F{EVENTO_TITULO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reports/cronograma_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="532" y="0" width="15" height="20" uuid="ad4cd38f-3c6d-4dde-8ade-6f93e7a789dc"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="547" y="0" width="15" height="20" uuid="6b05cce2-0595-4e9c-9627-d25e502a8afe"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="562" y="0" width="15" height="20" uuid="d5b104c1-0707-45eb-844f-fec5b09f93e1"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</textField>
+			<subreport>
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="577" y="0" width="45" height="20" uuid="92acbc63-47db-436d-ae16-844c367f3792"/>
+				<subreportParameter name="mes">
+					<subreportParameterExpression><![CDATA["8"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ano">
+					<subreportParameterExpression><![CDATA[$P{ano}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="evento">
+					<subreportParameterExpression><![CDATA[$F{EVENTO_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="evento_titulo">
+					<subreportParameterExpression><![CDATA[$F{TIPO_EVENTO_DESCRICAO}+" "+$F{EVENTO_TITULO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reports/cronograma_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="577" y="0" width="15" height="20" uuid="8811aa18-1a7f-4de6-a501-722411a8faf3"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="592" y="0" width="15" height="20" uuid="5f133af6-95a0-4a70-93eb-2a683ca80e16"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="607" y="0" width="15" height="20" uuid="8f78245b-a066-489b-a65f-af968dccdf87"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</textField>
+			<subreport>
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="622" y="0" width="45" height="20" uuid="c31d7931-298d-4d49-9b7e-9abe557f7f27"/>
+				<subreportParameter name="mes">
+					<subreportParameterExpression><![CDATA["9"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ano">
+					<subreportParameterExpression><![CDATA[$P{ano}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="evento">
+					<subreportParameterExpression><![CDATA[$F{EVENTO_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="evento_titulo">
+					<subreportParameterExpression><![CDATA[$F{TIPO_EVENTO_DESCRICAO}+" "+$F{EVENTO_TITULO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reports/cronograma_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="622" y="0" width="15" height="20" uuid="1e84b559-d283-4a9c-9255-33db59647b8c"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="637" y="0" width="15" height="20" uuid="816e6a6e-f316-4b4e-8020-9705a4542bf8"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="652" y="0" width="15" height="20" uuid="e6068d58-8ca9-4779-9e97-20046c9de652"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</textField>
+			<subreport>
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="667" y="0" width="45" height="20" uuid="270bac76-92ff-4c33-b6f1-40f5f7587195"/>
+				<subreportParameter name="mes">
+					<subreportParameterExpression><![CDATA["10"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ano">
+					<subreportParameterExpression><![CDATA[$P{ano}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="evento">
+					<subreportParameterExpression><![CDATA[$F{EVENTO_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="evento_titulo">
+					<subreportParameterExpression><![CDATA[$F{TIPO_EVENTO_DESCRICAO}+" "+$F{EVENTO_TITULO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reports/cronograma_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="667" y="0" width="15" height="20" uuid="d87b4f0e-94bc-49af-9b32-ec82b1c23ea2"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="682" y="0" width="15" height="20" uuid="6c937f38-92e9-4b5a-ac00-f379ccda0d88"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="697" y="0" width="15" height="20" uuid="ddbb09a9-c0fc-4268-9b99-9f65854bd023"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</textField>
+			<subreport>
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="712" y="0" width="45" height="20" uuid="144df1d1-cec6-441c-aa5a-b46a3b9390c6"/>
+				<subreportParameter name="mes">
+					<subreportParameterExpression><![CDATA["11"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ano">
+					<subreportParameterExpression><![CDATA[$P{ano}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="evento">
+					<subreportParameterExpression><![CDATA[$F{EVENTO_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="evento_titulo">
+					<subreportParameterExpression><![CDATA[$F{TIPO_EVENTO_DESCRICAO}+" "+$F{EVENTO_TITULO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reports/cronograma_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="712" y="0" width="15" height="20" uuid="b80a36e8-eb83-43c4-b826-c8a8e89de0fb"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="727" y="0" width="15" height="20" uuid="06ef30ee-9d5d-4d60-b443-ae71b429d2bb"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="742" y="0" width="15" height="20" uuid="387f33f7-00ea-469e-87ce-ee6d2fa097e8"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</textField>
+			<subreport>
+				<reportElement stretchType="RelativeToTallestObject" mode="Transparent" x="757" y="0" width="45" height="20" uuid="dbfc5f43-be2c-4a0f-9381-84216ed617c8"/>
+				<subreportParameter name="mes">
+					<subreportParameterExpression><![CDATA["12"]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ano">
+					<subreportParameterExpression><![CDATA[$P{ano}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="evento">
+					<subreportParameterExpression><![CDATA[$F{EVENTO_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="evento_titulo">
+					<subreportParameterExpression><![CDATA[$F{TIPO_EVENTO_DESCRICAO}+" "+$F{EVENTO_TITULO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reports/cronograma_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="757" y="0" width="15" height="20" uuid="a5d2f4fa-13a7-4774-94cc-cb4bff9a7e8a"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="772" y="0" width="15" height="20" uuid="06b4b7ae-988e-4529-b489-653632c95585"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="787" y="0" width="15" height="20" uuid="cca0ee38-ccc5-4b06-a039-0a164cf7f06e"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="682" y="2" width="80" height="18" uuid="cf279353-6570-4d47-835f-8be9dbd481e0"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="762" y="2" width="40" height="18" uuid="68f0918f-c013-4791-9798-b2a177539034"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="20">
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement mode="Transparent" x="0" y="2" width="620" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="95c66704-f7b7-41f9-b9eb-a896b2f1c7a9"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="9" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Relatório gerado em " + new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss").format(new java.util.Date())]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="682" y="2" width="80" height="18" uuid="4508d2d2-a36d-4943-8047-e377fd5e8197"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="762" y="2" width="40" height="18" uuid="f0e47b91-b27b-497a-bfb9-a11b68d69c23"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</lastPageFooter>
+	<summary>
+		<band height="18">
+			<staticText>
+				<reportElement x="0" y="0" width="228" height="18" uuid="bddc3f4f-6d4a-4f8a-a185-a02de4eccabe"/>
+				<box rightPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="CustomSans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="228" y="0" width="34" height="18" uuid="e63fdc60-024a-4746-a543-cc93dcf3b51b"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="CustomSans" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{CH_SUM}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="262" y="0" width="540" height="18" uuid="09157fde-af5d-4f01-b440-49ed109c422e"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="CustomSans"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

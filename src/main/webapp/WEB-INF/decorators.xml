@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+
+<decorators defaultdir="/WEB-INF/decorators">
+    
+    <decorator name="master" page="master.jsp">
+        <pattern>/*</pattern>
+    </decorator>
+    
+    <decorator name="modal" page="modal.jsp">
+    	<pattern>/material/didatico/*</pattern>    	
+        <pattern>/evento/participantes/*</pattern>
+        <pattern>/evento/gastos/*</pattern>
+        <pattern>/evento/desempenhos/*</pattern>
+        <pattern>/inscricao/justificativa/*</pattern>
+        <pattern>/eventoextra/justificativa/*</pattern>
+        <pattern>/evento/justificativa/*</pattern>
+        <pattern>/avaliacao/formalunocertificado/*</pattern>
+    </decorator>     
+
+</decorators>

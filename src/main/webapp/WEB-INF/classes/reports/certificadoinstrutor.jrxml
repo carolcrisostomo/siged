@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
+<!-- 2022-06-23T14:29:50 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="certificado" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="70a0dc58-635d-4857-917c-406ecab43ede">
+	<property name="ireport.zoom" value="0.75"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="96"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<style name="Nome" hTextAlign="Center" vTextAlign="Middle" fontName="Times New Roman" fontSize="30">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{nomeInstrutor}.length() >= 32 && $F{nomeInstrutor}.length() < 41]]></conditionExpression>
+			<style hTextAlign="Center" vTextAlign="Middle" fontName="Times New Roman" fontSize="26"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{nomeInstrutor}.length() >= 41 && $F{nomeInstrutor}.length() < 45]]></conditionExpression>
+			<style hTextAlign="Center" vTextAlign="Middle" fontName="Times New Roman" fontSize="24"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{nomeInstrutor}.length() >= 45 && $F{nomeInstrutor}.length() < 49]]></conditionExpression>
+			<style hTextAlign="Center" vTextAlign="Middle" fontName="Times New Roman" fontSize="22"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{nomeInstrutor}.length() >= 49 && $F{nomeInstrutor}.length() < 53]]></conditionExpression>
+			<style hTextAlign="Center" vTextAlign="Middle" fontName="Times New Roman" fontSize="20"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{nomeInstrutor}.length() >= 53 && $F{nomeInstrutor}.length() < 57]]></conditionExpression>
+			<style hTextAlign="Center" vTextAlign="Middle" fontName="Times New Roman" fontSize="18"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{nomeInstrutor}.length() >= 57]]></conditionExpression>
+			<style hTextAlign="Center" vTextAlign="Middle" fontName="Times New Roman" fontSize="16"/>
+		</conditionalStyle>
+	</style>
+	<style name="Titulo_Evento" hTextAlign="Center" vTextAlign="Top" rotation="None" fontName="Times New Roman" fontSize="20" isItalic="true">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{situacao}.length() >= 120 && $F{situacao}.length() < 130]]></conditionExpression>
+			<style hTextAlign="Center" vTextAlign="Top" rotation="None" fontName="Times New Roman" fontSize="20" isItalic="true"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{situacao}.length() >= 130 && $F{situacao}.length() < 140]]></conditionExpression>
+			<style hTextAlign="Center" vTextAlign="Top" rotation="None" fontName="Times New Roman" fontSize="18" isItalic="true"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{situacao}.length() >= 140 && $F{situacao}.length() < 150]]></conditionExpression>
+			<style hTextAlign="Center" vTextAlign="Top" rotation="None" fontName="Times New Roman" fontSize="16" isItalic="true"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{situacao}.length() >= 150]]></conditionExpression>
+			<style hTextAlign="Center" vTextAlign="Top" rotation="None" fontName="Times New Roman" fontSize="14" isItalic="true"/>
+		</conditionalStyle>
+	</style>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="situacao" class="java.lang.String">
+		<fieldDescription><![CDATA[situacao]]></fieldDescription>
+	</field>
+	<field name="periodo" class="java.lang.String">
+		<fieldDescription><![CDATA[periodo]]></fieldDescription>
+	</field>
+	<field name="dataFimRealizacaoPorExtenso" class="java.lang.String">
+		<fieldDescription><![CDATA[dataFimRealizacaoPorExtenso]]></fieldDescription>
+	</field>
+	<field name="conteudoProgramatico" class="java.lang.String">
+		<fieldDescription><![CDATA[conteudoProgramatico]]></fieldDescription>
+	</field>
+	<field name="nomeInstrutor" class="java.lang.String">
+		<fieldDescription><![CDATA[nomeInstrutor]]></fieldDescription>
+	</field>
+	<field name="cargaHoraria" class="java.lang.String">
+		<fieldDescription><![CDATA[cargaHoraria]]></fieldDescription>
+	</field>
+	<field name="local" class="java.lang.String">
+		<fieldDescription><![CDATA[local]]></fieldDescription>
+	</field>
+	<field name="moduloUnico" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[moduloUnico]]></fieldDescription>
+	</field>
+	<field name="modalidadeDescricao" class="java.lang.String">
+		<fieldDescription><![CDATA[modalidadeDescricao]]></fieldDescription>
+	</field>
+	<detail>
+		<band height="555" splitType="Stretch">
+			<image scaleImage="FillFrame" isUsingCache="true" onErrorType="Blank">
+				<reportElement positionType="Float" x="0" y="0" width="802" height="535" uuid="5309a070-30d3-4cb0-9ec5-6459658b758d"/>
+				<imageExpression><![CDATA["images/back_certificado.jpg"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement style="Nome" positionType="Float" isPrintRepeatedValues="false" x="162" y="156" width="640" height="38" uuid="caf4fc91-8f4d-4975-9a42-7679dc4bccee"/>
+				<textFieldExpression><![CDATA[$F{nomeInstrutor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Titulo_Evento" positionType="Float" x="162" y="210" width="640" height="104" uuid="8a6a9e79-86e4-423e-a739-0c52cbe975a4"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Times New Roman" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{situacao} + $F{local} + $F{periodo} + ", com carga horária de " + $F{cargaHoraria} + " horas."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="162" y="106" width="640" height="40" uuid="9faeeefe-231d-41fa-bf26-8e219ace61c4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="30" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Certificamos que ]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="162" y="320" width="640" height="41" uuid="868366f0-b88f-4030-8676-4d4d1371d06c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="20" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Fortaleza, " + $F{dataFimRealizacaoPorExtenso} + "."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="535" width="231" height="20" isPrintWhenDetailOverflows="true" uuid="41608c38-8740-42a2-a25d-5985bc2102bc"/>
+				<box rightPadding="0"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{modalidadeDescricao}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="RetainShape" hAlign="Left" vAlign="Middle">
+				<reportElement positionType="Float" x="492" y="405" width="310" height="72" uuid="f102b34f-9b49-4b28-97c0-3125e9c33c3e">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<imageExpression><![CDATA["images/assinatura_ernesto_saboia.png"]]></imageExpression>
+			</image>
+			<image scaleImage="RetainShape" hAlign="Right" vAlign="Middle">
+				<reportElement positionType="Float" x="162" y="405" width="310" height="70" uuid="e9f5e0eb-5f62-4073-9eb8-e613239bb8fe">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<imageExpression><![CDATA["images/assinatura_luis_eduardo.png"]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+	<summary>
+		<band height="555" splitType="Prevent">
+			<printWhenExpression><![CDATA[$F{moduloUnico} && $F{conteudoProgramatico} != null && !$F{conteudoProgramatico}.isEmpty()]]></printWhenExpression>
+			<image scaleImage="FillFrame" isUsingCache="true" onErrorType="Blank">
+				<reportElement positionType="Float" x="0" y="0" width="802" height="535" uuid="a2420766-339c-4c97-ada3-cadac78c3642"/>
+				<imageExpression><![CDATA["images/back_certificado.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement positionType="Float" x="162" y="106" width="640" height="24" uuid="49ed3e39-f10b-4fa3-b2ed-49d3c7f8f0ec"/>
+				<textElement textAlignment="Left">
+					<font fontName="Times New Roman" size="20" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Conteúdo Programático:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="162" y="140" width="640" height="379" uuid="f67b9d59-99ca-45a7-8256-50a24af92009"/>
+				<textElement textAlignment="Left">
+					<font fontName="Times New Roman" size="12" isItalic="false"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{conteudoProgramatico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="535" width="231" height="20" uuid="6f41f856-fa29-4926-b36e-9b516f53ba08"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{modalidadeDescricao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

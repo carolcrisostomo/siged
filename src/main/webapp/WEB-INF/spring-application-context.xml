@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xsi:schemaLocation="        
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+		http://www.springframework.org/schema/aop 
+  		http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+  	
+  	<!-- The important thing to note is that we have to set the “searchSystemEnvironment” flag to true (so that Spring can see system variables). -->
+	<bean id="propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="searchSystemEnvironment" value="true" />
+	</bean>
+
+	<context:property-placeholder 
+		location="classpath:application.properties,classpath:application-${ENV_TARGET}.properties"/>
+		
+	<alias name="${siged.email.preparator}" alias="emailPreparatorAlias"/>
+
+	<mvc:annotation-driven />
+	
+	<context:annotation-config />
+	
+	<tx:annotation-driven />	
+	
+	<mvc:view-controller path="/" view-name="redirect:/evento/previstos"/>
+
+	<mvc:resources mapping="/static/docs/**" location="/docs/" />
+	<mvc:resources mapping="/static/images/**" location="/images/" />
+ 	<mvc:resources mapping="/static/js/**" location="/js/" />
+	<mvc:resources mapping="/static/js/jquery/**" location="/js/jquery/" />
+ 	<mvc:resources mapping="/static/styles/**" location="/styles/" /> 	
+ 	
+
+	<context:component-scan base-package="br.com.siged" />
+	
+	
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>	
+	
+	
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+	
+	
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename" value="messages"></property>
+	</bean>	
+	
+	
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		
+		<property name="driverClass" value="${dataSource.driverClass}" />
+		<property name="jdbcUrl" value="${dataSource.url}" />
+		<property name="user" value="${dataSource.user}" />
+		<property name="password" value="${dataSource.password}" />
+		
+		<property name="acquireIncrement" value="${dataSource.acquireIncrement}" />
+		<property name="initialPoolSize" value="${dataSource.initialPoolSize}" />
+		<property name="minPoolSize" value="${dataSource.minPoolSize}" />
+		<property name="maxPoolSize" value="${dataSource.maxPoolSize}" />
+		<property name="maxConnectionAge" value="${dataSource.maxConnectionAge}" />
+		<property name="maxIdleTime" value="${dataSource.maxIdleTime}" />
+		<property name="maxIdleTimeExcessConnections" value="${dataSource.maxIdleTimeExcessConnections}" />
+		<property name="testConnectionOnCheckout" value="${dataSource.testConnectionOnCheckout}" />
+		        
+	</bean>	
+			
+	<bean id="entityManagerFactory"	class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="persistenceUnitName" value="${entityManagerFactory.persistenceUnitName}" />
+		<property name="dataSource" ref="dataSource" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="showSql" value="${entityManagerFactory.showSql}" />
+				<property name="generateDdl" value="${entityManagerFactory.generateDdl}" />
+				<property name="databasePlatform" value="${entityManagerFactory.databasePlatform}" />
+			</bean>
+		</property>
+		<property name="jpaProperties">
+        	<props>
+            	<prop key="hibernate.hbm2ddl.auto">update</prop>
+        	</props>
+    	</property>
+	</bean>		
+			
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+ 
+ 
+	<bean id="emailUtil" class="br.com.siged.util.EmailUtil">
+		<property name="mailSender" ref="mailSender"/>
+	</bean>
+	
+		
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${mailSender.host}" />
+		<property name="port" value="${mailSender.port}" />
+		<property name="username" value="${mailSender.username}" />
+		<property name="password" value="${mailSender.password}" />
+
+		<property name="javaMailProperties">
+	   		<props>
+       	      	<prop key="mail.smtp.auth">true</prop>
+       	      	<prop key="mail.debug">true</prop>
+       	      	<prop key="mail.mime.charset">UTF-8</prop>
+       	      	<prop key="mail.transport.protocol">smtp</prop>
+       	   </props>
+		</property>
+	</bean>	
+	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="-1" />				
+	</bean>	
+	
+	<!-- Exception Handler -->
+	<aop:config>
+		<aop:aspect id="exceptionHandlerAspect" ref="exceptionHandler">
+			<aop:pointcut id="allMethods"
+				expression="execution(* br.com.siged..*.*(..))" />
+			<aop:around pointcut-ref="allMethods" method="handle" />
+		</aop:aspect>
+	</aop:config>
+	
+	<aop:aspectj-autoproxy proxy-target-class="true"/>
+	
+</beans>

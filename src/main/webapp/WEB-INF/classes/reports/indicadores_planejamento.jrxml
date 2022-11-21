@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
+<!-- 2018-12-06T17:25:03 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="indicadores_qualidade" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="BlankPage" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="10aa0fa0-d44d-4c38-8299-c50243886933">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="38"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#A9A9A9">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#FFBFBF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#73B0E6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#CFDBE6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#73B0E6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#CFDBE6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TH" mode="Opaque" backcolor="#73B0E6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_CH" mode="Opaque" backcolor="#CFDBE6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Heading 3" fontSize="14" isBold="true"/>
+	<style name="Text Body" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+	<style name="Style_1" fill="Solid" scaleImage="Clip" markup="none" pattern="" isBlankWhenNull="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica-Bold"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="periodo_inicio" class="java.util.Date"/>
+	<parameter name="periodo_fim" class="java.util.Date"/>
+	<parameter name="data_filtro" class="java.util.Date"/>
+	<parameter name="indicadorManual1" class="java.lang.String"/>
+	<parameter name="indicadorManual2" class="java.lang.String"/>
+	<parameter name="indicadorManual3" class="java.lang.String"/>
+	<parameter name="parcial_ate" class="java.lang.Boolean"/>
+	<parameter name="meta_quantidade_acoes" class="java.lang.String"/>
+	<parameter name="meta_perc_juri_capacitados" class="java.lang.String"/>
+	<parameter name="meta_perc_serv_capacitados" class="java.lang.String"/>
+	<parameter name="meta_perc_acoes_plano" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select 1 from evento]]>
+	</queryString>
+	<variable name="total_executado1" class="java.lang.Double"/>
+	<variable name="total_previsto1" class="java.lang.Double"/>
+	<variable name="total_executado2" class="java.lang.Double"/>
+	<variable name="total_previsto2" class="java.lang.Double"/>
+	<group name="group">
+		<groupHeader>
+			<band height="300">
+				<textField>
+					<reportElement x="1" y="0" width="343" height="20" uuid="de40f9bc-aa32-4ad1-9009-75e95e0f7ee6"/>
+					<textElement textAlignment="Justified"/>
+					<textFieldExpression><![CDATA["Período: " + new String((new SimpleDateFormat("dd/MM/yyyy").format($P{periodo_inicio})).toString()) + " a " + new String((new SimpleDateFormat("dd/MM/yyyy").format($P{periodo_fim})).toString())]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1" y="19" width="282" height="20" uuid="9f9771f9-c109-4082-8538-1a04ff91872d"/>
+					<textElement textAlignment="Justified"/>
+					<textFieldExpression><![CDATA[($P{parcial_ate} != null
+    ? "Apuração dos indicadores: Parcial até " + new String((new SimpleDateFormat("dd/MM/yyyy").format($P{data_filtro})).toString())
+    : "Apuração dos indicadores: Total do período"
+)]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="table 3_TH" x="24" y="42" width="252" height="27" backcolor="#CCCCFF" uuid="ed2a9ac9-ce00-4cc2-9737-7776832ff538"/>
+					<box>
+						<bottomPen lineStyle="Solid"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[INDICADOR]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="table 3_TH" x="0" y="42" width="24" height="27" backcolor="#CCCCFF" uuid="e82bf981-327e-4024-9fcc-239508d93063"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[N°]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="table 3_TH" x="276" y="42" width="79" height="27" backcolor="#CCCCFF" uuid="d5f8d928-2c20-4205-bef8-72b33e8d5aa9"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[REALIZADO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="table 3_TH" x="355" y="42" width="79" height="27" backcolor="#CCCCFF" uuid="ac510522-5744-486f-9235-440de3f1387f"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[PREVISTO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="table 3_TH" x="434" y="42" width="79" height="27" backcolor="#CCCCFF" uuid="31a9a381-7b78-4c12-ae89-12f3e37598f2"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[META]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="table 3_TH" x="513" y="42" width="210" height="27" backcolor="#CCCCFF" uuid="d250fcdc-ac29-4f61-b89d-2cf4e5e09851"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[CÁLCULO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="table 3_TH" x="723" y="42" width="79" height="27" backcolor="#CCCCFF" uuid="6db40dcf-a6ca-488a-8188-1dab35a83146"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[RESULTADO]]></text>
+				</staticText>
+				<textField>
+					<reportElement style="table_TD" x="0" y="69" width="24" height="50" uuid="35cbb9f9-ca38-4e1e-96d7-1651c3e531b4"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[1]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="table_TD" mode="Opaque" x="24" y="69" width="252" height="50" forecolor="#000000" uuid="6f32dc3d-33be-41a0-82f9-fdc435da816f"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA["Quantidade de ações de integração promovidas"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="table_TD" x="276" y="69" width="79" height="50" uuid="21fd4e30-b3ab-47ef-adb2-e0f716e58c7e"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA["-"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="table_TD" x="355" y="69" width="79" height="50" uuid="69bb60d3-4202-4217-9409-bcdc2f1b87b3"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA["-"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="table_TD" x="434" y="69" width="79" height="50" uuid="cfdd8fa8-c05c-486d-92db-2b101c0aa705"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$P{meta_quantidade_acoes}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="table_TD" x="513" y="69" width="210" height="50" uuid="0a394a12-68c0-4293-be5e-f5d488798443"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA["Número de ações"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="table_TD" x="24" y="119" width="252" height="50" uuid="fd3d2b88-4850-45a7-8ed3-453429514ac8"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA["Percentual de execução do plano de capacitação dos jurisdicionados"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="table_TD" x="0" y="119" width="24" height="50" uuid="80acdce2-dcfb-4dda-a2c2-3ebc013f0d35"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[2]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="table_TD" x="434" y="119" width="79" height="50" uuid="d3cee17f-9144-45a1-8c92-1d9a65eb50fe"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$P{meta_perc_juri_capacitados}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="table_TD" x="513" y="119" width="210" height="50" uuid="3017022c-efb8-4fad-9b64-b559398d43cb"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA["Capacitações realizadas do plano anual *100 / Capacitações previstas no plano anual"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="table_TD" x="355" y="169" width="79" height="50" uuid="223a93bc-507d-4a77-a04b-904592840ccc"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA["-"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="table_TD" x="24" y="169" width="252" height="50" uuid="dedbcc3f-d401-423c-b844-f50927b7b574"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA["Percentual de servidores capacitados para o uso de recursos tecnológicos"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="table_TD" x="0" y="169" width="24" height="50" uuid="74d64374-5235-4928-85e8-13b45fc2e711"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[3]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="table_TD" x="434" y="169" width="79" height="50" uuid="b665e792-3fd5-4c50-a3af-0db7e977f218"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$P{meta_perc_serv_capacitados}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="table_TD" x="276" y="169" width="79" height="50" uuid="fe2dedd9-d292-474c-8ecd-16e74d48e630"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA["-"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="table_TD" x="513" y="169" width="210" height="50" uuid="6ec1202e-7ef4-44c7-970a-4605ccc22f78"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA["Servidores capacitados * 100 / Total de servidores do TCE"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="false">
+					<reportElement style="table_TD" x="723" y="69" width="79" height="50" backcolor="#E4E4E3" uuid="fb2d1e3b-089a-47b4-a107-a11fb1d3f701"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="false" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($P{indicadorManual1} == "0" || $P{indicadorManual1} == ""
+    ? "N/D"
+    : $P{indicadorManual1}
+)]]></textFieldExpression>
+				</textField>
+				<subreport>
+					<reportElement x="276" y="119" width="79" height="50" uuid="a3968c43-4ff6-4551-a1b2-9e24bfe53575"/>
+					<subreportParameter name="data_fim">
+						<subreportParameterExpression><![CDATA[$P{data_filtro}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="data_inicio">
+						<subreportParameterExpression><![CDATA[$P{periodo_inicio}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<returnValue subreportVariable="total_executado" toVariable="total_executado1"/>
+					<subreportExpression><![CDATA["reports/indicadores_planejamento_executado1.jasper"]]></subreportExpression>
+				</subreport>
+				<subreport>
+					<reportElement x="355" y="119" width="79" height="50" uuid="d188709c-4134-4f03-81a7-0911c93bf3ae"/>
+					<subreportParameter name="data_fim">
+						<subreportParameterExpression><![CDATA[$P{periodo_fim}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="data_inicio">
+						<subreportParameterExpression><![CDATA[$P{periodo_inicio}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<returnValue subreportVariable="total_previsto" toVariable="total_previsto1"/>
+					<subreportExpression><![CDATA["reports/indicadores_planejamento_previsto1.jasper"]]></subreportExpression>
+				</subreport>
+				<textField pattern="">
+					<reportElement x="0" y="280" width="275" height="13" uuid="bfbe76a4-6a78-42b5-a4a7-8fd7aed5205b"/>
+					<textElement textAlignment="Justified">
+						<font fontName="Arial" size="8" isItalic="true" pdfFontName="Helvetica-Oblique"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Relatório gerado em " + new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss").format(new java.util.Date())]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="false">
+					<reportElement style="table_TD" mode="Opaque" x="723" y="169" width="79" height="50" backcolor="#E4E4E3" uuid="98a6d832-9742-4f5d-be57-d6031e32f971"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="false" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($P{indicadorManual2} == "0" || $P{indicadorManual2} == ""
+    ? "N/D"
+    : $P{indicadorManual2} + "%"
+)]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Band" pattern="#,##0.00 %" isBlankWhenNull="false">
+					<reportElement style="table_TD" x="723" y="119" width="79" height="50" backcolor="#E4E4E3" uuid="17dd6c51-3fcc-4887-b2a1-76ba90866c2e">
+						<property name="net.sf.jasperreports.export.pdf.tag.h3"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="false" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{total_previsto1}.compareTo(new Double(0)) == 0
+    ? "N/D"
+    : (($V{total_executado1} != null && $V{total_previsto1} != null)
+        ? new String(MessageFormat.format("{0,number,#.##%}", new Double($V{total_executado1}/$V{total_previsto1})))
+        : "0%"
+    )
+)]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="table_TD" stretchType="RelativeToTallestObject" x="0" y="219" width="24" height="50" uuid="0e52b995-306e-42bb-8b70-6df4bf0301ab"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[4]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="table_TD" stretchType="RelativeToTallestObject" x="24" y="219" width="252" height="50" uuid="bcea0e47-0ca1-4c91-9f4a-965b758cf9b3"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA["Percentual de ações implementadas nos Planos de Ação dos Projetos correlacionados (Criação da Política de certificação profissional do servidor e Formação do Auditor do Século XXI)"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="table_TD" stretchType="RelativeToTallestObject" x="276" y="219" width="79" height="50" uuid="1a29c013-bc2b-4b27-b33a-4a1222c6cc72"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA["-"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="table_TD" stretchType="RelativeToTallestObject" x="355" y="219" width="79" height="50" uuid="7a8afb79-4178-454c-b8cb-db1e208d129b"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA["-"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="table_TD" stretchType="RelativeToTallestObject" x="434" y="219" width="79" height="50" uuid="322a7ac5-6647-4de3-abfe-ce666fd0a66f"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$P{meta_perc_acoes_plano}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="table_TD" stretchType="RelativeToTallestObject" x="513" y="219" width="210" height="50" uuid="6eb17bbf-3a12-4400-a62e-5cc55035e614"/>
+					<box leftPadding="3" rightPadding="3"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA["Número de ações implementadas *100 / Número de ações planejadas"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="false">
+					<reportElement style="table_TD" stretchType="RelativeToTallestObject" mode="Opaque" x="723" y="219" width="79" height="50" backcolor="#E4E4E3" uuid="9f50df46-ef6f-4e6e-b5d9-9e4a98a04e92"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="false" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($P{indicadorManual3} == "0" || $P{indicadorManual3} == ""
+    ? "N/D"
+    : $P{indicadorManual3} + "%"
+)]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<title>
+		<band height="50" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="0" y="1" width="802" height="22" forecolor="#000000" uuid="7b19e9f1-d1fc-4a44-a8f7-b4004a10b7e7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Sistema de Gestão Educacional]]></text>
+			</staticText>
+			<image onErrorType="Blank">
+				<reportElement x="1" y="1" width="81" height="40" uuid="65def83e-0d20-4ce8-b10f-fff635d9e9f6"/>
+				<imageExpression><![CDATA["images/logo_IPC.gif"]]></imageExpression>
+			</image>
+			<image onErrorType="Blank">
+				<reportElement x="667" y="0" width="164" height="34" uuid="49165996-472f-44f4-b40c-209bbee093a7"/>
+				<imageExpression><![CDATA["images/logo_TCE2.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="SubTitle" x="1" y="23" width="801" height="20" forecolor="#000000" uuid="63d2443e-f1d8-49f3-ac78-d15768f4e5cf"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Indicadores do Planejamento Estratégico]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageFooter>
+		<band height="76" splitType="Stretch">
+			<staticText>
+				<reportElement x="265" y="60" width="273" height="12" uuid="4390056b-f044-4c02-8c73-57065e73bf68"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10" isBold="false" isItalic="false" pdfFontName="Times-Italic" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Diretora Executiva do Instituto Plácido Castelo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="265" y="48" width="273" height="12" uuid="71f4c8f1-3d71-4751-915b-cd5a29cb0d28"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10" isBold="false" isItalic="false" pdfFontName="Times-Italic" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Maria Hilária de Sá Barreto]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

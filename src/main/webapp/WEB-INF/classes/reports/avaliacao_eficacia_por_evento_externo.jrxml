@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
+<!-- 2019-07-04T11:11:59 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="avaliacao_eficacia_por_evento" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="efd72f78-19cd-41f4-9d85-3d95b62f0d9d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="paramWhere" class="java.lang.String"/>
+	<parameter name="nomeEvento" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[--LISTA AVALIAÇÕES REALIZADAS
+SELECT
+    COUNT(participante.id),
+    participante.nome,
+    sapjava_setor.nmsetor,
+    avaliacao_eficacia.data_cadastro
+FROM participante
+    INNER JOIN avaliacao_eficacia ON participante.id = avaliacao_eficacia.participante_id
+    LEFT  JOIN sapjava_setor ON participante.setor_id = sapjava_setor.idsetor
+WHERE
+    avaliacao_eficacia.evento_id = $P!{paramWhere}
+    AND participante.id IN (SELECT participante_id FROM certificado WHERE evento_id = $P!{paramWhere})
+GROUP BY
+    participante.nome, sapjava_setor.nmsetor,
+    avaliacao_eficacia.data_cadastro
+ORDER BY
+    participante.nome]]>
+	</queryString>
+	<field name="COUNT(PARTICIPANTE.ID)" class="java.lang.Integer"/>
+	<field name="NOME" class="java.lang.String"/>
+	<field name="NMSETOR" class="java.lang.String"/>
+	<field name="DATA_CADASTRO" class="java.util.Date"/>
+	<group name="Pendentes">
+		<groupFooter>
+			<band height="50">
+				<subreport>
+					<reportElement x="0" y="13" width="145" height="37" uuid="ccf2b697-868a-440b-acd6-65af8a507d88"/>
+					<subreportParameter name="paramWhere">
+						<subreportParameterExpression><![CDATA[$P{paramWhere}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA["reports/avaliacao_eficacia_por_evento_externo_subreport1.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="EventosRealizados">
+		<groupFooter>
+			<band height="20">
+				<printWhenExpression><![CDATA[$V{REPORT_COUNT} > 0]]></printWhenExpression>
+				<textField evaluationTime="Report">
+					<reportElement positionType="Float" x="300" y="0" width="255" height="20" isRemoveLineWhenBlank="true" uuid="56f23918-c7d1-4d9a-a95a-41a54b8567f1">
+						<printWhenExpression><![CDATA[$V{REPORT_COUNT} > 0]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Bottom"/>
+					<textFieldExpression><![CDATA["TOTAL DE AVALIAÇÕES REALIZADAS: " + $V{REPORT_COUNT}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="186" splitType="Stretch">
+			<staticText>
+				<reportElement x="113" y="0" width="286" height="24" uuid="1118d422-4222-49b3-9fbd-e192be2ea2e2"/>
+				<textElement textAlignment="Center">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Sistema de Gestão Educacional]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="84" y="27" width="341" height="28" uuid="ef534110-1f29-4489-aca1-7c89e6458750"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório de Avaliações de Eficácia por Evento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="86" width="136" height="20" backcolor="#CCCCFF" uuid="8cb23329-8d23-4b0e-bab8-fba4d8b14bb0"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[EVENTO:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="136" y="86" width="420" height="20" uuid="c5af3244-7bad-4c16-a15b-cdd36b65d08c"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["CURSO " + $P{nomeEvento}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement positionType="Float" mode="Opaque" x="0" y="166" width="245" height="20" isRemoveLineWhenBlank="true" backcolor="#CCCCFF" uuid="0b85b300-078f-4c44-a926-e5bcceb664f4">
+					<printWhenExpression><![CDATA[$F{COUNT(PARTICIPANTE.ID)} > 0]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["PARTICIPANTE"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement positionType="Float" mode="Opaque" x="245" y="166" width="191" height="20" isRemoveLineWhenBlank="true" backcolor="#CCCCFF" uuid="d3e5a3bb-440a-4684-9d8d-6b8733514313">
+					<printWhenExpression><![CDATA[$F{COUNT(PARTICIPANTE.ID)} > 0]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["SETOR"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement positionType="Float" mode="Opaque" x="436" y="166" width="119" height="20" isRemoveLineWhenBlank="true" backcolor="#CCCCFF" uuid="c77765b4-6e6f-43bc-8e9e-28be34620a2f">
+					<printWhenExpression><![CDATA[$F{COUNT(PARTICIPANTE.ID)} > 0]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["DATA AVALIAÇÃO"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Page">
+				<reportElement positionType="Float" x="0" y="146" width="157" height="20" isRemoveLineWhenBlank="true" uuid="555bb754-ac45-4ea3-8ad6-7ee3fe2a59af">
+					<printWhenExpression><![CDATA[$F{COUNT(PARTICIPANTE.ID)} > 0]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[".: AVALIACÕES REALIZADAS :."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" mode="Opaque" x="0" y="106" width="136" height="20" backcolor="#CCCCFF" uuid="bb50959c-a211-4971-880b-42c97d74789a"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Qtde. DE APROVADOS:]]></text>
+			</staticText>
+			<subreport>
+				<reportElement positionType="Float" x="136" y="106" width="420" height="20" uuid="6beb525f-0b45-4095-a8b9-ab6abf3a46d9"/>
+				<subreportParameter name="paramWhere">
+					<subreportParameterExpression><![CDATA[$P{paramWhere}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reports/avaliacao_eficacia_por_evento_externo_subreport2.jasper"]]></subreportExpression>
+			</subreport>
+			<image>
+				<reportElement x="-15" y="2" width="81" height="40" uuid="899382c1-8aac-490b-b369-cff35a01a3e4"/>
+				<imageExpression><![CDATA["images/logo_IPC.gif"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="436" y="4" width="164" height="34" uuid="6961016d-5ac6-4a40-856b-89b8e61999fe"/>
+				<imageExpression><![CDATA["images/logo_TCE2.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="245" height="20" isRemoveLineWhenBlank="true" uuid="712125f6-bef4-4553-a0dc-8148944992ea"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NOME}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="245" y="0" width="191" height="20" isRemoveLineWhenBlank="true" uuid="d8a69da2-fd82-4402-ab57-634432050055"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[( $F{NMSETOR} != null ? $F{NMSETOR} : "-" )]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="436" y="0" width="119" height="20" isRemoveLineWhenBlank="true" uuid="66a1f0ed-b33d-47ea-9348-9e9a1525ec5a"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($F{DATA_CADASTRO})]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="436" y="0" width="80" height="20" uuid="6a1df0a9-5eb5-46b1-931c-a5b31b1bff57"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="516" y="0" width="40" height="20" uuid="ef5ef665-2a27-4356-b1d8-82ef321480a2"/>
+				<textElement verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="20">
+			<textField>
+				<reportElement x="0" y="0" width="266" height="20" uuid="40b419e8-6b91-472a-8c05-a0023312f2f6"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Relatório gerado em " + new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss").format(new Date())]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="515" y="0" width="40" height="20" uuid="ad836f72-2073-4fd7-9ce8-582a2f315fb3"/>
+				<textElement verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="435" y="0" width="80" height="20" uuid="b7272a33-0a92-4490-9726-00544be94947"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+		</band>
+	</lastPageFooter>
+</jasperReport>

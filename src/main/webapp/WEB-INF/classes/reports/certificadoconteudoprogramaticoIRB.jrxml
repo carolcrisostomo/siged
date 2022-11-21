@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
+<!-- 2022-07-27T16:26:14 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="certificadoconteudoprogramatico" pageWidth="802" pageHeight="555" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="23fefee9-73ba-481a-b500-82ba2d184da6">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="conteudoProgramatico" class="java.lang.String"/>
+	<parameter name="rodape1" class="java.lang.String"/>
+	<parameter name="rodape2" class="java.lang.String"/>
+	<parameter name="isProvedorRedeEscolas" class="java.lang.Boolean"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<title>
+		<band height="555" splitType="Stretch">
+			<image scaleImage="FillFrame" isUsingCache="true" onErrorType="Blank">
+				<reportElement positionType="Float" x="0" y="0" width="802" height="535" uuid="fb691857-6291-4605-9894-db97118e47b1"/>
+				<imageExpression><![CDATA["images/certificado-irb-verso.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement positionType="Float" x="50" y="160" width="720" height="30" uuid="e7abaf60-cd4c-458b-8c99-29bef73c7a35"/>
+				<textElement textAlignment="Left">
+					<font fontName="Times New Roman" size="20" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Conteúdo Programático:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="50" y="200" width="720" height="300" uuid="95170001-151f-425c-be83-51768b8c5c2c"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="10" isItalic="false"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0" firstLineIndent="0" spacingAfter="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{conteudoProgramatico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="231" y="535" width="571" height="20" uuid="ea4092dd-ae8b-407a-8f02-f4ea6648fdb6"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{rodape2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="535" width="231" height="20" uuid="07e45dbd-87ee-4d12-ae8c-9da5ce438dba"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{rodape1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+</jasperReport>

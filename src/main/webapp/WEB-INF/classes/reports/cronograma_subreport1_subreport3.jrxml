@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2016-05-17T15:07:32 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cronograma_subreport1_subreport1" pageWidth="786" pageHeight="20" whenNoDataType="BlankPage" columnWidth="786" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="e2ea590d-70e2-4360-91a8-63a5b4c9665d">
+	<property name="ireport.zoom" value="0.75"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="ano" class="java.lang.String"/>
+	<parameter name="mes" class="java.lang.String"/>
+	<parameter name="evento" class="java.math.BigDecimal"/>
+	<parameter name="evento_titulo" class="java.lang.String" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[SELECT evento.id as evento_id, 'X' as x
+FROM
+     EVENTO INNER JOIN EVENTO_HISTORICO on EVENTO.ID = EVENTO_HISTORICO.EVENTO_ID
+WHERE EXTRACT(MONTH FROM EVENTO_HISTORICO.DATA_INICIO_PREVISTO) = $P{mes} and EXTRACT(YEAR FROM EVENTO_HISTORICO.DATA_INICIO_PREVISTO) = $P{ano} and evento.id = $P{evento}
+group by evento.id]]>
+	</queryString>
+	<field name="EVENTO_ID" class="java.math.BigDecimal"/>
+	<field name="X" class="java.lang.String"/>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+				<reportElement mode="Opaque" x="580" y="0" width="206" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="cd5647dd-698e-4cca-bac9-f501d3c36f02"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{evento_titulo}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="15" height="20" backcolor="#FFFB00" uuid="01c8e640-4455-498a-8e6b-27455a27e975"/>
+				<imageExpression><![CDATA["images/indice_diagonal.jpg"
+]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+</jasperReport>

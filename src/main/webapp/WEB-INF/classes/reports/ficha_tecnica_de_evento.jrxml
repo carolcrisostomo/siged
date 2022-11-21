@@ -1,0 +1,1388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
+<!-- 2021-06-21T16:23:33 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="eventos_por_instrutor" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="343f8b5f-6040-407a-9248-5ea01d6cf759">
+	<property name="ireport.zoom" value="1.1000000000000003"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="204"/>
+	<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+	<parameter name="EVENTO_ID" class="java.lang.String"/>
+	<parameter name="isPeriodo1Dia" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="isInscricao1Dia" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[false]]></defaultValueExpression>
+	</parameter>
+	<parameter name="listaModalidades" class="java.lang.String"/>
+	<parameter name="listaLocalizacoes" class="java.lang.String"/>
+	<parameter name="qtdeVagas" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="linkEvento" class="java.lang.String"/>
+	<parameter name="linkGravacao" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT DISTINCT
+    e.id AS evento_id,
+    tipo_evento.descricao AS evento_tipo,
+    e.titulo AS evento_titulo,
+    e.carga_horaria AS evento_carga_horaria,
+    e.data_inicio_previsto AS evento_data_inicio_previsto,
+    e.data_fim_previsto AS evento_data_fim_previsto,
+    e.data_inicio_pre_inscricao AS data_inicio_pre_inscricao,
+    e.data_fim_pre_inscricao AS data_fim_pre_inscricao,
+    e.objetivo_geral AS evento_objetivo_geral,
+    e.objetivo_especifico AS evento_objetivo_especifico,
+    e.conteudo AS evento_conteudo,
+    e.modulo_unico AS evento_modulo_unico,
+    e.resultado_esperado AS evento_resultado_esperado,
+    e.observacoes_publicas AS evento_observacoes_publicas,
+    e.link_evento AS evento_link,
+    e.link_gravacao AS evento_link_gravacao,
+    participante.nome AS evento_responsavel,
+    (
+        SELECT
+            LISTAGG(pe2.descricao,', ') WITHIN GROUP(ORDER BY epj2.provedor_id)
+        FROM
+            evento_provedor_join epj2
+            INNER JOIN evento e2 ON epj2.evento_id = e2.id
+            INNER JOIN provedor_evento pe2 ON epj2.provedor_id = pe2.id
+        WHERE
+            e2.id = e.id
+    ) AS evento_provedor,
+    eixo_tematico.descricao AS eixo_tematico_descricao,
+    modulo.id AS modulo_id,
+    modulo.titulo AS modulo_titulo,
+    modulo.carga_horaria AS modulo_carga_horaria,
+    modulo.data_inicio AS modulo_data_inicio,
+    modulo.data_fim AS modulo_data_fim,
+    modulo.hora_inicio_turno1 AS modulo_hora_inicio_turno1,
+    modulo.hora_fim_turno1 AS modulo_hora_fim_turno1,
+    modulo.hora_inicio_turno2 AS modulo_hora_inicio_turno2,
+    modulo.hora_fim_turno2 AS modulo_hora_fim_turno2,
+    modulo.hora_inicio_turno3 AS modulo_hora_inicio_turno3,
+    modulo.hora_fim_turno3 AS modulo_hora_fim_turno3,
+    modulo.frequencia AS modulo_frequencia,
+    modulo.nota AS modulo_nota,
+    modulo.observacao AS modulo_observacao,
+    modalidade.descricao AS modalidade_modulo,
+    modalidade.id AS modalidade_id_modulo,    
+    localizacao.descricao AS modulo_localizacao_descricao,
+    localizacao.endereco AS modulo_localizacao_endereco,
+    cidade.nome AS modulo_localizacao_cidade,
+    cidade.uf AS modulo_localizacao_uf,
+    pais.descricao AS modulo_localizacao_pais
+FROM
+    evento e
+    INNER JOIN tipo_evento ON e.tipo_id = tipo_evento.id
+    LEFT  JOIN eixo_tematico ON e.eixo_tematico_id = eixo_tematico.id
+    LEFT  JOIN participante ON e.responsavel_evento = participante.id
+    INNER JOIN modulo ON e.id = modulo.evento_id
+    INNER JOIN modalidade ON modulo.modalidade_id = modalidade.id
+    INNER JOIN tipo_localizacao_evento localizacao ON modulo.localizacao_id = localizacao.id
+    LEFT  JOIN srh_tb_municipio cidade ON cidade.id = localizacao.cidade_id
+    LEFT  JOIN pais ON localizacao.pais_id = pais.id
+WHERE
+	e.id = $P!{EVENTO_ID}
+ORDER BY
+    modulo.data_inicio,
+    modulo.id]]>
+	</queryString>
+	<field name="EVENTO_ID" class="java.math.BigDecimal"/>
+	<field name="EVENTO_TIPO" class="java.lang.String"/>
+	<field name="EVENTO_TITULO" class="java.lang.String"/>
+	<field name="EVENTO_CARGA_HORARIA" class="java.lang.String"/>
+	<field name="EVENTO_DATA_INICIO_PREVISTO" class="java.sql.Timestamp"/>
+	<field name="EVENTO_DATA_FIM_PREVISTO" class="java.sql.Timestamp"/>
+	<field name="DATA_INICIO_PRE_INSCRICAO" class="java.sql.Timestamp"/>
+	<field name="DATA_FIM_PRE_INSCRICAO" class="java.sql.Timestamp"/>
+	<field name="EVENTO_OBJETIVO_GERAL" class="java.lang.String"/>
+	<field name="EVENTO_OBJETIVO_ESPECIFICO" class="java.lang.String"/>
+	<field name="EVENTO_CONTEUDO" class="java.lang.String"/>
+	<field name="EVENTO_MODULO_UNICO" class="java.lang.String"/>
+	<field name="EVENTO_RESULTADO_ESPERADO" class="java.lang.String"/>
+	<field name="EVENTO_OBSERVACOES_PUBLICAS" class="java.lang.String"/>
+	<field name="EVENTO_RESPONSAVEL" class="java.lang.String"/>
+	<field name="EVENTO_PROVEDOR" class="java.lang.String"/>
+	<field name="EIXO_TEMATICO_DESCRICAO" class="java.lang.String"/>
+	<field name="MODULO_ID" class="java.math.BigDecimal"/>
+	<field name="MODULO_TITULO" class="java.lang.String"/>
+	<field name="MODULO_CARGA_HORARIA" class="java.lang.String"/>
+	<field name="MODULO_DATA_INICIO" class="java.util.Date"/>
+	<field name="MODULO_DATA_FIM" class="java.util.Date"/>
+	<field name="MODULO_HORA_INICIO_TURNO1" class="java.lang.String"/>
+	<field name="MODULO_HORA_FIM_TURNO1" class="java.lang.String"/>
+	<field name="MODULO_HORA_INICIO_TURNO2" class="java.lang.String"/>
+	<field name="MODULO_HORA_FIM_TURNO2" class="java.lang.String"/>
+	<field name="MODULO_HORA_INICIO_TURNO3" class="java.lang.String"/>
+	<field name="MODULO_HORA_FIM_TURNO3" class="java.lang.String"/>
+	<field name="MODULO_FREQUENCIA" class="java.lang.String"/>
+	<field name="MODULO_NOTA" class="java.lang.String"/>
+	<field name="modalidade_modulo" class="java.lang.String"/>
+	<field name="modalidade_id_modulo" class="java.math.BigDecimal"/>
+	<field name="modulo_localizacao_descricao" class="java.lang.String"/>
+	<field name="modulo_localizacao_endereco" class="java.lang.String"/>
+	<field name="modulo_localizacao_cidade" class="java.lang.String"/>
+	<field name="modulo_localizacao_uf" class="java.lang.String"/>
+	<field name="modulo_localizacao_pais" class="java.lang.String"/>
+	<field name="modulo_observacao" class="java.lang.String"/>
+	<field name="EVENTO_LINK" class="java.lang.String"/>
+	<field name="EVENTO_LINK_GRAVACAO" class="java.lang.String"/>
+	<variable name="Total_paginas" class="java.lang.Integer" calculation="Count"/>
+	<variable name="QNT_MODULOS" class="java.lang.Integer" calculation="System"/>
+	<variable name="INSTRUTORES_COM_PERFIL" class="java.lang.Integer" resetType="Group" resetGroup="MODULO" calculation="System">
+		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	</variable>
+	<group name="MODULO">
+		<groupExpression><![CDATA[$F{MODULO_ID}]]></groupExpression>
+	</group>
+	<title>
+		<band height="64" splitType="Immediate">
+			<subreport>
+				<reportElement x="0" y="0" width="0" height="0" uuid="30216545-494d-41c1-94eb-fe5c1dc60060"/>
+				<subreportParameter name="EVENTO_ID">
+					<subreportParameterExpression><![CDATA[$P{EVENTO_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<returnValue subreportVariable="REPORT_COUNT" toVariable="QNT_MODULOS"/>
+				<subreportExpression><![CDATA["reports/ficha_tecnica_de_evento_subreport3.jasper"]]></subreportExpression>
+			</subreport>
+			<image onErrorType="Blank">
+				<reportElement x="0" y="0" width="81" height="40" uuid="d530e1bc-43ec-4036-acf6-f6ceae8bd1cc"/>
+				<imageExpression><![CDATA["images/logo_IPC.gif"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="0" width="555" height="23" forecolor="#000000" backcolor="#FFFFFF" uuid="9c16cf3d-52da-406c-a6c9-0e6c301335f4"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="CustomSans" size="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Sistema de Gestão Educacional]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="23" width="555" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="9ba46adb-afa7-43e0-90fa-51ab578cd360"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="CustomSans" size="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Ficha Técnica de Evento]]></text>
+			</staticText>
+			<image onErrorType="Blank">
+				<reportElement x="431" y="0" width="164" height="34" uuid="714c0e8b-c899-4d49-a8eb-3b98542c398a"/>
+				<imageExpression><![CDATA["images/logo_TCE2.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="20" splitType="Prevent">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<printWhenExpression><![CDATA[$V{REPORT_COUNT}==1]]></printWhenExpression>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="110" height="20" forecolor="#000000" backcolor="#CCCCFF" uuid="5ed1606e-19fc-4260-8bbf-8fe64e7bd276"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[TÍTULO:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="110" y="0" width="445" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="1c0a3b71-70fb-4361-9e52-047091a7d586"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EVENTO_TIPO}+" "+$F{EVENTO_TITULO}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20" splitType="Prevent">
+			<printWhenExpression><![CDATA[$V{REPORT_COUNT}==1]]></printWhenExpression>
+			<subreport>
+				<reportElement key="SUB" positionType="Float" mode="Opaque" x="110" y="0" width="445" height="20" isRemoveLineWhenBlank="true" uuid="7ebaa4b2-5f1c-46eb-a1fd-e2b7802b20a7"/>
+				<subreportParameter name="EVENTO_ID">
+					<subreportParameterExpression><![CDATA[$P{EVENTO_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reports/ficha_tecnica_de_evento_subreport2.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="110" height="20" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#CCCCFF" uuid="ce7c4a15-dd93-4aa7-a0af-9765010d3b0c"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[PÚBLICO ALVO:]]></text>
+			</staticText>
+		</band>
+		<band height="20" splitType="Prevent">
+			<printWhenExpression><![CDATA[$V{REPORT_COUNT}==1]]></printWhenExpression>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="110" height="20" forecolor="#000000" backcolor="#CCCCFF" uuid="7468f3e3-2071-4385-a320-3e36aa99ca74"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[MODALIDADE:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="110" y="0" width="183" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="d0851591-fdb1-45a2-b51a-315f1eeadc92"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{listaModalidades}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="293" y="0" width="95" height="20" forecolor="#000000" backcolor="#CCCCFF" uuid="dad571a2-86e7-4cb6-9c86-61d0d9837ee3"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[CARGA HORÁRIA:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="388" y="0" width="167" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="5d978803-dd41-4925-8dfd-e87fc4585358"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EVENTO_CARGA_HORARIA}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20" splitType="Prevent">
+			<printWhenExpression><![CDATA[$V{REPORT_COUNT}==1]]></printWhenExpression>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="110" height="20" forecolor="#000000" backcolor="#CCCCFF" uuid="3b5d17a0-c929-4a47-91c9-cdcad8f2eb95"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[PERÍODO:]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="110" y="0" width="183" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="95aada43-4b45-4870-9749-56610fd1ba91"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{isPeriodo1Dia}
+? 
+	new String((new SimpleDateFormat("dd/MM/yyyy").format($F{EVENTO_DATA_INICIO_PREVISTO})))
+:
+	new String((new SimpleDateFormat("dd/MM/yyyy").format($F{EVENTO_DATA_INICIO_PREVISTO})))
+    + " a " +
+	new String((new SimpleDateFormat("dd/MM/yyyy").format($F{EVENTO_DATA_FIM_PREVISTO})))]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="293" y="0" width="95" height="20" forecolor="#000000" backcolor="#CCCCFF" uuid="6d2572be-9688-4a3c-98cc-cfd4bc0b1272"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[HORÁRIO:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="388" y="0" width="167" height="20" uuid="0bab6480-1e6c-4c15-ba8c-6979cbd6c2f4"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($V{QNT_MODULOS}> 1 ? "CONFORME MÓDULOS ABAIXO" :
+		( $F{modalidade_id_modulo} == null  ?  "-" :
+			( $F{MODULO_HORA_INICIO_TURNO1} != null && $F{MODULO_HORA_FIM_TURNO1} != null  ?  $F{MODULO_HORA_INICIO_TURNO1} + " - " + $F{MODULO_HORA_FIM_TURNO1}  : "-") 
+			+
+			( $F{MODULO_HORA_INICIO_TURNO2} != null  ?  ", " +  $F{MODULO_HORA_INICIO_TURNO2} + " - " + $F{MODULO_HORA_FIM_TURNO2}  : "") 
+			+	
+			( $F{MODULO_HORA_INICIO_TURNO3} != null  ?  ", " +  $F{MODULO_HORA_INICIO_TURNO3} + " - " + $F{MODULO_HORA_FIM_TURNO3}  : "") 
+	)
+)]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20">
+			<printWhenExpression><![CDATA[$V{REPORT_COUNT}==1]]></printWhenExpression>
+			<staticText>
+				<reportElement key="" positionType="Float" mode="Opaque" x="0" y="0" width="110" height="20" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#CCCCFF" uuid="dbc6f617-ac47-4c43-ac65-a16d7e01e756">
+					<printWhenExpression><![CDATA[$F{DATA_INICIO_PRE_INSCRICAO} != null && $F{DATA_FIM_PRE_INSCRICAO} != null]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[PRÉ-INSCRIÇÃO:]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement key="" positionType="Float" mode="Opaque" x="110" y="0" width="183" height="20" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF" uuid="76ff2ffd-8fce-4c26-a851-1eed8c5ee497">
+					<printWhenExpression><![CDATA[$F{DATA_INICIO_PRE_INSCRICAO} != null && $F{DATA_FIM_PRE_INSCRICAO} != null]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{isInscricao1Dia}
+? 
+	new String((new SimpleDateFormat("dd/MM/yyyy").format($F{DATA_INICIO_PRE_INSCRICAO})))
+:
+	new String((new SimpleDateFormat("dd/MM/yyyy").format($F{DATA_INICIO_PRE_INSCRICAO})))
+    + " a " +
+	new String((new SimpleDateFormat("dd/MM/yyyy").format($F{DATA_FIM_PRE_INSCRICAO})))]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="293" y="0" width="95" height="20" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#CCCCFF" uuid="9a3a6870-1cd3-4a02-8115-fbd16b854dbc">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[QTDE. DE VAGAS:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="388" y="0" width="167" height="20" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF" uuid="eda4c3a8-c832-472b-9f8b-752d4b90c9be"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{qtdeVagas}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20" splitType="Prevent">
+			<printWhenExpression><![CDATA[$V{REPORT_COUNT}==1]]></printWhenExpression>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="110" height="20" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#CCCCFF" uuid="95fd1403-b746-4252-bc7a-6930d5403365">
+					<printWhenExpression><![CDATA[$V{QNT_MODULOS} > 1]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[LOCALIZAÇÃO:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="110" y="0" width="445" height="20" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF" uuid="ba0502b2-4f87-4dc2-a7ea-ac3e42759c8d">
+					<printWhenExpression><![CDATA[$V{QNT_MODULOS} > 1]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{listaLocalizacoes}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20" splitType="Prevent">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="110" y="0" width="445" height="20" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF" uuid="0dffcc84-665c-4f92-a5db-392a8cc140de">
+					<printWhenExpression><![CDATA[$V{QNT_MODULOS} > 1]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MODULO_TITULO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="110" height="20" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#CCCCFF" uuid="e4230f19-97ce-437a-be0d-fb951eeac8f2">
+					<printWhenExpression><![CDATA[$V{QNT_MODULOS} > 1]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[MÓDULO:]]></text>
+			</staticText>
+		</band>
+		<band height="20" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="388" y="0" width="167" height="20" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF" uuid="8348a6a3-855c-40e9-b145-16024f751a7c">
+					<printWhenExpression><![CDATA[$V{QNT_MODULOS} > 1]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $F{modalidade_id_modulo} == null  ?  "-" : 
+	( $F{MODULO_HORA_INICIO_TURNO1} != null && $F{MODULO_HORA_FIM_TURNO1} != null  
+		?  $F{MODULO_HORA_INICIO_TURNO1} + " - " + $F{MODULO_HORA_FIM_TURNO1}  
+		: "-"
+	) 
+	+
+	( $F{MODULO_HORA_INICIO_TURNO2} != null  
+		?  ", " +  $F{MODULO_HORA_INICIO_TURNO2} + " - " + $F{MODULO_HORA_FIM_TURNO2}  
+		: ""
+	) 
+	+
+	( $F{MODULO_HORA_INICIO_TURNO3} != null  
+		?  ", " +  $F{MODULO_HORA_INICIO_TURNO3} + " - " + $F{MODULO_HORA_FIM_TURNO3} 
+		 : ""
+	)
+)]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="293" y="0" width="95" height="20" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#CCCCFF" uuid="403e45a2-f605-425a-bfc6-b650ccd25f32">
+					<printWhenExpression><![CDATA[$V{QNT_MODULOS} > 1]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[HORÁRIO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="110" height="20" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#CCCCFF" uuid="c1311cae-500a-4b3f-b959-2fc48129f62c">
+					<printWhenExpression><![CDATA[$V{QNT_MODULOS} > 1]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[PERÍODO:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="110" y="0" width="183" height="20" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF" uuid="990e9577-57d9-4b07-b380-96aeb82e4b9b">
+					<printWhenExpression><![CDATA[$V{QNT_MODULOS} > 1]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new String((new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{MODULO_DATA_INICIO})))
+    + " a " +
+
+new String((new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{MODULO_DATA_FIM})))]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="110" height="20" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#CCCCFF" uuid="f7590b9b-b78a-4c49-873f-47992f86a158">
+					<printWhenExpression><![CDATA[$V{QNT_MODULOS} > 1]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[MODALIDADE:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="110" y="0" width="183" height="20" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF" uuid="374e6e5e-9700-4689-9ffe-4a070466c1a6">
+					<printWhenExpression><![CDATA[$V{QNT_MODULOS} > 1]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{modalidade_modulo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="293" y="0" width="95" height="20" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#CCCCFF" uuid="f2d4aea9-96e7-41e4-a226-7b3aa5793919">
+					<printWhenExpression><![CDATA[$V{QNT_MODULOS} > 1]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[CARGA HORÁRIA:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="388" y="0" width="167" height="20" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF" uuid="57e55541-f662-4e40-bb08-b629450cf4e2">
+					<printWhenExpression><![CDATA[$V{QNT_MODULOS} > 1]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MODULO_CARGA_HORARIA}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="110" height="20" forecolor="#000000" backcolor="#CCCCFF" uuid="f111f339-6586-4856-a499-9038a4d5a51a"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[LOCALIZAÇÃO:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="110" y="0" width="445" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="d93f64cb-814c-471a-8dd4-df70ff7a089d"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $F{modalidade_id_modulo}.equals(new BigDecimal(1)) && $F{modulo_localizacao_endereco} == null ? $F{modulo_localizacao_descricao}+", "+
+$F{modulo_localizacao_cidade}.toUpperCase()+" - "+
+$F{modulo_localizacao_uf}+", "+
+$F{modulo_localizacao_pais} : $F{modulo_localizacao_descricao} )]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="30" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<printWhenExpression><![CDATA[$P{linkEvento} != null]]></printWhenExpression>
+			<staticText>
+				<reportElement key="" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="110" height="30" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#CCCCFF" uuid="184a2b0c-ed7b-49be-962f-b3d251dee0b7">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LINK PARA O EVENTO:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="110" y="0" width="445" height="30" uuid="6d4d82f8-5ec3-4068-b221-e39871bae856"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{linkEvento}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="30">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<printWhenExpression><![CDATA[$P{linkGravacao} != null]]></printWhenExpression>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="110" height="30" isRemoveLineWhenBlank="true" backcolor="#CCCCFF" uuid="001b0ad1-d222-4d4e-b4ca-a7750f243dcf">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LINK PARA A GRAVAÇÃO:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="110" y="0" width="445" height="30" uuid="6f9f7259-fd9c-4872-95af-5868aa8f9835"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{linkGravacao}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="110" height="20" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#CCCCFF" uuid="2eb6a199-1e98-47fe-af8c-5456e9eb9c2c">
+					<printWhenExpression><![CDATA[$F{modulo_localizacao_endereco} != null]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[ENDEREÇO:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="110" y="0" width="445" height="20" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF" uuid="5bfb0e62-bdb2-4d75-a428-e4c2ebd385ee">
+					<printWhenExpression><![CDATA[$F{modulo_localizacao_endereco} != null]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{modulo_localizacao_endereco}+", "+
+$F{modulo_localizacao_cidade}.toUpperCase()+" - "+
+$F{modulo_localizacao_uf}+", "+
+$F{modulo_localizacao_pais}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20" splitType="Prevent">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement positionType="Float" mode="Opaque" x="0" y="0" width="110" height="20" forecolor="#000000" backcolor="#CCCCFF" uuid="a0c257a7-6533-4c06-a364-abe955553afc"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[FREQ. MÍNIMA:]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement positionType="Float" mode="Opaque" x="110" y="0" width="445" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="09794a9f-68c4-4779-a648-3c2e254ffa64"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{MODULO_FREQUENCIA} == null || $F{MODULO_FREQUENCIA}.equals("0")
+    ? " - " : $F{MODULO_FREQUENCIA} + "%" )]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" mode="Opaque" x="293" y="0" width="95" height="20" forecolor="#000000" backcolor="#CCCCFF" uuid="d9359aef-3f4e-4e40-b5b3-597c5af4596e">
+					<printWhenExpression><![CDATA[$F{MODULO_NOTA} != null && !$F{MODULO_NOTA}.equals("0")]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[NOTA MÍNIMA:]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement positionType="Float" mode="Opaque" x="388" y="0" width="167" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="3e1f835b-ad68-4f6b-a4c8-aa3b6b88d4f1">
+					<printWhenExpression><![CDATA[$F{MODULO_NOTA} != null && !$F{MODULO_NOTA}.equals("0")]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{MODULO_NOTA} == null || $F{MODULO_NOTA}.equals("0")
+    ? " - " : $F{MODULO_NOTA})]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20" splitType="Prevent">
+			<subreport isUsingCache="false">
+				<reportElement mode="Opaque" x="0" y="0" width="0" height="0" uuid="82000d4b-6ce2-4080-b789-51859660b43f"/>
+				<subreportParameter name="MODULO_ID">
+					<subreportParameterExpression><![CDATA[$F{MODULO_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="MOSTRAR">
+					<subreportParameterExpression><![CDATA[false]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<returnValue subreportVariable="INSTRUTORES_COM_PERFIL" toVariable="INSTRUTORES_COM_PERFIL"/>
+				<subreportExpression><![CDATA["reports/ficha_tecnica_de_evento_subreport4.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="110" y="0" width="445" height="20" uuid="0c31af66-0d51-4ee7-b8bb-deb0641f306e"/>
+				<subreportParameter name="MODULO_ID">
+					<subreportParameterExpression><![CDATA[$F{MODULO_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reports/ficha_tecnica_de_evento_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="110" height="20" forecolor="#000000" backcolor="#CCCCFF" uuid="2579d88f-6da7-497c-a05b-1b5af48ebd0d"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[INSTRUTOR(ES):]]></text>
+			</staticText>
+		</band>
+		<band height="30" splitType="Prevent">
+			<printWhenExpression><![CDATA[$V{INSTRUTORES_COM_PERFIL} > 0]]></printWhenExpression>
+			<subreport isUsingCache="false">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="110" y="0" width="445" height="30" uuid="1928d51e-2ed6-4164-a37d-de7f20b42b33"/>
+				<subreportParameter name="MODULO_ID">
+					<subreportParameterExpression><![CDATA[$F{MODULO_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="MOSTRAR">
+					<subreportParameterExpression><![CDATA[true]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<returnValue subreportVariable="INSTRUTORES_COM_PERFIL" toVariable="INSTRUTORES_COM_PERFIL"/>
+				<subreportExpression><![CDATA["reports/ficha_tecnica_de_evento_subreport4.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="110" y="0" width="445" height="30" forecolor="#000000" backcolor="#FFFFFF" uuid="9891a430-fb70-411b-b526-0eeffce8ee9c"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="110" height="30" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#CCCCFF" uuid="b1b075b3-3dc4-405b-b570-bd6ad02cdc93"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[PERFIL DO(S) INSTRUTOR(ES):]]></text>
+			</staticText>
+		</band>
+		<band height="30">
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="110" height="30" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#CCCCFF" uuid="ae103cc0-b9ce-41a4-9569-8ed55ce49319">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<printWhenExpression><![CDATA[$F{modulo_observacao} != null]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[OBSERVAÇÃO DO MÓDULO:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="110" y="0" width="445" height="30" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF" uuid="663f4271-86e6-4bc3-80e5-6a30c6619dcf">
+					<printWhenExpression><![CDATA[$F{modulo_observacao} != null]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{modulo_observacao}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20" splitType="Prevent">
+			<printWhenExpression><![CDATA[$V{REPORT_COUNT}==$V{QNT_MODULOS}]]></printWhenExpression>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="110" height="20" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#CCCCFF" uuid="72519510-8124-40c1-9851-dd7c12b9f57d">
+					<printWhenExpression><![CDATA[$F{EIXO_TEMATICO_DESCRICAO} != null]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[EIXO TEMÁTICO:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="110" y="0" width="445" height="20" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF" uuid="971778bf-52bb-4448-9ec2-463051edd23d">
+					<printWhenExpression><![CDATA[$F{EIXO_TEMATICO_DESCRICAO} != null]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EIXO_TEMATICO_DESCRICAO}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20" splitType="Prevent">
+			<printWhenExpression><![CDATA[$V{REPORT_COUNT}==$V{QNT_MODULOS}]]></printWhenExpression>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="110" height="20" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#CCCCFF" uuid="d240986f-0b7a-479e-855f-3528d07cdb49"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[OBJETIVO GERAL:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="110" y="0" width="445" height="20" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF" uuid="a6cf2482-353a-4688-9cf5-b484c9dee3f4"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EVENTO_OBJETIVO_GERAL}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="30" splitType="Prevent">
+			<printWhenExpression><![CDATA[$V{REPORT_COUNT}==$V{QNT_MODULOS}]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="110" y="0" width="445" height="30" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF" uuid="fb4e913e-24e3-4425-9345-06d050649560">
+					<printWhenExpression><![CDATA[$F{EVENTO_OBJETIVO_ESPECIFICO} != null]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="styled">
+					<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EVENTO_OBJETIVO_ESPECIFICO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="110" height="30" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#CCCCFF" uuid="9e16a2e0-8c00-4f33-9751-4c766b94129e">
+					<printWhenExpression><![CDATA[$F{EVENTO_OBJETIVO_ESPECIFICO} != null]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[OBJETIVOS ESPECÍFICOS:]]></text>
+			</staticText>
+		</band>
+		<band height="30" splitType="Prevent">
+			<printWhenExpression><![CDATA[$V{REPORT_COUNT}==$V{QNT_MODULOS}]]></printWhenExpression>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="110" height="30" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#CCCCFF" uuid="91d0a567-0d4f-4377-8cfe-383c9674be2b"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[CONTEÚDO PROGRAMÁTICO:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="110" y="0" width="445" height="30" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF" uuid="a90f8f02-0de8-4c7d-bba7-53dabcb1246b"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EVENTO_CONTEUDO}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="30" splitType="Prevent">
+			<printWhenExpression><![CDATA[$V{REPORT_COUNT}==$V{QNT_MODULOS}]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="110" y="0" width="445" height="30" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF" uuid="0a6d11c0-2a2c-4384-9607-72c09e885b5d">
+					<printWhenExpression><![CDATA[$F{EVENTO_RESULTADO_ESPERADO} != null]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EVENTO_RESULTADO_ESPERADO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="110" height="30" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#CCCCFF" uuid="f2305eeb-30ca-4e31-8407-77e6f2be65fd">
+					<printWhenExpression><![CDATA[$F{EVENTO_RESULTADO_ESPERADO} != null]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[RESULTADOS ESPERADOS:]]></text>
+			</staticText>
+		</band>
+		<band height="20" splitType="Prevent">
+			<printWhenExpression><![CDATA[$V{REPORT_COUNT}==$V{QNT_MODULOS}]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="110" y="0" width="445" height="20" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF" uuid="950af81a-6687-4f40-986e-095d82f14061"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EVENTO_PROVEDOR}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="110" height="20" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#CCCCFF" uuid="42a4319b-68e9-4181-9ad3-b33dbf6b76e0"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[PROVEDOR(ES):]]></text>
+			</staticText>
+		</band>
+		<band height="30" splitType="Prevent">
+			<printWhenExpression><![CDATA[$V{REPORT_COUNT}==$V{QNT_MODULOS}]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="110" y="0" width="445" height="30" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF" uuid="2519e299-7fd3-491d-88b1-2d164995942d">
+					<printWhenExpression><![CDATA[$F{EVENTO_RESPONSAVEL} != null]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EVENTO_RESPONSAVEL}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="110" height="30" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#CCCCFF" uuid="d0abd1f3-775a-48b8-babf-8dc7221034e0">
+					<printWhenExpression><![CDATA[$F{EVENTO_RESPONSAVEL} != null]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[RESPONSÁVEL PELO EVENTO:]]></text>
+			</staticText>
+		</band>
+		<band height="20" splitType="Prevent">
+			<printWhenExpression><![CDATA[$V{REPORT_COUNT}==$V{QNT_MODULOS}]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="110" y="0" width="445" height="20" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#FFFFFF" uuid="f5e37934-4870-4f4c-ac83-4a7e6eca0e94">
+					<printWhenExpression><![CDATA[$F{EVENTO_OBSERVACOES_PUBLICAS} != null]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EVENTO_OBSERVACOES_PUBLICAS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="110" height="20" isRemoveLineWhenBlank="true" forecolor="#000000" backcolor="#CCCCFF" uuid="fa04e52f-9557-49b6-8cb0-47aa4632b64d">
+					<printWhenExpression><![CDATA[$F{EVENTO_OBSERVACOES_PUBLICAS} != null]]></printWhenExpression>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["OBSERVAÇÕES:"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="97" splitType="Immediate">
+			<printWhenExpression><![CDATA[$V{REPORT_COUNT}==$V{QNT_MODULOS}]]></printWhenExpression>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="110" y="0" width="445" height="30" forecolor="#000000" backcolor="#FFFFFF" uuid="98bab37c-4682-4b4b-bd7b-311874d719d8"/>
+				<box topPadding="2" leftPadding="4" bottomPadding="1" rightPadding="3">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Top" rotation="None" markup="html">
+					<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[&nbsp;&nbsp;- A pré-inscrição no evento deverá ser realizada no Sistema de Gestão Educacional do IPC, em link disponível no seu sítio institucional (<font color='blue'><u>www.ipc.tce.ce.gov.br</u></font>);
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="110" height="30" forecolor="#000000" backcolor="#CCCCFF" uuid="680a0eaf-b9f1-491c-8828-50c8f6cdd12a"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None" markup="none">
+					<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="110" y="29" width="445" height="26" forecolor="#000000" backcolor="#FFFFFF" uuid="366e157e-b760-4a52-afd5-9bcd03e446f8"/>
+				<box leftPadding="4" rightPadding="3">
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Top" rotation="None" markup="html">
+					<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[&nbsp;&nbsp;- No caso de servidores do TCE, a indicação deverá ser feita pelo chefe do participante no sistema até 7 (sete) dias antes do início do evento;]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="29" width="110" height="26" forecolor="#000000" backcolor="#CCCCFF" uuid="0f93ad18-785a-4f96-be74-ec69959114eb"/>
+				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[INFORMAÇÕES COMPLEMENTARES:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="110" y="54" width="445" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="9a500c97-3623-4a7c-ab32-bcf137bd6471"/>
+				<box topPadding="0" leftPadding="4" rightPadding="2">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Top" rotation="None" markup="html">
+					<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[&nbsp;&nbsp;- O participante será informado por e-mail da confirmação ou não de sua inscrição;]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="54" width="110" height="13" forecolor="#000000" backcolor="#CCCCFF" uuid="b59ec628-0c7a-42fe-ad6d-f94a6c83e566"/>
+				<box topPadding="0" leftPadding="2" bottomPadding="0" rightPadding="2">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="110" y="67" width="445" height="30" forecolor="#000000" backcolor="#FFFFFF" uuid="c1d89c74-cedb-4bd1-9826-ae8711069986"/>
+				<box leftPadding="4" bottomPadding="2" rightPadding="3">
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Top" rotation="None" markup="html">
+					<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[&nbsp;&nbsp;- Será emitido certificado para o participante que comprovar frequência igual ou superior ao mínimo exigido, e for aprovado por nota (quando aplicável).]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="67" width="110" height="30" forecolor="#000000" backcolor="#CCCCFF" uuid="80db6e24-f798-492b-9eba-6b3770d16fcf"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20">
+			<textField>
+				<reportElement x="435" y="0" width="80" height="20" uuid="6344a6ff-b36c-4cdf-8c95-67139410c0ac"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pág. "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="515" y="0" width="40" height="20" uuid="a94a2aa4-7162-4ddc-9990-0bbd8e4c732a"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="20">
+			<textField>
+				<reportElement x="0" y="0" width="369" height="20" uuid="e21377c5-aa37-4b23-b0ae-c0dc7dd63509"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="CustomSans" size="9" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Relatório gerado em " + new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss").format(new java.util.Date())]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="435" y="0" width="80" height="20" uuid="22320436-f7e3-49ba-b70c-135b3121c5f2"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pág. "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="515" y="0" width="40" height="20" uuid="30fb285d-852e-4c0e-b5cb-837f983dcafa"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="CustomSans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</lastPageFooter>
+</jasperReport>

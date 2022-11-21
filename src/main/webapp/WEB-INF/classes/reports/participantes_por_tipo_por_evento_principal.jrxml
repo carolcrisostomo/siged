@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
+<!-- 2020-03-05T10:50:00 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="participantes_por_tipo_por_evento_principal" pageWidth="555" pageHeight="802" orientation="Landscape" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="a8d67e5c-9a00-4286-9ab6-d71a14de44f2">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#A9A9A9">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#FFBFBF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#73B0E6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#CFDBE6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#73B0E6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#CFDBE6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TH" mode="Opaque" backcolor="#73B0E6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_CH" mode="Opaque" backcolor="#CFDBE6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<parameter name="evento_id" class="java.lang.String"/>
+	<parameter name="total_participante" class="java.lang.String"/>
+	<parameter name="participante_tipo_id" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+    evento.titulo AS evento_titulo,
+    evento.data_inicio_realizacao AS evento_data_inicio_realizacao,
+    evento.data_fim_realizacao AS evento_data_fim_realizacao,
+    evento.carga_horaria AS evento_carga_horaria,
+    tipo_evento.descricao AS tipo_evento_descricao,
+    participante.nome AS participante_nome,
+    participante.tipo_id AS participante_tipo_id,
+    UPPER(participante.entidade) AS participante_entidade,
+    UPPER(setor.nmsetor) AS setor_nmsetor,
+    entidade.identidade AS entidade_identidade,
+    UPPER(entidade.dsentidade) AS entidade_dsentidade
+FROM evento
+    INNER JOIN inscricao ON inscricao.evento_id = evento.id
+    INNER JOIN participante ON participante.id = inscricao.participante_id
+    LEFT JOIN sapjava_setor ON sapjava_setor.idsetor = participante.setor_id
+    INNER JOIN tipo_evento ON evento.tipo_id = tipo_evento.id
+    LEFT JOIN sapjava_entidade ON sapjava_entidade.identidade = participante.orgao_id
+WHERE evento.id = $P!{evento_id}
+    AND inscricao.confirmada = 'S'
+    $P!{participante_tipo_id}
+ORDER BY
+    participante.tipo_id,
+    participante.nome]]>
+	</queryString>
+	<field name="evento_titulo" class="java.lang.String"/>
+	<field name="evento_data_inicio_realizacao" class="java.sql.Timestamp"/>
+	<field name="evento_data_fim_realizacao" class="java.sql.Timestamp"/>
+	<field name="evento_carga_horaria" class="java.lang.String"/>
+	<field name="tipo_evento_descricao" class="java.lang.String"/>
+	<field name="participante_nome" class="java.lang.String"/>
+	<field name="participante_tipo_id" class="java.lang.Double"/>
+	<field name="participante_entidade" class="java.lang.String"/>
+	<field name="setor_nmsetor" class="java.lang.String"/>
+	<field name="entidade_identidade" class="java.lang.Integer"/>
+	<field name="entidade_dsentidade" class="java.lang.String"/>
+	<variable name="total_participante" class="java.lang.Integer" incrementType="Group" incrementGroup="group_participante_tipo_id" calculation="Sum">
+		<variableExpression><![CDATA[$V{group_participante_tipo_id_COUNT}]]></variableExpression>
+	</variable>
+	<group name="group_participante_tipo_id" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{participante_tipo_id}]]></groupExpression>
+		<groupHeader>
+			<band height="40">
+				<staticText>
+					<reportElement style="table 3_TH" x="27" y="20" width="253" height="20" backcolor="#CCCCFF" uuid="d26cb336-1cbe-452d-96e9-0a1385f4403c"/>
+					<box leftPadding="2"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans" isBold="true"/>
+					</textElement>
+					<text><![CDATA[NOME]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="table 3_TH" x="0" y="20" width="27" height="20" backcolor="#CCCCFF" uuid="8bd20ae8-380f-4d58-ada5-618dade8d202"/>
+					<box leftPadding="2"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="CustomSans" isBold="true"/>
+					</textElement>
+					<text><![CDATA[N°]]></text>
+				</staticText>
+				<textField>
+					<reportElement style="table 3_TD" mode="Transparent" x="0" y="0" width="555" height="20" forecolor="#000000" backcolor="#CCCCFF" uuid="2a9ddab9-d840-4def-8d75-0986c166af47"/>
+					<box leftPadding="0">
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans" size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($F{participante_tipo_id} == 1 
+	? "PARTICIPANTES DO TIPO SERVIDOR"
+	: ($F{participante_tipo_id} == 2 
+		? "PARTICIPANTES DO TIPO JURISDICIONADO"
+		: ($F{participante_tipo_id} == 3
+			? "PARTICIPANTES DO TIPO SOCIEDADE"
+			: ($F{participante_tipo_id} == 4
+				? "PARTICIPANTES DO TIPO MEMBRO"
+				: "-"
+			)
+		)
+	)
+)]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement style="table_TD" stretchType="RelativeToTallestObject" mode="Opaque" x="280" y="20" width="275" height="20" backcolor="#CCCCFF" uuid="c883a9bc-d75d-40ed-ac78-9cec0efd136d"/>
+					<box leftPadding="2">
+						<topPen lineStyle="Solid"/>
+						<leftPen lineStyle="Solid"/>
+						<bottomPen lineStyle="Solid"/>
+						<rightPen lineStyle="Solid"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="CustomSans" size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[(($F{participante_tipo_id} == 1 || $F{participante_tipo_id} == 4)
+    ? "SETOR"
+    : ($F{participante_tipo_id} == 2
+        ? "ÓRGÃO"
+        : ($F{participante_tipo_id} == 3
+            ? "INSTITUIÇÃO"
+            : "SETOR/ÓRGÃO/INSTITUIÇÃO"
+        )
+    )
+)]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<textField>
+					<reportElement style="table_TD" mode="Opaque" x="0" y="0" width="555" height="20" uuid="2fabc960-8232-4eed-af5f-da5e85ef2845"/>
+					<box leftPadding="2">
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="CustomSans" size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["TOTAL: " + $V{group_participante_tipo_id_COUNT}.toString()]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="table_TD" stretchType="RelativeToTallestObject" mode="Opaque" x="280" y="0" width="275" height="20" uuid="d0a18606-cfbf-4c72-8881-f900d2c0f231"/>
+				<box leftPadding="2">
+					<topPen lineStyle="Solid"/>
+					<leftPen lineStyle="Solid"/>
+					<bottomPen lineStyle="Solid"/>
+					<rightPen lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($F{participante_tipo_id} == 1 || $F{participante_tipo_id} == 4)
+    ? ($F{setor_nmsetor} != null ? $F{setor_nmsetor} : "-" )
+    : ($F{participante_tipo_id} == 2
+        ? ($F{entidade_dsentidade} != null && $F{entidade_identidade} != 0 ? $F{entidade_dsentidade} : "-")
+        : ($F{participante_entidade} != null ? $F{participante_entidade} : "-")
+      )
+)]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="table_TD" stretchType="RelativeToTallestObject" mode="Opaque" x="27" y="0" width="253" height="20" uuid="b8e0a9e2-4392-4e0d-bb54-bcc17a1826e9"/>
+				<box leftPadding="2">
+					<topPen lineStyle="Solid"/>
+					<leftPen lineStyle="Solid"/>
+					<bottomPen lineStyle="Solid"/>
+					<rightPen lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="CustomSans" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{participante_nome}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="table_TD" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="27" height="20" uuid="b6688651-4bda-4664-965f-c62800d84fab"/>
+				<box leftPadding="2">
+					<topPen lineStyle="Solid"/>
+					<leftPen lineStyle="Solid"/>
+					<bottomPen lineStyle="Solid"/>
+					<rightPen lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="CustomSans" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{group_participante_tipo_id_COUNT}.toString()]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

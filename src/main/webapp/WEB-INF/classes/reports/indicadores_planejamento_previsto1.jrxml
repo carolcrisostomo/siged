@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
+<!-- 2017-01-17T11:25:07 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="indicadores_qualidade_previsto1" pageWidth="79" pageHeight="52" columnWidth="79" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="422db0dd-1190-446d-8625-947a06e444b4">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="data_inicio" class="java.util.Date"/>
+	<parameter name="data_fim" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[SELECT COUNT(e.id) AS total
+FROM EVENTO e
+INNER JOIN EVENTO_TIPOPUBLICO etp ON e.id = etp.EVENTO_ID
+WHERE 
+etp.PUBLICO_ALVO_ID = 2
+AND e.data_inicio_previsto >= $P{data_inicio}
+AND e.data_inicio_previsto <= $P{data_fim}]]>
+	</queryString>
+	<field name="total" class="java.lang.Double"/>
+	<variable name="total_previsto" class="java.lang.Double">
+		<variableExpression><![CDATA[$F{total}]]></variableExpression>
+	</variable>
+	<detail>
+		<band height="50" splitType="Stretch">
+			<textField pattern="###0" isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="79" height="50" uuid="c9a7a580-19fb-485a-89e8-3d02f5f66ae9"/>
+				<box>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{total} != null ? $F{total} : new Double(0))]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

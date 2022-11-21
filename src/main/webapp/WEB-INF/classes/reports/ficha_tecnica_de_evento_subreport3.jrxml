@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subreport" pageWidth="555" pageHeight="300" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="EVENTO_ID" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+modulo.id AS modulo_id
+FROM
+evento INNER JOIN modulo ON evento.id = modulo.evento_id
+WHERE evento.id = $P!{EVENTO_ID}]]>
+	</queryString>
+	<field name="MODULO_ID" class="java.math.BigDecimal"/>
+</jasperReport>

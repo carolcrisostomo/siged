@@ -1,0 +1,570 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
+<!-- 2018-04-06T14:14:43 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="participantes" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a34ff644-bce0-4666-a891-8e63003746d8">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="566"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Arial" fontSize="26" isBold="true"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="paramWhere" class="java.lang.String"/>
+	<parameter name="publico_alvo" class="java.lang.String"/>
+	<parameter name="setor" class="java.lang.String"/>
+	<parameter name="orgao" class="java.lang.String"/>
+	<parameter name="evento" class="java.lang.String"/>
+	<parameter name="desempenho" class="java.lang.String"/>
+	<parameter name="esfera" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="municipio" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT DISTINCT
+     participante.id AS participante_id,
+     participante.nome AS participante_nome,
+     participante.cpf AS participante_cpf,
+     participante.email AS participante_email,
+     tipo_publico_alvo.descricao as tipo_descricao,
+     tipo_publico_alvo.id as tipo_id,
+     entidade.dsentidade AS orgao_descricao,
+     participante.entidade AS participante_entidade,
+     setor.nmsetor AS setor_descricao
+
+FROM
+     participante 
+     LEFT JOIN sapjava_setor ON sapjava_setor.idsetor = participante.setor_id
+     LEFT JOIN sapjava_entidade ON participante.orgao_id = sapjava_entidade.identidade
+     LEFT JOIN sapjava_localidade ON sapjava_entidade.idlocalidade = sapjava_localidade.idlocalidade
+     LEFT JOIN inscricao ON participante.id = inscricao.participante_id
+     LEFT JOIN evento ON inscricao.evento_id = evento.id
+     LEFT JOIN tipo_publico_alvo ON participante.tipo_id = tipo_publico_alvo.id
+
+$P!{paramWhere}
+
+ORDER BY
+     participante.nome]]>
+	</queryString>
+	<field name="PARTICIPANTE_NOME" class="java.lang.String"/>
+	<field name="PARTICIPANTE_CPF" class="java.lang.String"/>
+	<field name="TIPO_DESCRICAO" class="java.lang.String"/>
+	<field name="TIPO_ID" class="java.math.BigDecimal"/>
+	<field name="ORGAO_DESCRICAO" class="java.lang.String"/>
+	<field name="PARTICIPANTE_ENTIDADE" class="java.lang.String"/>
+	<field name="SETOR_DESCRICAO" class="java.lang.String"/>
+	<field name="PARTICIPANTE_EMAIL" class="java.lang.String"/>
+	<group name="Filtro Publico Alvo">
+		<groupHeader>
+			<band height="20">
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+					<reportElement style="SubTitle" positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="99" y="0" width="703" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="2503f071-2f8d-4ba3-a808-69f343c1c1c4"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{publico_alvo}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="SubTitle" positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="99" height="20" forecolor="#000000" backcolor="#CCCCFF" uuid="322a6e17-b173-42d1-bb86-ee2ca557c321"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[PÚBLICO ALVO:]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="Filtro Orgao">
+		<groupHeader>
+			<band height="60">
+				<staticText>
+					<reportElement style="SubTitle" positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="99" height="20" forecolor="#000000" backcolor="#CCCCFF" uuid="75a6b3d0-1708-4b2c-9097-0f619fb0fade"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[ESFERA:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+					<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="99" y="0" width="703" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="ccdc0b16-7fd2-4237-ae2c-f6eb9f06c17f"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{esfera}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="SubTitle" positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="20" width="99" height="20" forecolor="#000000" backcolor="#CCCCFF" uuid="4ce3ad06-1c6d-47a9-839c-37b2ea921163"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[MUNICÍPIO:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+					<reportElement style="SubTitle" positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="99" y="20" width="703" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="16fc0cf5-2980-46b3-a063-0aa8927d1d5b"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{municipio}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="SubTitle" positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="40" width="99" height="20" forecolor="#000000" backcolor="#CCCCFF" uuid="da4cd135-73da-404c-a2d4-ffedb60d81f9"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[ÓRGÃO:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+					<reportElement style="SubTitle" positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="99" y="40" width="703" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="83227407-5d39-4b31-a342-93e47c73fb31"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{orgao}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="Filtro Setor">
+		<groupHeader>
+			<band height="20">
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+					<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="99" y="0" width="703" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="c1141dd6-e07a-4099-935a-65a99254e5c0"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{setor}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="SubTitle" positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="99" height="20" forecolor="#000000" backcolor="#CCCCFF" uuid="319ff34d-06aa-4e0e-8996-708881d0ab19"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[SETOR TCE:]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="Filtro Evento">
+		<groupHeader>
+			<band height="20">
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+					<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="99" y="0" width="703" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="6a9a578b-2aa2-4398-a9e2-fa0a33cd86fe"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{evento}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="SubTitle" positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="99" height="20" forecolor="#000000" backcolor="#CCCCFF" uuid="d05514a0-8987-40f7-b28d-5f7a4ac5b47f"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[EVENTO:]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="Filtro Desempenho">
+		<groupHeader>
+			<band height="20">
+				<printWhenExpression><![CDATA[$P{desempenho} != null]]></printWhenExpression>
+				<staticText>
+					<reportElement style="SubTitle" positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="99" height="20" forecolor="#000000" backcolor="#CCCCFF" uuid="a5dff10a-e8a7-407b-8e8d-d02564d1cdd2"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[DESEMPENHO:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+					<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="99" y="0" width="703" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="abb8e850-52c5-413d-9e1e-bb6af1d49450"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{desempenho}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="group">
+		<groupHeader>
+			<band height="35">
+				<staticText>
+					<reportElement style="SubTitle" positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="15" width="200" height="20" forecolor="#000000" backcolor="#CCCCFF" uuid="7b70e035-8f7b-4c16-9327-0c9ed802056f"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[NOME]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="SubTitle" positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="200" y="15" width="90" height="20" forecolor="#000000" backcolor="#CCCCFF" uuid="5ea7da74-0f6d-4c2f-95de-c17625d20f9f"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[TIPO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="SubTitle" positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="290" y="15" width="70" height="20" forecolor="#000000" backcolor="#CCCCFF" uuid="f7518dbc-603d-4806-b3ae-d203c4a50317"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[CPF]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="SubTitle" positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="532" y="15" width="160" height="20" forecolor="#000000" backcolor="#CCCCFF" uuid="de61bf0a-a717-4576-9320-ec72b1a25b0c"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[ÓRGÃO / INSTITUIÇÃO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="SubTitle" positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="692" y="15" width="110" height="20" forecolor="#000000" backcolor="#CCCCFF" uuid="fff825cd-0a7c-4b98-bc9c-c8f2a50cafbb"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[SETOR TCE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="SubTitle" positionType="Float" stretchType="RelativeToTallestObject" mode="Opaque" x="360" y="15" width="172" height="20" forecolor="#000000" backcolor="#CCCCFF" uuid="7780e3d7-5244-4941-bb8b-fee90ab9f2a7"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+						<pen lineWidth="0.5" lineColor="#000000"/>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="CustomSans" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[E-MAIL]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="30">
+				<textField>
+					<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="492" y="10" width="310" height="20" uuid="dc482723-f448-4a69-b45b-1cb629ed4628"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA["TOTAL DE PARTICIPANTES: " + $V{REPORT_COUNT}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<title>
+		<band height="55" splitType="Stretch">
+			<image scaleImage="RetainShape" hAlign="Left" vAlign="Top" onErrorType="Blank">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="0" y="1" width="81" height="40" forecolor="#000000" backcolor="#FFFFFF" uuid="f2e6327e-8780-43e8-8c4a-63f702d2b3de"/>
+				<graphicElement fill="Solid"/>
+				<imageExpression><![CDATA["images/logo_IPC.gif"]]></imageExpression>
+			</image>
+			<image onErrorType="Blank">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="666" y="0" width="164" height="34" uuid="891d4ca6-6966-4134-99a6-0012557ca9c5"/>
+				<imageExpression><![CDATA["images/logo_TCE2.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="Title" positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="0" y="0" width="802" height="23" forecolor="#000000" backcolor="#FFFFFF" uuid="badb26ad-2097-4ba1-a525-b3876d0be1a3"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="CustomSans" size="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Sistema de Gestão Educacional]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="0" y="23" width="801" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="bce7c775-9be7-4737-9c92-ea5022267973"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="CustomSans" size="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Relatório de Participantes]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="20" splitType="Prevent">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="0" y="0" width="200" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="0c2bbd2c-0948-4453-9cc1-2c2fc8c550d6"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PARTICIPANTE_NOME}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="200" y="0" width="90" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="39a4b093-8c0e-42e3-aeaa-3225c450d45d"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TIPO_DESCRICAO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="290" y="0" width="70" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="f5d2062e-ec9b-4e2c-9101-87695d0a37a6"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PARTICIPANTE_CPF}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="532" y="0" width="160" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="2d96e142-8ef9-47dd-984a-9bb1399896bd"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $F{TIPO_ID}.equals(new BigDecimal("1")) || $F{TIPO_ID}.equals(new BigDecimal("4")) ? "TCE-CE" : ( $F{TIPO_ID}.equals(new BigDecimal("2")) ? $F{ORGAO_DESCRICAO} : $F{PARTICIPANTE_ENTIDADE} ) )]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="692" y="0" width="110" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="6ec67cac-623e-42ae-a746-83671525165a"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $F{TIPO_ID}.equals(new BigDecimal("1")) ? $F{SETOR_DESCRICAO} : "" )]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="360" y="0" width="172" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="fb7fda04-c38b-4290-bc59-54269ffd26a9"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="CustomSans" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PARTICIPANTE_EMAIL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="682" y="10" width="80" height="20" uuid="558eb394-c98a-43d7-834f-8eeaea4e3fbf"/>
+				<textElement textAlignment="Right">
+					<font isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pág. "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="762" y="10" width="40" height="20" uuid="58dffec2-211a-4b12-9aee-d77eff10bb79"/>
+				<textElement>
+					<font isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="30">
+			<textField>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="10" width="369" height="20" uuid="f1e726f6-24a1-4a9e-aee2-0dc92acfe775"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Relatório gerado em " + new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss").format(new java.util.Date())]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="761" y="10" width="40" height="20" uuid="a8dba785-a741-4e14-ad95-e5bee507cbe7"/>
+				<textElement>
+					<font isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="681" y="10" width="80" height="20" uuid="60847cf2-f613-44a7-9d16-db8a3964f060"/>
+				<textElement textAlignment="Right">
+					<font isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pág. "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+		</band>
+	</lastPageFooter>
+</jasperReport>
